@@ -10,10 +10,10 @@
   <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
 
   <style>
-    body { margin: 0; padding: 0; background: #070b10; font-family: 'Roboto', 'Segoe UI', sans-serif; color: #fff; overflow: hidden; }
+    body { margin: 0; padding: 0; background: #000; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #fff; overflow: hidden; }
     #map { position: absolute; top: 0; bottom: 0; width: 100%; }
 
-    /* HUD Telemetria Stile Militare/Radar Pro */
+    /* HUD Telemetria */
     .storm-hud {
       position: absolute;
       bottom: 25px;
@@ -71,40 +71,75 @@
 </div>
 
 <script>
-  // Mappa Dark / Satellite per Nowcasting Professionale
-  const map = new maplibregl.Map({
-    container: 'map',
-    style: {
-      version: 8,
-      sources: {
-        'carto-dark': {
-          type: 'raster',
-          tiles: [
-            'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
-            'https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
-            'https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png'
-          ],
-          tileSize: 256,
-          attribution: '&copy; CartoDB &copy; OpenStreetMap contributors'
-        }
-      },
-      layers: [
-        {
-          id: 'carto-dark-layer',
-          type: 'raster',
-          source: 'carto-dark',
-          minzoom: 0,
-          maxzoom: 19
-        }
-      ]
-    },
-    center: [12.50, 41.90],
-    zoom: 6.5,
-    pitch: 52,
-    bearing: -5
-  });
+  async function initMap() {
+    // 1. Recupera l'ultimo layer radar disponibile da RainViewer
+    let radarPath = '';
+    try {
+      const apiRes = await fetch('https://api.rainviewer.com/public/weather-maps.json');
+      const apiData = await apiRes.json();
+      if (apiData.radar && apiData.radar.past && apiData.radar.past.length > 0) {
+        radarPath = apiData.radar.past[apiData.radar.past.length - 1].path;
+      }
+    } catch (e) {
+      console.warn("Impossibile caricare i timestamp RainViewer, uso basemap di backup.");
+    }
 
-  map.addControl(new maplibregl.NavigationControl());
+    // 2. Costruzione sorgenti per MapLibre: Mappa OpenStreetMap + Overlay Radar RainViewer
+    const mapSources = {
+      'osm-tiles': {
+        type: 'raster',
+        tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+        tileSize: 256,
+        attribution: '&copy; OpenStreetMap'
+      }
+    };
+
+    const mapLayers = [
+      {
+        id: 'osm-layer',
+        type: 'raster',
+        source: 'osm-tiles',
+        minzoom: 0,
+        maxzoom: 19
+      }
+    ];
+
+    if (radarPath) {
+      mapSources['rainviewer-radar'] = {
+        type: 'raster',
+        tiles: [`https://tilecache.rainviewer.com${radarPath}/256/{z}/{x}/{y}/2/1_1.png`],
+        tileSize: 256
+      };
+      mapLayers.push({
+        id: 'rainviewer-layer',
+        type: 'raster',
+        source: 'rainviewer-radar',
+        minzoom: 0,
+        maxzoom: 19,
+        paint: { 'raster-opacity': 0.65 }
+      });
+    }
+
+    window.map = new maplibregl.Map({
+      container: 'map',
+      style: { version: 8, sources: mapSources, layers: mapLayers },
+      center: [12.50, 41.90],
+      zoom: 6.5,
+      pitch: 45,
+      bearing: 0
+    });
+
+    map.addControl(new maplibregl.NavigationControl());
+
+    map.on('click', () => {
+      document.getElementById('hud').style.display = 'none';
+    });
+
+    map.on('load', () => {
+      fetchAndRenderStorms();
+      setInterval(fetchAndRenderStorms, 30000);
+    });
+  }
 
   const DATA_URL = "storm_cells.json";
   let activeMarkers = [];
@@ -134,7 +169,7 @@
       const cellLat = cell.centroid[0];
       const cellLon = cell.centroid[1];
 
-      // 1. Centroide Rosso Pulsante
+      // Centroide Rosso Pulsante
       const el = document.createElement('div');
       el.className = 'pulsing-centroid';
       const diameterPx = Math.max(22, Math.min(65, cell.radius_km * 3.2));
@@ -147,7 +182,6 @@
 
       activeMarkers.push(marker);
 
-      // Evento Click sul Centroide per Telemetria
       el.addEventListener('click', (e) => {
         e.stopPropagation();
         const hud = document.getElementById('hud');
@@ -161,7 +195,7 @@
         `;
       });
 
-      // 2. Vettore Storico Reale 15 min (Linea Turchese Continua)
+      // Vettore Storico Reale 15 min (Linea Turchese Continua)
       if (cell.history_track && cell.history_track.length > 1) {
         const historyCoordinates = cell.history_track.map(pt => [pt[1], pt[0]]);
         const histSourceId = `hist-src-${cell.id}`;
@@ -183,7 +217,7 @@
         }
       }
 
-      // 3. Vettore Predittivo 3 Ore (Linea Arancione Tratteggiata)
+      // Vettore Predittivo 3 Ore (Linea Arancione Tratteggiata)
       const predCoordinates = [
         [cellLon, cellLat],
         [cell.predictive_vector[1], cell.predictive_vector[0]]
@@ -212,14 +246,8 @@
     });
   }
 
-  map.on('click', () => {
-    document.getElementById('hud').style.display = 'none';
-  });
-
-  map.on('load', () => {
-    fetchAndRenderStorms();
-    setInterval(fetchAndRenderStorms, 30000);
-  });
+  // Avvio dell'applicazione
+  initMap();
 </script>
 </body>
 </html>
