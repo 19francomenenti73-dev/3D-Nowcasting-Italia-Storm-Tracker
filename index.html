@@ -2,167 +2,206 @@
 <html lang="it">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <title>Nowcasting Italia - 3D Convective Tracker</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet" />
   <style>
-    html, body, #map { width: 100%; height: 100%; margin: 0; padding: 0; background: #111; }
+    body { margin: 0; padding: 0; background: #090d16; font-family: system-ui, -apple-system, sans-serif; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; height: 100%; }
     
-    #status-box {
+    #ui-panel {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      z-index: 1000;
-      background: rgba(15, 23, 42, 0.9);
+      top: 12px;
+      right: 12px;
+      z-index: 10;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid #334155;
       color: #38bdf8;
-      padding: 6px 10px;
-      font-family: system-ui, sans-serif;
+      padding: 8px 12px;
+      border-radius: 6px;
       font-size: 11px;
       font-weight: bold;
-      border-radius: 4px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+    }
+
+    .mapboxgl-popup-content {
+      background: #0f172a !important;
+      color: #f8fafc !important;
       border: 1px solid #334155;
-    }
-
-    /* Centroide Verde Pulsante */
-    .pulsing-centroid {
-      width: 14px;
-      height: 14px;
-      background: #22c55e;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 0 0 rgba(34, 197, 94, 0.6);
-      animation: pulse-animation 1.5s infinite;
-    }
-    @keyframes pulse-animation {
-      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-      70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-    }
-
-    /* Stile Popup */
-    .leaflet-popup-content-wrapper {
-      background: #0f172a;
-      color: #f8fafc;
-      font-family: system-ui, sans-serif;
+      border-radius: 8px;
+      padding: 12px;
       font-size: 12px;
-      border-radius: 6px;
-      border: 1px solid #334155;
     }
-    .leaflet-popup-tip { background: #0f172a; }
-    .pop-title { color: #f43f5e; font-size: 13px; font-weight: bold; border-bottom: 1px solid #334155; padding-bottom: 3px; margin-bottom: 5px; }
-    .pop-row { display: flex; justify-content: space-between; margin: 2px 0; }
+    .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip { border-top-color: #0f172a !important; }
+    .pop-title { color: #f43f5e; font-weight: bold; font-size: 13px; border-bottom: 1px solid #334155; padding-bottom: 4px; margin-bottom: 6px; }
+    .pop-row { display: flex; justify-content: space-between; margin: 3px 0; gap: 12px; }
     .pop-lbl { color: #94a3b8; }
     .pop-val { font-weight: bold; color: #38bdf8; }
   </style>
 </head>
 <body>
 
-<div id="status-box">Tracker attivo</div>
+<div id="ui-panel">Nowcasting 3D: Sincronizzazione...</div>
 <div id="map"></div>
 
 <script>
-  var map = L.map('map', { zoomControl: true }).setView([42.50, 12.50], 6);
+  // Access Token pubblico Mapbox per rendering WebGL 3D
+  mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
-  // Mappa base OpenStreetMap pulita e stabile (Zero API Key)
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 11,
-    minZoom: 5,
-    attribution: '&copy; OpenStreetMap'
-  }).addTo(map);
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v11',
+    center: [12.50, 42.00],
+    zoom: 6.5,
+    pitch: 50, // Inclinazione prospettica 3D della mappa
+    bearing: -5
+  });
+
+  map.addControl(new mapboxgl.NavigationControl());
 
   var dataUrl = 'https://raw.githubusercontent.com/19francomenenti73-dev/3D-Nowcasting-Italia-Storm-Tracker/main/storm_cells.json';
 
-  function getRadarColor(dbz) {
-    if (dbz >= 55) return '#7f1d1d';
-    if (dbz >= 48) return '#ef4444';
-    if (dbz >= 40) return '#f97316';
-    if (dbz >= 35) return '#eab308';
-    return '#22c55e';
-  }
+  map.on('load', function () {
+    fetchTracker3D();
+    setInterval(fetchTracker3D, 60000);
+  });
 
-  function loadTrackerData() {
+  function fetchTracker3D() {
     fetch(dataUrl + '?v=' + Date.now())
       .then(res => res.json())
       .then(data => {
         var cells = data.cells || [];
-        document.getElementById('status-box').innerHTML = `Celle attive: ${cells.length}`;
+        document.getElementById('ui-panel').innerHTML = `Celle 3D Attive (≥32 dBZ): ${cells.length}`;
+
+        // Pulizia layer precedenti
+        ['cells-3d-extrusion', 'cells-vectors-blue', 'cells-vectors-red'].forEach(layer => {
+          if (map.getLayer(layer)) map.removeLayer(layer);
+        });
+        if (map.getSource('cells-geojson')) map.removeSource('cells-geojson');
+        if (map.getSource('vectors-geojson')) map.removeSource('vectors-geojson');
+
+        var cellFeatures = [];
+        var vectorFeatures = [];
 
         cells.forEach(cell => {
-          if (!cell.polygon || cell.polygon.length < 3) return;
+          if (!cell.poly_base || cell.poly_base.length < 3) return;
 
-          var maxDbz = cell.max_dbz;
-          var color = getRadarColor(maxDbz);
-          var centroid = cell.centroid;
+          var ringBase = cell.poly_base.map(pt => [pt[1], pt[0]]);
+          ringBase.push(ringBase[0]);
 
-          // 1. PROIEZIONE 3D IN GRIGIO TRASPARENTE (Base inferiore)
-          if (cell.polygon_3d_base) {
-            L.polygon(cell.polygon_3d_base, {
-              color: '#64748b',
-              weight: 1,
-              opacity: 0.3,
-              fillColor: '#475569',
-              fillOpacity: 0.15
-            }).addTo(map);
-          }
+          var color = cell.max_dbz >= 50 ? '#ef4444' : (cell.max_dbz >= 42 ? '#f97316' : '#22c55e');
+          var extrusionHeight = (cell.echo_top_km || 10) * 800; // Altezza colonna 3D in metri
 
-          // 2. CELLA RADAR REALE SUPERIORE (Solo bordo non pieno + trasparenza interna minima)
-          var radarPolygon = L.polygon(cell.polygon, {
-            color: color,
-            weight: 2,
-            opacity: 0.9,
-            fillColor: color,
-            fillOpacity: 0.25
-          }).addTo(map);
-
-          // 3. VETTORE BLU REALE (Movimento effettivo a 10 minuti)
-          if (cell.movement_vector) {
-            L.polyline(cell.movement_vector, {
-              color: '#3b82f6',
-              weight: 3,
-              opacity: 0.85
-            }).addTo(map);
-          }
-
-          // 4. LINEA ROSSA TRATTEGGIATA (Previsionale dal tracker)
-          if (cell.predictive_vector) {
-            L.polyline(cell.predictive_vector, {
-              color: '#ef4444',
-              weight: 2,
-              dashArray: '5, 5',
-              opacity: 0.9
-            }).addTo(map);
-          }
-
-          // 5. CENTROIDE VERDE PULSANTE & POPUP INTERATTIVO
-          var pulsingIcon = L.divIcon({
-            className: 'pulsing-centroid',
-            iconSize: [14, 14],
-            iconAnchor: [7, 7]
+          // Feature Poligono 3D
+          cellFeatures.push({
+            'type': 'Feature',
+            'properties': {
+              'id': cell.id,
+              'dbz': cell.max_dbz,
+              'color': color,
+              'height': extrusionHeight,
+              'base_height': 0,
+              'eta': cell.eta_target,
+              'stage': cell.stage,
+              'wind': cell.wind_speed_kmh,
+              'hail': cell.hail_probability,
+              'vil': cell.vil,
+              'top_km': cell.echo_top_km
+            },
+            'geometry': {
+              'type': 'Polygon',
+              'coordinates': [ringBase]
+            }
           });
 
-          var popupContent = `
-            <div class="pop-title">ID Cella: ${cell.id}</div>
-            <div class="pop-row"><span class="pop-lbl">ETA Bersaglio:</span> <span class="pop-val" style="color:#f43f5e">${cell.eta_target}</span></div>
-            <div class="pop-row"><span class="pop-lbl">Stadio:</span> <span class="pop-val">${cell.stage}</span></div>
-            <div class="pop-row"><span class="pop-lbl">Max dBZ:</span> <span class="pop-val">${maxDbz} dBZ</span></div>
-            <div class="pop-row"><span class="pop-lbl">Velocità Vento:</span> <span class="pop-val">${cell.wind_speed_kmh} km/h</span></div>
-            <div class="pop-row"><span class="pop-lbl">Echo Top:</span> <span class="pop-val">${cell.echo_top_km} km</span></div>
-            <div class="pop-row"><span class="pop-lbl">VIL:</span> <span class="pop-val">${cell.vil} kg/m²</span></div>
-            <div class="pop-row"><span class="pop-lbl">Prob. Grandine:</span> <span class="pop-val">${cell.hail_probability}%</span></div>
-          `;
+          // Vettore Blu (Avanzamento effettivo 10 min)
+          if (cell.movement_vector) {
+            vectorFeatures.push({
+              'type': 'Feature',
+              'properties': { 'type': 'blue' },
+              'geometry': {
+                'type': 'LineString',
+                'coordinates': [[cell.movement_vector[0][1], cell.movement_vector[0][0]], [cell.movement_vector[1][1], cell.movement_vector[1][0]]]
+              }
+            });
+          }
 
-          L.marker(centroid, { icon: pulsingIcon })
-            .addTo(map)
-            .bindPopup(popupContent);
+          // Vettore Rosso (Previsionale)
+          if (cell.predictive_vector) {
+            vectorFeatures.push({
+              'type': 'Feature',
+              'properties': { 'type': 'red' },
+              'geometry': {
+                'type': 'LineString',
+                'coordinates': [[cell.predictive_vector[0][1], cell.predictive_vector[0][0]], [cell.predictive_vector[1][1], cell.predictive_vector[1][0]]]
+              }
+            });
+          }
+        });
+
+        // Add Poligoni 3D
+        map.addSource('cells-geojson', {
+          'type': 'geojson',
+          'data': { 'type': 'FeatureCollection', 'features': cellFeatures }
+        });
+
+        map.addLayer({
+          'id': 'cells-3d-extrusion',
+          'type': 'fill-extrusion',
+          'source': 'cells-geojson',
+          'paint': {
+            'fill-extrusion-color': ['get', 'color'],
+            'fill-extrusion-height': ['get', 'height'],
+            'fill-extrusion-base': ['get', 'base_height'],
+            'fill-extrusion-opacity': 0.65
+          }
+        });
+
+        // Add Vettori
+        map.addSource('vectors-geojson', {
+          'type': 'geojson',
+          'data': { 'type': 'FeatureCollection', 'features': vectorFeatures }
+        });
+
+        map.addLayer({
+          'id': 'cells-vectors-blue',
+          'type': 'line',
+          'source': 'vectors-geojson',
+          'filter': ['==', ['get', 'type'], 'blue'],
+          'paint': { 'line-color': '#2563eb', 'line-width': 4 }
+        });
+
+        map.addLayer({
+          'id': 'cells-vectors-red',
+          'type': 'line',
+          'source': 'vectors-geojson',
+          'filter': ['==', ['get', 'type'], 'red'],
+          'paint': { 'line-color': '#dc2626', 'line-width': 3, 'line-dasharray': [2, 2] }
+        });
+
+        // Popup Dati al Click
+        map.on('click', 'cells-3d-extrusion', function (e) {
+          var props = e.features[0].properties;
+          new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(`
+              <div class="pop-title">Cella ID: ${props.id}</div>
+              <div class="pop-row"><span class="pop-lbl">ETA Bersaglio:</span> <span class="pop-val" style="color:#f43f5e">${props.eta}</span></div>
+              <div class="pop-row"><span class="pop-lbl">Maturità:</span> <span class="pop-val">${props.stage}</span></div>
+              <div class="pop-row"><span class="pop-lbl">Riflettività:</span> <span class="pop-val">${props.dbz} dBZ</span></div>
+              <div class="pop-row"><span class="pop-lbl">Velocità Vento:</span> <span class="pop-val">${props.wind} km/h</span></div>
+              <div class="pop-row"><span class="pop-lbl">Echo Top:</span> <span class="pop-val">${props.top_km} km</span></div>
+              <div class="pop-row"><span class="pop-lbl">VIL:</span> <span class="pop-val">${props.vil} kg/m²</span></div>
+              <div class="pop-row"><span class="pop-lbl">Prob. Grandine:</span> <span class="pop-val">${props.hail}%</span></div>
+            `)
+            .addTo(map);
         });
       })
       .catch(err => {
-        document.getElementById('status-box').innerHTML = "Errore sync dati";
+        document.getElementById('ui-panel').innerHTML = "Errore sync JSON";
       });
   }
-
-  loadTrackerData();
-  setInterval(loadTrackerData, 60000); // Aggiornamento automatico ogni minuto
 </script>
 </body>
 </html>
