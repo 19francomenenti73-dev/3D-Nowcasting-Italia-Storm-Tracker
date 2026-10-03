@@ -41,10 +41,18 @@
   });
 
   function fetchAndRender() {
-    // Forziamo il bypass della cache chiedendo 'celle_tempestose.json'
-    var jsonUrl = './celle_tempestose.json?v=' + Date.now();
+    // Calcolo del percorso dinamico per evitare il 404 sulle sottocartelle di GitHub Pages
+    var basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+    var timestamp = '?v=' + Date.now();
     
-    fetch(jsonUrl)
+    // Tenta prima con 'celle_tempestose.json', se fallisce fa il fallback automatico su 'storm_cells.json'
+    fetch(basePath + 'celle_tempestose.json' + timestamp)
+      .then(res => {
+        if (!res.ok) {
+          return fetch(basePath + 'storm_cells.json' + timestamp);
+        }
+        return res;
+      })
       .then(res => {
         if (!res.ok) throw new Error("HTTP " + res.status);
         return res.json();
