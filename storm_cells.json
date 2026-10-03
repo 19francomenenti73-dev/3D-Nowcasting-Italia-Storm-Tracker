@@ -1,15 +1,43 @@
 {
-  "timestamp": "2026-10-03T08:48:24.165142+00:00",
-  "frame_time": 1791016800,
-  "cell_count": 87,
+  "timestamp": "2026-10-03T09:16:24.090613+00:00",
+  "frame_time": 1791018600,
+  "cell_count": 95,
   "cells": [
     {
-      "id": "TC_S02F",
+      "id": "TC_S06F",
       "centroid": [
-        35.7816,
-        15.1886
+        35.8006,
+        14.3966
       ],
-      "radius_km": 5.1,
+      "radius_km": 2.2,
+      "max_dbz": 60.3,
+      "echo_top_km": 12.9,
+      "vil": 0.1,
+      "rain_rate": 213.9,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          35.8006,
+          14.3966
+        ]
+      ],
+      "predictive_vector": [
+        35.8006,
+        14.3966
+      ],
+      "eta_rome_min": 1499,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S09F",
+      "centroid": [
+        35.7779,
+        15.1533
+      ],
+      "radius_km": 3.7,
       "max_dbz": 63.5,
       "echo_top_km": 13.4,
       "vil": 0.2,
@@ -17,7 +45,7 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (180/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 28.3,
+      "speed_kmh": 12.8,
       "history_track": [
         [
           36.2456,
@@ -58,90 +86,54 @@
         [
           35.7816,
           15.1886
+        ],
+        [
+          35.7779,
+          15.1533
         ]
       ],
       "predictive_vector": [
-        35.5596,
-        14.2898
+        35.7335,
+        14.7297
       ],
-      "eta_rome_min": 1532,
+      "eta_rome_min": 3384,
+      "cep_km": 1.7
+    },
+    {
+      "id": "TC_S10F",
+      "centroid": [
+        36.1448,
+        13.5557
+      ],
+      "radius_km": 2.0,
+      "max_dbz": 54.1,
+      "echo_top_km": 11.7,
+      "vil": 0.0,
+      "rain_rate": 87.9,
+      "hail_probability": 90,
+      "flash_rate": "Molto Alto (90/m)",
+      "stage": "Matura",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          36.1448,
+          13.5557
+        ]
+      ],
+      "predictive_vector": [
+        36.1448,
+        13.5557
+      ],
+      "eta_rome_min": 1387,
       "cep_km": 2.3
     },
     {
-      "id": "TC_S05F",
+      "id": "TC_S13F",
       "centroid": [
-        39.6991,
-        9.9038
+        39.9635,
+        9.5811
       ],
-      "radius_km": 2.7,
-      "max_dbz": 63.5,
-      "echo_top_km": 13.4,
-      "vil": 0.2,
-      "rain_rate": 340.8,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (180/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 32.4,
-      "history_track": [
-        [
-          39.1838,
-          9.6121
-        ],
-        [
-          39.2285,
-          9.5906
-        ],
-        [
-          39.2436,
-          9.5834
-        ],
-        [
-          39.2358,
-          9.684
-        ],
-        [
-          39.3249,
-          9.7368
-        ],
-        [
-          39.5963,
-          9.9528
-        ],
-        [
-          39.5963,
-          9.9528
-        ],
-        [
-          39.6091,
-          9.895
-        ],
-        [
-          39.6338,
-          9.8633
-        ],
-        [
-          39.6496,
-          9.9733
-        ],
-        [
-          39.6991,
-          9.9038
-        ]
-      ],
-      "predictive_vector": [
-        40.2931,
-        9.0698
-      ],
-      "eta_rome_min": 612,
-      "cep_km": 2.5
-    },
-    {
-      "id": "TC_S07F",
-      "centroid": [
-        40.087,
-        9.2932
-      ],
-      "radius_km": 2.3,
+      "radius_km": 3.2,
       "max_dbz": 40.9,
       "echo_top_km": 9.4,
       "vil": 0.0,
@@ -149,487 +141,71 @@
       "hail_probability": 0,
       "flash_rate": "Moderato (13/m)",
       "stage": "Sviluppo",
-      "speed_kmh": 28.0,
+      "speed_kmh": 112.5,
       "history_track": [
         [
           40.087,
           9.2932
+        ],
+        [
+          39.9635,
+          9.5811
+        ],
+        [
+          40.0803,
+          9.3726
         ]
       ],
       "predictive_vector": [
-        40.087,
-        9.2932
+        38.4815,
+        13.0359
       ],
-      "eta_rome_min": 726,
-      "cep_km": 2.3
-    },
-    {
-      "id": "TC_S08F",
-      "centroid": [
-        40.2132,
-        9.4365
-      ],
-      "radius_km": 4.1,
-      "max_dbz": 38.2,
-      "echo_top_km": 8.9,
-      "vil": 0.0,
-      "rain_rate": 8.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (9/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 28.0,
-      "history_track": [
-        [
-          40.2132,
-          9.4365
-        ]
-      ],
-      "predictive_vector": [
-        40.2132,
-        9.4365
-      ],
-      "eta_rome_min": 687,
-      "cep_km": 2.3
-    },
-    {
-      "id": "TC_S14F",
-      "centroid": [
-        41.2673,
-        10.8156
-      ],
-      "radius_km": 2.3,
-      "max_dbz": 60.3,
-      "echo_top_km": 12.9,
-      "vil": 0.1,
-      "rain_rate": 213.9,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (180/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 90.9,
-      "history_track": [
-        [
-          41.9287,
-          11.1527
-        ],
-        [
-          41.7445,
-          11.0899
-        ],
-        [
-          41.3492,
-          11.2633
-        ],
-        [
-          41.5977,
-          10.9398
-        ],
-        [
-          41.6698,
-          10.943
-        ],
-        [
-          41.7069,
-          11.1144
-        ],
-        [
-          41.6237,
-          11.0997
-        ],
-        [
-          41.4714,
-          10.7614
-        ],
-        [
-          41.428,
-          10.9838
-        ],
-        [
-          41.2673,
-          10.8156
-        ],
-        [
-          41.3082,
-          11.0285
-        ],
-        [
-          41.4174,
-          11.0292
-        ]
-      ],
-      "predictive_vector": [
-        39.3389,
-        8.7972
-      ],
-      "eta_rome_min": 103,
-      "cep_km": 4.8
+      "eta_rome_min": 175,
+      "cep_km": 5.7
     },
     {
       "id": "TC_S15F",
       "centroid": [
-        41.3082,
-        11.0285
+        40.0803,
+        9.3726
       ],
-      "radius_km": 2.6,
-      "max_dbz": 55.6,
-      "echo_top_km": 12.0,
-      "vil": 0.1,
-      "rain_rate": 108.7,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (111/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 55.3,
+      "radius_km": 3.2,
+      "max_dbz": 46.5,
+      "echo_top_km": 10.4,
+      "vil": 0.0,
+      "rain_rate": 29.3,
+      "hail_probability": 33,
+      "flash_rate": "Elevato (30/m)",
+      "stage": "Sviluppo",
+      "speed_kmh": 27.2,
       "history_track": [
         [
-          41.9287,
-          11.1527
+          40.087,
+          9.2932
         ],
         [
-          41.7445,
-          11.0899
+          39.9635,
+          9.5811
         ],
         [
-          41.3492,
-          11.2633
-        ],
-        [
-          41.5977,
-          10.9398
-        ],
-        [
-          41.6698,
-          10.943
-        ],
-        [
-          41.7069,
-          11.1144
-        ],
-        [
-          41.6237,
-          11.0997
-        ],
-        [
-          41.4714,
-          10.7614
-        ],
-        [
-          41.428,
-          10.9838
-        ],
-        [
-          41.2673,
-          10.8156
-        ],
-        [
-          41.3082,
-          11.0285
-        ],
-        [
-          41.4174,
-          11.0292
+          40.0803,
+          9.3726
         ]
       ],
       "predictive_vector": [
-        39.8706,
-        11.5649
+        39.9999,
+        10.3254
       ],
-      "eta_rome_min": 151,
-      "cep_km": 3.4
+      "eta_rome_min": 737,
+      "cep_km": 2.3
     },
     {
       "id": "TC_S17F",
       "centroid": [
-        41.4174,
-        11.0292
+        40.1932,
+        9.4144
       ],
-      "radius_km": 3.4,
-      "max_dbz": 53.2,
-      "echo_top_km": 11.6,
-      "vil": 0.0,
-      "rain_rate": 77.5,
-      "hail_probability": 84,
-      "flash_rate": "Elevato (79/m)",
-      "stage": "Matura",
-      "speed_kmh": 15.9,
-      "history_track": [
-        [
-          41.9287,
-          11.1527
-        ],
-        [
-          41.7445,
-          11.0899
-        ],
-        [
-          41.3492,
-          11.2633
-        ],
-        [
-          41.5977,
-          10.9398
-        ],
-        [
-          41.6698,
-          10.943
-        ],
-        [
-          41.7069,
-          11.1144
-        ],
-        [
-          41.6237,
-          11.0997
-        ],
-        [
-          41.4714,
-          10.7614
-        ],
-        [
-          41.428,
-          10.9838
-        ],
-        [
-          41.2673,
-          10.8156
-        ],
-        [
-          41.3082,
-          11.0285
-        ],
-        [
-          41.4174,
-          11.0292
-        ]
-      ],
-      "predictive_vector": [
-        41.2902,
-        11.574
-      ],
-      "eta_rome_min": 504,
-      "cep_km": 1.8
-    },
-    {
-      "id": "TC_S19F",
-      "centroid": [
-        41.5577,
-        8.0035
-      ],
-      "radius_km": 2.5,
-      "max_dbz": 52.1,
-      "echo_top_km": 11.4,
-      "vil": 0.0,
-      "rain_rate": 65.4,
-      "hail_probability": 75,
-      "flash_rate": "Elevato (67/m)",
-      "stage": "Matura",
-      "speed_kmh": 22.8,
-      "history_track": [
-        [
-          41.4477,
-          8.1132
-        ],
-        [
-          41.4984,
-          7.8395
-        ],
-        [
-          41.5058,
-          7.8672
-        ],
-        [
-          41.6065,
-          7.6469
-        ],
-        [
-          41.6065,
-          7.6469
-        ],
-        [
-          41.6433,
-          7.6853
-        ],
-        [
-          41.6682,
-          7.6642
-        ],
-        [
-          41.7427,
-          7.7448
-        ],
-        [
-          41.5641,
-          7.9356
-        ],
-        [
-          41.6629,
-          7.7689
-        ],
-        [
-          41.7035,
-          7.6078
-        ],
-        [
-          41.5577,
-          8.0035
-        ]
-      ],
-      "predictive_vector": [
-        41.4809,
-        8.8183
-      ],
-      "eta_rome_min": 988,
-      "cep_km": 2.1
-    },
-    {
-      "id": "TC_S22F",
-      "centroid": [
-        41.6219,
-        7.8228
-      ],
-      "radius_km": 2.6,
-      "max_dbz": 54.4,
-      "echo_top_km": 11.8,
-      "vil": 0.0,
-      "rain_rate": 91.7,
-      "hail_probability": 93,
-      "flash_rate": "Molto Alto (94/m)",
-      "stage": "Matura",
-      "speed_kmh": 25.6,
-      "history_track": [
-        [
-          41.4984,
-          7.8395
-        ],
-        [
-          41.5058,
-          7.8672
-        ],
-        [
-          41.6065,
-          7.6469
-        ],
-        [
-          41.6065,
-          7.6469
-        ],
-        [
-          41.6433,
-          7.6853
-        ],
-        [
-          41.6682,
-          7.6642
-        ],
-        [
-          41.7427,
-          7.7448
-        ],
-        [
-          41.5641,
-          7.9356
-        ],
-        [
-          41.6629,
-          7.7689
-        ],
-        [
-          41.7035,
-          7.6078
-        ],
-        [
-          41.6219,
-          7.8228
-        ],
-        [
-          41.6917,
-          7.7121
-        ]
-      ],
-      "predictive_vector": [
-        41.1299,
-        8.4696
-      ],
-      "eta_rome_min": 913,
-      "cep_km": 2.2
-    },
-    {
-      "id": "TC_S25F",
-      "centroid": [
-        41.6917,
-        7.7121
-      ],
-      "radius_km": 3.4,
-      "max_dbz": 35.3,
-      "echo_top_km": 8.4,
-      "vil": 0.0,
-      "rain_rate": 5.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (6/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 22.8,
-      "history_track": [
-        [
-          41.4984,
-          7.8395
-        ],
-        [
-          41.5058,
-          7.8672
-        ],
-        [
-          41.6065,
-          7.6469
-        ],
-        [
-          41.6065,
-          7.6469
-        ],
-        [
-          41.6433,
-          7.6853
-        ],
-        [
-          41.6682,
-          7.6642
-        ],
-        [
-          41.7427,
-          7.7448
-        ],
-        [
-          41.5641,
-          7.9356
-        ],
-        [
-          41.6629,
-          7.7689
-        ],
-        [
-          41.7035,
-          7.6078
-        ],
-        [
-          41.6219,
-          7.8228
-        ],
-        [
-          41.6917,
-          7.7121
-        ]
-      ],
-      "predictive_vector": [
-        42.0373,
-        7.0305
-      ],
-      "eta_rome_min": 1047,
-      "cep_km": 2.1
-    },
-    {
-      "id": "TC_S28F",
-      "centroid": [
-        41.8607,
-        7.4802
-      ],
-      "radius_km": 3.1,
+      "radius_km": 8.6,
       "max_dbz": 43.5,
       "echo_top_km": 9.8,
       "vil": 0.0,
@@ -637,20 +213,112 @@
       "hail_probability": 11,
       "flash_rate": "Moderato (19/m)",
       "stage": "Sviluppo",
-      "speed_kmh": 42.5,
+      "speed_kmh": 11.6,
       "history_track": [
         [
-          41.4376,
-          7.941
+          40.2132,
+          9.4365
         ],
         [
-          41.4477,
-          8.1132
+          40.1932,
+          9.4144
+        ]
+      ],
+      "predictive_vector": [
+        39.9532,
+        9.1492
+      ],
+      "eta_rome_min": 1673,
+      "cep_km": 1.7
+    },
+    {
+      "id": "TC_S22F",
+      "centroid": [
+        41.1723,
+        11.0548
+      ],
+      "radius_km": 2.0,
+      "max_dbz": 60.3,
+      "echo_top_km": 12.9,
+      "vil": 0.1,
+      "rain_rate": 213.9,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 61.1,
+      "history_track": [
+        [
+          41.7445,
+          11.0899
         ],
         [
-          41.4984,
-          7.8395
+          41.3492,
+          11.2633
         ],
+        [
+          41.5977,
+          10.9398
+        ],
+        [
+          41.6698,
+          10.943
+        ],
+        [
+          41.7069,
+          11.1144
+        ],
+        [
+          41.6237,
+          11.0997
+        ],
+        [
+          41.4714,
+          10.7614
+        ],
+        [
+          41.428,
+          10.9838
+        ],
+        [
+          41.2673,
+          10.8156
+        ],
+        [
+          41.3082,
+          11.0285
+        ],
+        [
+          41.4174,
+          11.0292
+        ],
+        [
+          41.1723,
+          11.0548
+        ]
+      ],
+      "predictive_vector": [
+        39.5415,
+        11.3704
+      ],
+      "eta_rome_min": 142,
+      "cep_km": 3.6
+    },
+    {
+      "id": "TC_S29F",
+      "centroid": [
+        41.6273,
+        7.861
+      ],
+      "radius_km": 3.3,
+      "max_dbz": 49.1,
+      "echo_top_km": 10.8,
+      "vil": 0.0,
+      "rain_rate": 42.8,
+      "hail_probability": 53,
+      "flash_rate": "Elevato (44/m)",
+      "stage": "Matura",
+      "speed_kmh": 12.9,
+      "history_track": [
         [
           41.5058,
           7.8672
@@ -676,180 +344,44 @@
           7.7448
         ],
         [
-          41.8091,
-          7.588
+          41.5641,
+          7.9356
         ],
         [
-          41.8607,
-          7.4802
+          41.6629,
+          7.7689
+        ],
+        [
+          41.7035,
+          7.6078
+        ],
+        [
+          41.6219,
+          7.8228
+        ],
+        [
+          41.6917,
+          7.7121
+        ],
+        [
+          41.6273,
+          7.861
         ]
       ],
       "predictive_vector": [
-        42.4799,
-        6.1866
+        41.6921,
+        8.3194
       ],
-      "eta_rome_min": 586,
-      "cep_km": 2.9
+      "eta_rome_min": 1797,
+      "cep_km": 1.7
     },
     {
-      "id": "TC_S35F",
+      "id": "TC_S31F",
       "centroid": [
-        41.9917,
-        7.0732
+        41.6266,
+        5.9615
       ],
-      "radius_km": 3.3,
-      "max_dbz": 54.4,
-      "echo_top_km": 11.8,
-      "vil": 0.0,
-      "rain_rate": 91.7,
-      "hail_probability": 93,
-      "flash_rate": "Molto Alto (94/m)",
-      "stage": "Matura",
-      "speed_kmh": 98.7,
-      "history_track": [
-        [
-          41.9782,
-          6.9562
-        ],
-        [
-          41.869,
-          7.3539
-        ],
-        [
-          41.9954,
-          6.9696
-        ],
-        [
-          42.0218,
-          6.823
-        ],
-        [
-          42.0684,
-          6.793
-        ],
-        [
-          41.9917,
-          7.0732
-        ],
-        [
-          42.1179,
-          6.665
-        ]
-      ],
-      "predictive_vector": [
-        41.0713,
-        10.4356
-      ],
-      "eta_rome_min": 272,
-      "cep_km": 5.1
-    },
-    {
-      "id": "TC_S36F",
-      "centroid": [
-        41.9972,
-        9.8842
-      ],
-      "radius_km": 2.6,
-      "max_dbz": 35.3,
-      "echo_top_km": 8.4,
-      "vil": 0.0,
-      "rain_rate": 5.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (6/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 207.3,
-      "history_track": [
-        [
-          42.5817,
-          10.5944
-        ],
-        [
-          42.4548,
-          10.5594
-        ],
-        [
-          42.3323,
-          10.3199
-        ],
-        [
-          42.2931,
-          10.4955
-        ],
-        [
-          42.4053,
-          10.4819
-        ],
-        [
-          41.9972,
-          9.8842
-        ]
-      ],
-      "predictive_vector": [
-        37.976,
-        4.6558
-      ],
-      "eta_rome_min": 62,
-      "cep_km": 9.5
-    },
-    {
-      "id": "TC_S45F",
-      "centroid": [
-        42.1179,
-        6.665
-      ],
-      "radius_km": 6.9,
-      "max_dbz": 55.6,
-      "echo_top_km": 12.0,
-      "vil": 0.1,
-      "rain_rate": 108.7,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (111/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 47.6,
-      "history_track": [
-        [
-          41.9782,
-          6.9562
-        ],
-        [
-          41.869,
-          7.3539
-        ],
-        [
-          41.9954,
-          6.9696
-        ],
-        [
-          42.0218,
-          6.823
-        ],
-        [
-          42.0684,
-          6.793
-        ],
-        [
-          41.9917,
-          7.0732
-        ],
-        [
-          42.1179,
-          6.665
-        ]
-      ],
-      "predictive_vector": [
-        42.7119,
-        5.129
-      ],
-      "eta_rome_min": 607,
-      "cep_km": 3.1
-    },
-    {
-      "id": "TC_S48F",
-      "centroid": [
-        41.9389,
-        5.8824
-      ],
-      "radius_km": 20.1,
+      "radius_km": 12.0,
       "max_dbz": 63.5,
       "echo_top_km": 13.4,
       "vil": 0.2,
@@ -857,24 +389,8 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (180/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 20.7,
+      "speed_kmh": 141.4,
       "history_track": [
-        [
-          41.9898,
-          5.748
-        ],
-        [
-          41.8617,
-          5.7621
-        ],
-        [
-          41.9225,
-          5.6358
-        ],
-        [
-          41.817,
-          5.7228
-        ],
         [
           41.9295,
           5.7526
@@ -906,22 +422,102 @@
         [
           41.9389,
           5.8824
+        ],
+        [
+          41.6266,
+          5.9615
+        ],
+        [
+          41.9121,
+          5.8674
+        ],
+        [
+          42.0225,
+          6.0392
+        ],
+        [
+          42.16,
+          5.7932
         ]
       ],
       "predictive_vector": [
-        41.3929,
-        5.724
+        37.879,
+        6.9107
       ],
-      "eta_rome_min": 1585,
-      "cep_km": 2.0
+      "eta_rome_min": 230,
+      "cep_km": 6.9
     },
     {
-      "id": "TC_S51F",
+      "id": "TC_S39F",
       "centroid": [
-        42.5662,
-        20.658
+        41.9802,
+        10.0107
       ],
-      "radius_km": 6.0,
+      "radius_km": 2.4,
+      "max_dbz": 55.6,
+      "echo_top_km": 12.0,
+      "vil": 0.1,
+      "rain_rate": 108.7,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (111/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 42.5,
+      "history_track": [
+        [
+          42.5817,
+          10.5944
+        ],
+        [
+          42.4548,
+          10.5594
+        ],
+        [
+          42.3323,
+          10.3199
+        ],
+        [
+          42.2931,
+          10.4955
+        ],
+        [
+          42.4053,
+          10.4819
+        ],
+        [
+          41.9972,
+          9.8842
+        ],
+        [
+          41.9802,
+          10.0107
+        ],
+        [
+          41.9873,
+          10.2758
+        ],
+        [
+          42.0282,
+          9.8551
+        ],
+        [
+          42.0933,
+          10.0876
+        ]
+      ],
+      "predictive_vector": [
+        41.7762,
+        11.5287
+      ],
+      "eta_rome_min": 290,
+      "cep_km": 2.9
+    },
+    {
+      "id": "TC_S40F",
+      "centroid": [
+        41.9121,
+        5.8674
+      ],
+      "radius_km": 6.2,
       "max_dbz": 63.5,
       "echo_top_km": 13.4,
       "vil": 0.2,
@@ -929,7 +525,471 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (180/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 24.3,
+      "speed_kmh": 12.9,
+      "history_track": [
+        [
+          41.9295,
+          5.7526
+        ],
+        [
+          41.8771,
+          5.8528
+        ],
+        [
+          41.9394,
+          5.9552
+        ],
+        [
+          41.9394,
+          5.9552
+        ],
+        [
+          42.007,
+          5.9048
+        ],
+        [
+          41.7684,
+          5.9518
+        ],
+        [
+          41.9844,
+          5.8956
+        ],
+        [
+          41.9389,
+          5.8824
+        ],
+        [
+          41.6266,
+          5.9615
+        ],
+        [
+          41.9121,
+          5.8674
+        ],
+        [
+          42.0225,
+          6.0392
+        ],
+        [
+          42.16,
+          5.7932
+        ]
+      ],
+      "predictive_vector": [
+        41.5905,
+        5.6874
+      ],
+      "eta_rome_min": 2551,
+      "cep_km": 1.7
+    },
+    {
+      "id": "TC_S41F",
+      "centroid": [
+        41.9873,
+        10.2758
+      ],
+      "radius_km": 2.1,
+      "max_dbz": 60.3,
+      "echo_top_km": 12.9,
+      "vil": 0.1,
+      "rain_rate": 213.9,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 129.5,
+      "history_track": [
+        [
+          42.5817,
+          10.5944
+        ],
+        [
+          42.4548,
+          10.5594
+        ],
+        [
+          42.3323,
+          10.3199
+        ],
+        [
+          42.2931,
+          10.4955
+        ],
+        [
+          42.4053,
+          10.4819
+        ],
+        [
+          41.9972,
+          9.8842
+        ],
+        [
+          41.9802,
+          10.0107
+        ],
+        [
+          41.9873,
+          10.2758
+        ],
+        [
+          42.0282,
+          9.8551
+        ],
+        [
+          42.0933,
+          10.0876
+        ]
+      ],
+      "predictive_vector": [
+        41.8685,
+        14.975
+      ],
+      "eta_rome_min": 85,
+      "cep_km": 6.4
+    },
+    {
+      "id": "TC_S44F",
+      "centroid": [
+        42.0225,
+        6.0392
+      ],
+      "radius_km": 2.0,
+      "max_dbz": 43.5,
+      "echo_top_km": 9.8,
+      "vil": 0.0,
+      "rain_rate": 19.2,
+      "hail_probability": 11,
+      "flash_rate": "Moderato (19/m)",
+      "stage": "Sviluppo",
+      "speed_kmh": 63.8,
+      "history_track": [
+        [
+          41.9295,
+          5.7526
+        ],
+        [
+          41.8771,
+          5.8528
+        ],
+        [
+          41.9394,
+          5.9552
+        ],
+        [
+          41.9394,
+          5.9552
+        ],
+        [
+          42.007,
+          5.9048
+        ],
+        [
+          41.7684,
+          5.9518
+        ],
+        [
+          41.9844,
+          5.8956
+        ],
+        [
+          41.9389,
+          5.8824
+        ],
+        [
+          41.6266,
+          5.9615
+        ],
+        [
+          41.9121,
+          5.8674
+        ],
+        [
+          42.0225,
+          6.0392
+        ],
+        [
+          42.16,
+          5.7932
+        ]
+      ],
+      "predictive_vector": [
+        43.0257,
+        7.9208
+      ],
+      "eta_rome_min": 501,
+      "cep_km": 3.8
+    },
+    {
+      "id": "TC_S45F",
+      "centroid": [
+        42.0282,
+        9.8551
+      ],
+      "radius_km": 2.9,
+      "max_dbz": 38.2,
+      "echo_top_km": 8.9,
+      "vil": 0.0,
+      "rain_rate": 8.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (9/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 16.8,
+      "history_track": [
+        [
+          42.5817,
+          10.5944
+        ],
+        [
+          42.4548,
+          10.5594
+        ],
+        [
+          42.3323,
+          10.3199
+        ],
+        [
+          42.2931,
+          10.4955
+        ],
+        [
+          42.4053,
+          10.4819
+        ],
+        [
+          41.9972,
+          9.8842
+        ],
+        [
+          41.9802,
+          10.0107
+        ],
+        [
+          41.9873,
+          10.2758
+        ],
+        [
+          42.0282,
+          9.8551
+        ],
+        [
+          42.0933,
+          10.0876
+        ]
+      ],
+      "predictive_vector": [
+        42.4002,
+        9.5059
+      ],
+      "eta_rome_min": 780,
+      "cep_km": 1.9
+    },
+    {
+      "id": "TC_S47F",
+      "centroid": [
+        42.069,
+        6.4514
+      ],
+      "radius_km": 2.9,
+      "max_dbz": 54.4,
+      "echo_top_km": 11.8,
+      "vil": 0.0,
+      "rain_rate": 91.7,
+      "hail_probability": 93,
+      "flash_rate": "Molto Alto (94/m)",
+      "stage": "Matura",
+      "speed_kmh": 73.8,
+      "history_track": [
+        [
+          41.9782,
+          6.9562
+        ],
+        [
+          41.869,
+          7.3539
+        ],
+        [
+          41.9954,
+          6.9696
+        ],
+        [
+          42.0218,
+          6.823
+        ],
+        [
+          42.0684,
+          6.793
+        ],
+        [
+          41.9917,
+          7.0732
+        ],
+        [
+          42.1179,
+          6.665
+        ],
+        [
+          42.069,
+          6.4514
+        ]
+      ],
+      "predictive_vector": [
+        41.4822,
+        3.8882
+      ],
+      "eta_rome_min": 405,
+      "cep_km": 4.2
+    },
+    {
+      "id": "TC_S49F",
+      "centroid": [
+        42.0933,
+        10.0876
+      ],
+      "radius_km": 2.3,
+      "max_dbz": 57.1,
+      "echo_top_km": 12.3,
+      "vil": 0.1,
+      "rain_rate": 134.3,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (137/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 79.6,
+      "history_track": [
+        [
+          42.5817,
+          10.5944
+        ],
+        [
+          42.4548,
+          10.5594
+        ],
+        [
+          42.3323,
+          10.3199
+        ],
+        [
+          42.2931,
+          10.4955
+        ],
+        [
+          42.4053,
+          10.4819
+        ],
+        [
+          41.9972,
+          9.8842
+        ],
+        [
+          41.9802,
+          10.0107
+        ],
+        [
+          41.9873,
+          10.2758
+        ],
+        [
+          42.0282,
+          9.8551
+        ],
+        [
+          42.0933,
+          10.0876
+        ]
+      ],
+      "predictive_vector": [
+        43.2465,
+        12.5284
+      ],
+      "eta_rome_min": 150,
+      "cep_km": 4.4
+    },
+    {
+      "id": "TC_S50F",
+      "centroid": [
+        42.16,
+        5.7932
+      ],
+      "radius_km": 8.7,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 102.6,
+      "history_track": [
+        [
+          41.9295,
+          5.7526
+        ],
+        [
+          41.8771,
+          5.8528
+        ],
+        [
+          41.9394,
+          5.9552
+        ],
+        [
+          41.9394,
+          5.9552
+        ],
+        [
+          42.007,
+          5.9048
+        ],
+        [
+          41.7684,
+          5.9518
+        ],
+        [
+          41.9844,
+          5.8956
+        ],
+        [
+          41.9389,
+          5.8824
+        ],
+        [
+          41.6266,
+          5.9615
+        ],
+        [
+          41.9121,
+          5.8674
+        ],
+        [
+          42.0225,
+          6.0392
+        ],
+        [
+          42.16,
+          5.7932
+        ]
+      ],
+      "predictive_vector": [
+        44.8132,
+        4.7228
+      ],
+      "eta_rome_min": 323,
+      "cep_km": 5.3
+    },
+    {
+      "id": "TC_S51F",
+      "centroid": [
+        42.5255,
+        20.6927
+      ],
+      "radius_km": 2.8,
+      "max_dbz": 56.8,
+      "echo_top_km": 12.2,
+      "vil": 0.1,
+      "rain_rate": 128.7,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (132/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 21.4,
       "history_track": [
         [
           42.6148,
@@ -942,35 +1002,35 @@
         [
           42.7389,
           20.5876
+        ],
+        [
+          42.5255,
+          20.6927
         ]
       ],
       "predictive_vector": [
-        41.983,
-        21.0612
+        42.0371,
+        21.1091
       ],
-      "eta_rome_min": 1660,
-      "cep_km": 2.2
+      "eta_rome_min": 1893,
+      "cep_km": 2.1
     },
     {
       "id": "TC_S56F",
       "centroid": [
-        42.6659,
-        6.5135
+        42.6614,
+        6.5037
       ],
-      "radius_km": 3.9,
-      "max_dbz": 38.2,
-      "echo_top_km": 8.9,
+      "radius_km": 4.3,
+      "max_dbz": 40.9,
+      "echo_top_km": 9.4,
       "vil": 0.0,
-      "rain_rate": 8.9,
+      "rain_rate": 13.1,
       "hail_probability": 0,
-      "flash_rate": "Moderato (9/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 40.7,
+      "flash_rate": "Moderato (13/m)",
+      "stage": "Sviluppo",
+      "speed_kmh": 3.8,
       "history_track": [
-        [
-          42.7682,
-          5.7447
-        ],
         [
           42.7157,
           5.7405
@@ -1010,30 +1070,110 @@
         [
           42.6659,
           6.5135
+        ],
+        [
+          42.6614,
+          6.5037
+        ],
+        [
+          42.6873,
+          6.2516
         ]
       ],
       "predictive_vector": [
-        42.9971,
-        7.9379
+        42.6074,
+        6.3861
       ],
-      "eta_rome_min": 731,
-      "cep_km": 2.8
+      "eta_rome_min": 2983,
+      "cep_km": 1.4
     },
     {
-      "id": "TC_S58F",
+      "id": "TC_S57F",
       "centroid": [
-        42.7389,
-        20.5876
+        42.6873,
+        6.2516
       ],
-      "radius_km": 3.7,
-      "max_dbz": 63.5,
-      "echo_top_km": 13.4,
-      "vil": 0.2,
-      "rain_rate": 340.8,
+      "radius_km": 2.0,
+      "max_dbz": 36.8,
+      "echo_top_km": 8.6,
+      "vil": 0.0,
+      "rain_rate": 7.2,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (7/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 86.2,
+      "history_track": [
+        [
+          42.7157,
+          5.7405
+        ],
+        [
+          42.7165,
+          5.7473
+        ],
+        [
+          42.532,
+          5.9971
+        ],
+        [
+          42.7494,
+          5.7324
+        ],
+        [
+          42.532,
+          5.9971
+        ],
+        [
+          42.6083,
+          6.4003
+        ],
+        [
+          42.6146,
+          6.1716
+        ],
+        [
+          42.6383,
+          6.3948
+        ],
+        [
+          42.9349,
+          6.6903
+        ],
+        [
+          42.6659,
+          6.5135
+        ],
+        [
+          42.6614,
+          6.5037
+        ],
+        [
+          42.6873,
+          6.2516
+        ]
+      ],
+      "predictive_vector": [
+        42.9441,
+        3.1088
+      ],
+      "eta_rome_min": 360,
+      "cep_km": 4.6
+    },
+    {
+      "id": "TC_S59F",
+      "centroid": [
+        42.7461,
+        20.5896
+      ],
+      "radius_km": 3.3,
+      "max_dbz": 56.8,
+      "echo_top_km": 12.2,
+      "vil": 0.1,
+      "rain_rate": 128.7,
       "hail_probability": 100,
-      "flash_rate": "Molto Alto (180/m)",
+      "flash_rate": "Molto Alto (132/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 56.5,
+      "speed_kmh": 3.3,
       "history_track": [
         [
           42.6148,
@@ -1046,39 +1186,35 @@
         [
           42.7389,
           20.5876
+        ],
+        [
+          42.7461,
+          20.5896
         ]
       ],
       "predictive_vector": [
-        44.2281,
-        20.146
+        42.8325,
+        20.6136
       ],
-      "eta_rome_min": 708,
-      "cep_km": 3.5
+      "eta_rome_min": 4005,
+      "cep_km": 1.3
     },
     {
-      "id": "TC_S63F",
+      "id": "TC_S65F",
       "centroid": [
-        42.8482,
-        6.4558
+        42.8452,
+        6.5401
       ],
-      "radius_km": 6.0,
-      "max_dbz": 46.5,
-      "echo_top_km": 10.4,
+      "radius_km": 3.9,
+      "max_dbz": 49.1,
+      "echo_top_km": 10.8,
       "vil": 0.0,
-      "rain_rate": 29.3,
-      "hail_probability": 33,
-      "flash_rate": "Elevato (30/m)",
-      "stage": "Sviluppo",
-      "speed_kmh": 85.6,
+      "rain_rate": 42.8,
+      "hail_probability": 53,
+      "flash_rate": "Elevato (44/m)",
+      "stage": "Matura",
+      "speed_kmh": 27.5,
       "history_track": [
-        [
-          42.7682,
-          5.7447
-        ],
-        [
-          42.7157,
-          5.7405
-        ],
         [
           42.7165,
           5.7473
@@ -1118,22 +1254,30 @@
         [
           42.9106,
           6.7092
+        ],
+        [
+          42.8452,
+          6.5401
+        ],
+        [
+          43.0015,
+          6.2708
         ]
       ],
       "predictive_vector": [
-        41.8078,
-        3.6418
+        42.8092,
+        7.5517
       ],
-      "eta_rome_min": 352,
-      "cep_km": 4.6
+      "eta_rome_min": 1083,
+      "cep_km": 2.3
     },
     {
-      "id": "TC_S68F",
+      "id": "TC_S70F",
       "centroid": [
-        42.9106,
-        6.7092
+        42.9214,
+        6.6884
       ],
-      "radius_km": 2.2,
+      "radius_km": 3.2,
       "max_dbz": 37.4,
       "echo_top_km": 8.7,
       "vil": 0.0,
@@ -1141,12 +1285,8 @@
       "hail_probability": 0,
       "flash_rate": "Moderato (8/m)",
       "stage": "Iniziazione",
-      "speed_kmh": 12.4,
+      "speed_kmh": 8.3,
       "history_track": [
-        [
-          42.7682,
-          5.7447
-        ],
         [
           42.7157,
           5.7405
@@ -1190,22 +1330,170 @@
         [
           42.9106,
           6.7092
+        ],
+        [
+          42.9214,
+          6.6884
         ]
       ],
       "predictive_vector": [
-        42.619,
-        6.936
+        43.051,
+        6.4388
       ],
-      "eta_rome_min": 2344,
-      "cep_km": 1.7
+      "eta_rome_min": 2917,
+      "cep_km": 1.5
     },
     {
-      "id": "TC_S71F",
+      "id": "TC_S75F",
       "centroid": [
-        42.8837,
-        5.7304
+        43.0303,
+        21.7603
       ],
-      "radius_km": 13.6,
+      "radius_km": 3.2,
+      "max_dbz": 53.2,
+      "echo_top_km": 11.6,
+      "vil": 0.0,
+      "rain_rate": 77.5,
+      "hail_probability": 84,
+      "flash_rate": "Elevato (79/m)",
+      "stage": "Matura",
+      "speed_kmh": 158.0,
+      "history_track": [
+        [
+          43.4197,
+          22.0512
+        ],
+        [
+          43.3767,
+          22.0422
+        ],
+        [
+          43.3767,
+          22.0422
+        ],
+        [
+          43.3542,
+          22.0122
+        ],
+        [
+          43.3603,
+          22.0268
+        ],
+        [
+          43.0075,
+          21.7805
+        ],
+        [
+          43.2145,
+          21.5192
+        ],
+        [
+          43.3912,
+          22.0349
+        ],
+        [
+          43.3494,
+          21.9741
+        ],
+        [
+          43.0303,
+          21.7603
+        ],
+        [
+          43.1786,
+          21.9243
+        ],
+        [
+          43.3922,
+          22.0608
+        ]
+      ],
+      "predictive_vector": [
+        39.2011,
+        19.1947
+      ],
+      "eta_rome_min": 289,
+      "cep_km": 7.5
+    },
+    {
+      "id": "TC_S76F",
+      "centroid": [
+        43.0015,
+        6.2708
+      ],
+      "radius_km": 2.4,
+      "max_dbz": 35.3,
+      "echo_top_km": 8.4,
+      "vil": 0.0,
+      "rain_rate": 5.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (6/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 90.9,
+      "history_track": [
+        [
+          42.7165,
+          5.7473
+        ],
+        [
+          42.532,
+          5.9971
+        ],
+        [
+          42.7494,
+          5.7324
+        ],
+        [
+          42.532,
+          5.9971
+        ],
+        [
+          42.6083,
+          6.4003
+        ],
+        [
+          42.6146,
+          6.1716
+        ],
+        [
+          42.6383,
+          6.3948
+        ],
+        [
+          42.9349,
+          6.6903
+        ],
+        [
+          42.8482,
+          6.4558
+        ],
+        [
+          42.9106,
+          6.7092
+        ],
+        [
+          42.8452,
+          6.5401
+        ],
+        [
+          43.0015,
+          6.2708
+        ]
+      ],
+      "predictive_vector": [
+        44.8411,
+        4.0508
+      ],
+      "eta_rome_min": 343,
+      "cep_km": 4.8
+    },
+    {
+      "id": "TC_S77F",
+      "centroid": [
+        42.9497,
+        5.6991
+      ],
+      "radius_km": 11.2,
       "max_dbz": 63.5,
       "echo_top_km": 13.4,
       "vil": 0.2,
@@ -1213,7 +1501,7 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (180/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 32.7,
+      "speed_kmh": 31.1,
       "history_track": [
         [
           42.7682,
@@ -1258,30 +1546,34 @@
         [
           42.8837,
           5.7304
+        ],
+        [
+          42.9497,
+          5.6991
         ]
       ],
       "predictive_vector": [
-        43.6877,
-        5.2336
+        43.7417,
+        5.3235
       ],
-      "eta_rome_min": 1031,
-      "cep_km": 2.5
+      "eta_rome_min": 1090,
+      "cep_km": 2.4
     },
     {
-      "id": "TC_S72F",
+      "id": "TC_S78F",
       "centroid": [
-        43.0959,
-        20.447
+        43.0033,
+        20.4976
       ],
-      "radius_km": 12.3,
-      "max_dbz": 63.5,
-      "echo_top_km": 13.4,
-      "vil": 0.2,
-      "rain_rate": 340.8,
+      "radius_km": 8.6,
+      "max_dbz": 55.6,
+      "echo_top_km": 12.0,
+      "vil": 0.1,
+      "rain_rate": 108.7,
       "hail_probability": 100,
-      "flash_rate": "Molto Alto (180/m)",
+      "flash_rate": "Molto Alto (111/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 71.4,
+      "speed_kmh": 44.4,
       "history_track": [
         [
           42.9426,
@@ -1290,22 +1582,30 @@
         [
           43.0959,
           20.447
+        ],
+        [
+          43.0033,
+          20.4976
+        ],
+        [
+          43.3445,
+          20.3594
         ]
       ],
       "predictive_vector": [
-        44.9355,
-        19.667
+        41.8921,
+        21.1048
       ],
-      "eta_rome_min": 553,
-      "cep_km": 4.1
+      "eta_rome_min": 894,
+      "cep_km": 3.0
     },
     {
-      "id": "TC_S73F",
+      "id": "TC_S79F",
       "centroid": [
-        43.4618,
-        21.5499
+        43.1786,
+        21.9243
       ],
-      "radius_km": 5.9,
+      "radius_km": 4.4,
       "max_dbz": 55.6,
       "echo_top_km": 12.0,
       "vil": 0.1,
@@ -1313,67 +1613,7 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (111/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 81.2,
-      "history_track": [
-        [
-          43.6654,
-          21.6329
-        ],
-        [
-          43.6139,
-          21.6662
-        ],
-        [
-          43.7854,
-          21.4017
-        ],
-        [
-          43.6139,
-          21.6662
-        ],
-        [
-          43.6209,
-          21.5864
-        ],
-        [
-          43.6954,
-          21.5342
-        ],
-        [
-          43.4034,
-          21.3115
-        ],
-        [
-          43.7045,
-          21.538
-        ],
-        [
-          43.4618,
-          21.5499
-        ]
-      ],
-      "predictive_vector": [
-        44.1626,
-        24.4107
-      ],
-      "eta_rome_min": 554,
-      "cep_km": 4.4
-    },
-    {
-      "id": "TC_S75F",
-      "centroid": [
-        43.3494,
-        21.9741
-      ],
-      "radius_km": 21.0,
-      "max_dbz": 63.5,
-      "echo_top_km": 13.4,
-      "vil": 0.2,
-      "rain_rate": 340.8,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (180/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 27.1,
+      "speed_kmh": 77.7,
       "history_track": [
         [
           43.4197,
@@ -1410,122 +1650,34 @@
         [
           43.3494,
           21.9741
+        ],
+        [
+          43.0303,
+          21.7603
+        ],
+        [
+          43.1786,
+          21.9243
+        ],
+        [
+          43.3922,
+          22.0608
         ]
       ],
       "predictive_vector": [
-        42.8478,
-        21.2445
+        41.129,
+        21.3267
       ],
-      "eta_rome_min": 1733,
-      "cep_km": 2.3
+      "eta_rome_min": 600,
+      "cep_km": 4.3
     },
     {
-      "id": "TC_S77F",
+      "id": "TC_S80F",
       "centroid": [
-        43.5903,
-        20.2423
+        43.3445,
+        20.3594
       ],
-      "radius_km": 3.1,
-      "max_dbz": 53.2,
-      "echo_top_km": 11.6,
-      "vil": 0.0,
-      "rain_rate": 77.5,
-      "hail_probability": 84,
-      "flash_rate": "Elevato (79/m)",
-      "stage": "Matura",
-      "speed_kmh": 7.3,
-      "history_track": [
-        [
-          43.5747,
-          20.2489
-        ],
-        [
-          43.5903,
-          20.2423
-        ],
-        [
-          43.7235,
-          20.2054
-        ]
-      ],
-      "predictive_vector": [
-        43.7775,
-        20.1631
-      ],
-      "eta_rome_min": 3908,
-      "cep_km": 1.5
-    },
-    {
-      "id": "TC_S78F",
-      "centroid": [
-        43.6869,
-        21.2276
-      ],
-      "radius_km": 4.0,
-      "max_dbz": 53.2,
-      "echo_top_km": 11.6,
-      "vil": 0.0,
-      "rain_rate": 77.5,
-      "hail_probability": 84,
-      "flash_rate": "Elevato (79/m)",
-      "stage": "Matura",
-      "speed_kmh": 100.1,
-      "history_track": [
-        [
-          43.6654,
-          21.6329
-        ],
-        [
-          43.6139,
-          21.6662
-        ],
-        [
-          43.7854,
-          21.4017
-        ],
-        [
-          43.6139,
-          21.6662
-        ],
-        [
-          43.6209,
-          21.5864
-        ],
-        [
-          43.6954,
-          21.5342
-        ],
-        [
-          43.4034,
-          21.3115
-        ],
-        [
-          43.7045,
-          21.538
-        ],
-        [
-          43.6869,
-          21.2276
-        ],
-        [
-          43.6948,
-          21.5358
-        ]
-      ],
-      "predictive_vector": [
-        43.4757,
-        17.5028
-      ],
-      "eta_rome_min": 437,
-      "cep_km": 5.2
-    },
-    {
-      "id": "TC_S79F",
-      "centroid": [
-        43.7235,
-        20.2054
-      ],
-      "radius_km": 2.5,
+      "radius_km": 2.7,
       "max_dbz": 54.4,
       "echo_top_km": 11.8,
       "vil": 0.0,
@@ -1533,43 +1685,147 @@
       "hail_probability": 93,
       "flash_rate": "Molto Alto (94/m)",
       "stage": "Matura",
-      "speed_kmh": 67.6,
+      "speed_kmh": 114.2,
       "history_track": [
         [
-          43.5747,
-          20.2489
+          42.9426,
+          20.512
         ],
         [
-          43.5903,
-          20.2423
+          43.0959,
+          20.447
         ],
         [
-          43.7235,
-          20.2054
+          43.0033,
+          20.4976
+        ],
+        [
+          43.3445,
+          20.3594
         ]
       ],
       "predictive_vector": [
-        45.5091,
-        19.6834
+        46.3277,
+        19.3082
       ],
-      "eta_rome_min": 578,
-      "cep_km": 3.9
+      "eta_rome_min": 344,
+      "cep_km": 5.8
     },
     {
-      "id": "TC_S80F",
+      "id": "TC_S81F",
       "centroid": [
-        43.6948,
-        21.5358
+        43.3922,
+        22.0608
       ],
-      "radius_km": 11.9,
-      "max_dbz": 63.5,
-      "echo_top_km": 13.4,
-      "vil": 0.2,
-      "rain_rate": 340.8,
+      "radius_km": 13.9,
+      "max_dbz": 54.4,
+      "echo_top_km": 11.8,
+      "vil": 0.0,
+      "rain_rate": 91.7,
+      "hail_probability": 93,
+      "flash_rate": "Molto Alto (94/m)",
+      "stage": "Matura",
+      "speed_kmh": 33.9,
+      "history_track": [
+        [
+          43.4197,
+          22.0512
+        ],
+        [
+          43.3767,
+          22.0422
+        ],
+        [
+          43.3767,
+          22.0422
+        ],
+        [
+          43.3542,
+          22.0122
+        ],
+        [
+          43.3603,
+          22.0268
+        ],
+        [
+          43.0075,
+          21.7805
+        ],
+        [
+          43.2145,
+          21.5192
+        ],
+        [
+          43.3912,
+          22.0349
+        ],
+        [
+          43.3494,
+          21.9741
+        ],
+        [
+          43.0303,
+          21.7603
+        ],
+        [
+          43.1786,
+          21.9243
+        ],
+        [
+          43.3922,
+          22.0608
+        ]
+      ],
+      "predictive_vector": [
+        43.9058,
+        23.1012
+      ],
+      "eta_rome_min": 1398,
+      "cep_km": 2.6
+    },
+    {
+      "id": "TC_S82F",
+      "centroid": [
+        43.7502,
+        7.4601
+      ],
+      "radius_km": 4.6,
+      "max_dbz": 56.8,
+      "echo_top_km": 12.2,
+      "vil": 0.1,
+      "rain_rate": 128.7,
       "hail_probability": 100,
-      "flash_rate": "Molto Alto (180/m)",
+      "flash_rate": "Molto Alto (132/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 4.4,
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          43.7502,
+          7.4601
+        ]
+      ],
+      "predictive_vector": [
+        43.7502,
+        7.4601
+      ],
+      "eta_rome_min": 972,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S83F",
+      "centroid": [
+        43.705,
+        21.5541
+      ],
+      "radius_km": 10.1,
+      "max_dbz": 55.6,
+      "echo_top_km": 12.0,
+      "vil": 0.1,
+      "rain_rate": 108.7,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (111/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 7.4,
       "history_track": [
         [
           43.6654,
@@ -1610,22 +1866,94 @@
         [
           43.6948,
           21.5358
+        ],
+        [
+          43.705,
+          21.5541
         ]
       ],
       "predictive_vector": [
-        43.5784,
-        21.5094
+        43.8274,
+        21.7737
       ],
-      "eta_rome_min": 4521,
-      "cep_km": 1.4
+      "eta_rome_min": 4531,
+      "cep_km": 1.5
     },
     {
-      "id": "TC_S81F",
+      "id": "TC_S85F",
       "centroid": [
-        44.15,
-        5.6984
+        43.911,
+        21.2052
       ],
-      "radius_km": 3.9,
+      "radius_km": 3.2,
+      "max_dbz": 57.1,
+      "echo_top_km": 12.3,
+      "vil": 0.1,
+      "rain_rate": 134.3,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (137/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 99.9,
+      "history_track": [
+        [
+          43.6654,
+          21.6329
+        ],
+        [
+          43.6139,
+          21.6662
+        ],
+        [
+          43.7854,
+          21.4017
+        ],
+        [
+          43.6139,
+          21.6662
+        ],
+        [
+          43.6209,
+          21.5864
+        ],
+        [
+          43.6954,
+          21.5342
+        ],
+        [
+          43.4034,
+          21.3115
+        ],
+        [
+          43.7045,
+          21.538
+        ],
+        [
+          43.6869,
+          21.2276
+        ],
+        [
+          43.6948,
+          21.5358
+        ],
+        [
+          43.911,
+          21.2052
+        ]
+      ],
+      "predictive_vector": [
+        46.6002,
+        20.9364
+      ],
+      "eta_rome_min": 439,
+      "cep_km": 5.2
+    },
+    {
+      "id": "TC_S86F",
+      "centroid": [
+        44.0269,
+        8.6465
+      ],
+      "radius_km": 3.1,
       "max_dbz": 63.5,
       "echo_top_km": 13.4,
       "vil": 0.2,
@@ -1633,67 +1961,27 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (180/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 48.2,
+      "speed_kmh": 28.0,
       "history_track": [
         [
-          43.8888,
-          5.7846
-        ],
-        [
-          43.9865,
-          5.774
-        ],
-        [
-          44.0184,
-          5.7794
-        ],
-        [
-          44.2285,
-          6.1478
-        ],
-        [
-          43.9909,
-          5.7911
-        ],
-        [
-          43.9909,
-          5.7911
-        ],
-        [
-          44.0531,
-          5.8073
-        ],
-        [
-          44.1273,
-          5.8091
-        ],
-        [
-          44.1943,
-          5.8362
-        ],
-        [
-          44.15,
-          5.6984
-        ],
-        [
-          44.3128,
-          5.7899
+          44.0269,
+          8.6465
         ]
       ],
       "predictive_vector": [
-        43.6184,
-        4.0448
+        44.0269,
+        8.6465
       ],
-      "eta_rome_min": 743,
-      "cep_km": 3.1
+      "eta_rome_min": 831,
+      "cep_km": 2.3
     },
     {
       "id": "TC_S87F",
       "centroid": [
-        44.3128,
-        5.7899
+        44.2448,
+        5.7212
       ],
-      "radius_km": 15.8,
+      "radius_km": 2.5,
       "max_dbz": 63.5,
       "echo_top_km": 13.4,
       "vil": 0.2,
@@ -1701,12 +1989,8 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (180/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 54.7,
+      "speed_kmh": 37.3,
       "history_track": [
-        [
-          43.8888,
-          5.7846
-        ],
         [
           43.9865,
           5.774
@@ -1746,50 +2030,398 @@
         [
           44.3128,
           5.7899
+        ],
+        [
+          44.2448,
+          5.7212
+        ],
+        [
+          44.3538,
+          5.786
         ]
       ],
       "predictive_vector": [
-        45.7348,
-        5.2343
+        43.4288,
+        4.8968
       ],
-      "eta_rome_min": 654,
-      "cep_km": 3.4
+      "eta_rome_min": 963,
+      "cep_km": 2.7
     },
     {
-      "id": "TC_S91F",
+      "id": "TC_S88F",
       "centroid": [
-        44.7245,
-        13.5899
+        44.3538,
+        5.786
       ],
-      "radius_km": 2.2,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
-      "vil": 0.0,
-      "rain_rate": 4.4,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
+      "radius_km": 11.2,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 18.3,
+      "history_track": [
+        [
+          43.9865,
+          5.774
+        ],
+        [
+          44.0184,
+          5.7794
+        ],
+        [
+          44.2285,
+          6.1478
+        ],
+        [
+          43.9909,
+          5.7911
+        ],
+        [
+          43.9909,
+          5.7911
+        ],
+        [
+          44.0531,
+          5.8073
+        ],
+        [
+          44.1273,
+          5.8091
+        ],
+        [
+          44.1943,
+          5.8362
+        ],
+        [
+          44.15,
+          5.6984
+        ],
+        [
+          44.3128,
+          5.7899
+        ],
+        [
+          44.2448,
+          5.7212
+        ],
+        [
+          44.3538,
+          5.786
+        ]
+      ],
+      "predictive_vector": [
+        44.8458,
+        5.7392
+      ],
+      "eta_rome_min": 1964,
+      "cep_km": 1.9
+    },
+    {
+      "id": "TC_S94F",
+      "centroid": [
+        44.4031,
+        8.7933
+      ],
+      "radius_km": 14.2,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
       "speed_kmh": 28.0,
       "history_track": [
         [
-          44.7245,
-          13.5899
+          44.4031,
+          8.7933
         ]
       ],
       "predictive_vector": [
-        44.7245,
-        13.5899
+        44.4031,
+        8.7933
       ],
-      "eta_rome_min": 697,
+      "eta_rome_min": 867,
       "cep_km": 2.3
     },
     {
-      "id": "TC_S92F",
+      "id": "TC_S95F",
       "centroid": [
-        44.8038,
-        5.645
+        44.345,
+        8.1988
       ],
-      "radius_km": 2.5,
+      "radius_km": 10.1,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          44.345,
+          8.1988
+        ]
+      ],
+      "predictive_vector": [
+        44.345,
+        8.1988
+      ],
+      "eta_rome_min": 935,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S96F",
+      "centroid": [
+        44.5999,
+        9.1905
+      ],
+      "radius_km": 6.4,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          44.5999,
+          9.1905
+        ]
+      ],
+      "predictive_vector": [
+        44.5999,
+        9.1905
+      ],
+      "eta_rome_min": 853,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S98F",
+      "centroid": [
+        44.7732,
+        6.9321
+      ],
+      "radius_km": 2.9,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          44.7732,
+          6.9321
+        ]
+      ],
+      "predictive_vector": [
+        44.7732,
+        6.9321
+      ],
+      "eta_rome_min": 1163,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S100F",
+      "centroid": [
+        44.8166,
+        5.6455
+      ],
+      "radius_km": 3.2,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 5.7,
+      "history_track": [
+        [
+          45.2232,
+          5.8584
+        ],
+        [
+          45.2934,
+          5.9062
+        ],
+        [
+          45.3117,
+          5.9123
+        ],
+        [
+          45.346,
+          5.9064
+        ],
+        [
+          45.346,
+          5.9064
+        ],
+        [
+          45.3923,
+          5.9331
+        ],
+        [
+          44.915,
+          5.6436
+        ],
+        [
+          45.4259,
+          5.9413
+        ],
+        [
+          44.924,
+          5.6633
+        ],
+        [
+          44.8038,
+          5.645
+        ],
+        [
+          45.0675,
+          5.6829
+        ],
+        [
+          44.8166,
+          5.6455
+        ]
+      ],
+      "predictive_vector": [
+        44.9702,
+        5.6515
+      ],
+      "eta_rome_min": 3780,
+      "cep_km": 1.4
+    },
+    {
+      "id": "TC_S101F",
+      "centroid": [
+        44.9255,
+        8.3828
+      ],
+      "radius_km": 4.1,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          44.9255,
+          8.3828
+        ]
+      ],
+      "predictive_vector": [
+        44.9255,
+        8.3828
+      ],
+      "eta_rome_min": 1000,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S102F",
+      "centroid": [
+        45.0039,
+        8.0642
+      ],
+      "radius_km": 2.8,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          45.0039,
+          8.0642
+        ]
+      ],
+      "predictive_vector": [
+        45.0039,
+        8.0642
+      ],
+      "eta_rome_min": 1050,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S103F",
+      "centroid": [
+        44.4666,
+        7.5969
+      ],
+      "radius_km": 37.6,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          44.4666,
+          7.5969
+        ]
+      ],
+      "predictive_vector": [
+        44.4666,
+        7.5969
+      ],
+      "eta_rome_min": 1033,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S104F",
+      "centroid": [
+        45.0848,
+        18.378
+      ],
+      "radius_km": 3.7,
+      "max_dbz": 53.2,
+      "echo_top_km": 11.6,
+      "vil": 0.0,
+      "rain_rate": 77.5,
+      "hail_probability": 84,
+      "flash_rate": "Elevato (79/m)",
+      "stage": "Matura",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          45.0848,
+          18.378
+        ]
+      ],
+      "predictive_vector": [
+        45.0848,
+        18.378
+      ],
+      "eta_rome_min": 1246,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S106F",
+      "centroid": [
+        45.1674,
+        7.8335
+      ],
+      "radius_km": 4.2,
       "max_dbz": 56.8,
       "echo_top_km": 12.2,
       "vil": 0.1,
@@ -1797,67 +2429,27 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (132/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 53.8,
+      "speed_kmh": 28.0,
       "history_track": [
         [
-          45.2232,
-          5.8584
-        ],
-        [
-          45.2934,
-          5.9062
-        ],
-        [
-          45.3117,
-          5.9123
-        ],
-        [
-          45.346,
-          5.9064
-        ],
-        [
-          45.346,
-          5.9064
-        ],
-        [
-          45.3923,
-          5.9331
-        ],
-        [
-          44.915,
-          5.6436
-        ],
-        [
-          45.4259,
-          5.9413
-        ],
-        [
-          44.924,
-          5.6633
-        ],
-        [
-          44.8038,
-          5.645
-        ],
-        [
-          45.0675,
-          5.6829
+          45.1674,
+          7.8335
         ]
       ],
       "predictive_vector": [
-        43.3614,
-        5.4254
+        45.1674,
+        7.8335
       ],
-      "eta_rome_min": 702,
-      "cep_km": 3.4
+      "eta_rome_min": 1103,
+      "cep_km": 2.3
     },
     {
-      "id": "TC_S94F",
+      "id": "TC_S108F",
       "centroid": [
-        45.0675,
-        5.6829
+        45.1474,
+        5.6888
       ],
-      "radius_km": 5.1,
+      "radius_km": 6.8,
       "max_dbz": 63.5,
       "echo_top_km": 13.4,
       "vil": 0.2,
@@ -1865,7 +2457,7 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (180/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 64.1,
+      "speed_kmh": 35.6,
       "history_track": [
         [
           45.2232,
@@ -1910,20 +2502,164 @@
         [
           45.0675,
           5.6829
+        ],
+        [
+          45.1474,
+          5.6888
         ]
       ],
       "predictive_vector": [
-        46.7895,
-        5.9181
+        46.1062,
+        5.7596
       ],
-      "eta_rome_min": 599,
-      "cep_km": 3.8
+      "eta_rome_min": 1086,
+      "cep_km": 2.6
     },
     {
-      "id": "TC_S97F",
+      "id": "TC_S109F",
       "centroid": [
-        45.2175,
-        21.9425
+        45.0751,
+        9.1143
+      ],
+      "radius_km": 11.5,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          45.0751,
+          9.1143
+        ]
+      ],
+      "predictive_vector": [
+        45.0751,
+        9.1143
+      ],
+      "eta_rome_min": 946,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S110F",
+      "centroid": [
+        45.0783,
+        8.5087
+      ],
+      "radius_km": 16.8,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          45.0783,
+          8.5087
+        ]
+      ],
+      "predictive_vector": [
+        45.0783,
+        8.5087
+      ],
+      "eta_rome_min": 1011,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S111F",
+      "centroid": [
+        45.3692,
+        9.0646
+      ],
+      "radius_km": 2.4,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          45.3692,
+          9.0646
+        ]
+      ],
+      "predictive_vector": [
+        45.3692,
+        9.0646
+      ],
+      "eta_rome_min": 1006,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S112F",
+      "centroid": [
+        45.3273,
+        8.8007
+      ],
+      "radius_km": 8.1,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          45.3273,
+          8.8007
+        ]
+      ],
+      "predictive_vector": [
+        45.3273,
+        8.8007
+      ],
+      "eta_rome_min": 1024,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S114F",
+      "centroid": [
+        45.4985,
+        8.76
+      ],
+      "radius_km": 3.1,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          45.4985,
+          8.76
+        ]
+      ],
+      "predictive_vector": [
+        45.4985,
+        8.76
+      ],
+      "eta_rome_min": 1059,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S115F",
+      "centroid": [
+        45.5509,
+        10.5439
       ],
       "radius_km": 2.6,
       "max_dbz": 63.5,
@@ -1933,71 +2669,27 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (180/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 6.4,
+      "speed_kmh": 28.0,
       "history_track": [
         [
-          45.1525,
-          22.2738
-        ],
-        [
-          45.1821,
-          22.3458
-        ],
-        [
-          45.1945,
-          22.4401
-        ],
-        [
-          45.1406,
-          22.3014
-        ],
-        [
-          45.1406,
-          22.3014
-        ],
-        [
-          45.1489,
-          22.3018
-        ],
-        [
-          45.1676,
-          22.4623
-        ],
-        [
-          45.1841,
-          22.3366
-        ],
-        [
-          45.2658,
-          22.0469
-        ],
-        [
-          45.2154,
-          21.9224
-        ],
-        [
-          45.2529,
-          22.0355
-        ],
-        [
-          45.2175,
-          21.9425
+          45.5509,
+          10.5439
         ]
       ],
       "predictive_vector": [
-        45.2427,
-        22.1837
+        45.5509,
+        10.5439
       ],
-      "eta_rome_min": 4959,
-      "cep_km": 1.5
+      "eta_rome_min": 928,
+      "cep_km": 2.3
     },
     {
-      "id": "TC_S98F",
+      "id": "TC_S116F",
       "centroid": [
-        45.1996,
-        22.0298
+        45.3569,
+        17.3559
       ],
-      "radius_km": 3.3,
+      "radius_km": 17.7,
       "max_dbz": 63.5,
       "echo_top_km": 13.4,
       "vil": 0.2,
@@ -2005,84 +2697,8 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (180/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 23.8,
+      "speed_kmh": 40.5,
       "history_track": [
-        [
-          45.1525,
-          22.2738
-        ],
-        [
-          45.1821,
-          22.3458
-        ],
-        [
-          45.1945,
-          22.4401
-        ],
-        [
-          45.1406,
-          22.3014
-        ],
-        [
-          45.1406,
-          22.3014
-        ],
-        [
-          45.1489,
-          22.3018
-        ],
-        [
-          45.1676,
-          22.4623
-        ],
-        [
-          45.1841,
-          22.3366
-        ],
-        [
-          45.2658,
-          22.0469
-        ],
-        [
-          45.2154,
-          21.9224
-        ],
-        [
-          45.2529,
-          22.0355
-        ],
-        [
-          45.1996,
-          22.0298
-        ]
-      ],
-      "predictive_vector": [
-        44.56,
-        21.9614
-      ],
-      "eta_rome_min": 2097,
-      "cep_km": 2.2
-    },
-    {
-      "id": "TC_S102F",
-      "centroid": [
-        45.322,
-        17.4757
-      ],
-      "radius_km": 17.9,
-      "max_dbz": 63.5,
-      "echo_top_km": 13.4,
-      "vil": 0.2,
-      "rain_rate": 340.8,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (180/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 22.4,
-      "history_track": [
-        [
-          45.4647,
-          16.954
-        ],
         [
           45.4102,
           17.252
@@ -2126,22 +2742,26 @@
         [
           45.322,
           17.4757
+        ],
+        [
+          45.3569,
+          17.3559
         ]
       ],
       "predictive_vector": [
-        45.3916,
-        16.6201
+        45.7757,
+        15.9183
       ],
-      "eta_rome_min": 1457,
-      "cep_km": 2.1
+      "eta_rome_min": 800,
+      "cep_km": 2.8
     },
     {
-      "id": "TC_S104F",
+      "id": "TC_S117F",
       "centroid": [
-        45.5921,
-        6.0046
+        45.5448,
+        6.3134
       ],
-      "radius_km": 19.2,
+      "radius_km": 10.8,
       "max_dbz": 63.5,
       "echo_top_km": 13.4,
       "vil": 0.2,
@@ -2149,16 +2769,8 @@
       "hail_probability": 100,
       "flash_rate": "Molto Alto (180/m)",
       "stage": "Severa / Supercella",
-      "speed_kmh": 45.9,
+      "speed_kmh": 98.5,
       "history_track": [
-        [
-          45.2232,
-          5.8584
-        ],
-        [
-          45.2934,
-          5.9062
-        ],
         [
           45.3117,
           5.9123
@@ -2194,35 +2806,215 @@
         [
           45.5921,
           6.0046
+        ],
+        [
+          45.5448,
+          6.3134
+        ],
+        [
+          45.6451,
+          5.953
+        ],
+        [
+          45.8616,
+          5.7924
         ]
       ],
       "predictive_vector": [
-        46.6553,
-        6.913
+        44.9772,
+        10.019
       ],
-      "eta_rome_min": 850,
-      "cep_km": 3.0
+      "eta_rome_min": 383,
+      "cep_km": 5.1
     },
     {
-      "id": "TC_S113F",
+      "id": "TC_S118F",
       "centroid": [
-        46.4159,
-        7.6341
+        45.6451,
+        5.953
       ],
-      "radius_km": 2.2,
-      "max_dbz": 34.1,
-      "echo_top_km": 8.1,
-      "vil": 0.0,
-      "rain_rate": 4.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 121.6,
+      "radius_km": 10.1,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.5,
       "history_track": [
         [
-          46.3801,
-          7.3694
+          45.3117,
+          5.9123
         ],
+        [
+          45.346,
+          5.9064
+        ],
+        [
+          45.346,
+          5.9064
+        ],
+        [
+          45.3923,
+          5.9331
+        ],
+        [
+          44.915,
+          5.6436
+        ],
+        [
+          45.4259,
+          5.9413
+        ],
+        [
+          45.1103,
+          6.145
+        ],
+        [
+          45.5035,
+          5.9289
+        ],
+        [
+          45.5921,
+          6.0046
+        ],
+        [
+          45.5448,
+          6.3134
+        ],
+        [
+          45.6451,
+          5.953
+        ],
+        [
+          45.8616,
+          5.7924
+        ]
+      ],
+      "predictive_vector": [
+        46.2811,
+        5.3338
+      ],
+      "eta_rome_min": 1383,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S119F",
+      "centroid": [
+        45.8616,
+        5.7924
+      ],
+      "radius_km": 5.8,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 136.7,
+      "history_track": [
+        [
+          45.3117,
+          5.9123
+        ],
+        [
+          45.346,
+          5.9064
+        ],
+        [
+          45.346,
+          5.9064
+        ],
+        [
+          45.3923,
+          5.9331
+        ],
+        [
+          44.915,
+          5.6436
+        ],
+        [
+          45.4259,
+          5.9413
+        ],
+        [
+          45.1103,
+          6.145
+        ],
+        [
+          45.5035,
+          5.9289
+        ],
+        [
+          45.5921,
+          6.0046
+        ],
+        [
+          45.5448,
+          6.3134
+        ],
+        [
+          45.6451,
+          5.953
+        ],
+        [
+          45.8616,
+          5.7924
+        ]
+      ],
+      "predictive_vector": [
+        49.0956,
+        3.246
+      ],
+      "eta_rome_min": 298,
+      "cep_km": 6.7
+    },
+    {
+      "id": "TC_S120F",
+      "centroid": [
+        45.998,
+        19.0394
+      ],
+      "radius_km": 3.5,
+      "max_dbz": 53.2,
+      "echo_top_km": 11.6,
+      "vil": 0.0,
+      "rain_rate": 77.5,
+      "hail_probability": 84,
+      "flash_rate": "Elevato (79/m)",
+      "stage": "Matura",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          45.998,
+          19.0394
+        ]
+      ],
+      "predictive_vector": [
+        45.998,
+        19.0394
+      ],
+      "eta_rome_min": 1457,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S134F",
+      "centroid": [
+        46.428,
+        7.1622
+      ],
+      "radius_km": 2.0,
+      "max_dbz": 33.2,
+      "echo_top_km": 8.0,
+      "vil": 0.0,
+      "rain_rate": 4.4,
+      "hail_probability": 0,
+      "flash_rate": "Basso (<5/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 49.9,
+      "history_track": [
         [
           46.4105,
           7.7115
@@ -2266,243 +3058,63 @@
         [
           46.5255,
           7.2424
+        ],
+        [
+          46.428,
+          7.1622
         ]
       ],
       "predictive_vector": [
-        45.3887,
-        12.1545
+        45.258,
+        6.1998
       ],
-      "eta_rome_min": 308,
-      "cep_km": 6.1
+      "eta_rome_min": 779,
+      "cep_km": 3.2
     },
     {
-      "id": "TC_S122F",
+      "id": "TC_S146F",
       "centroid": [
-        46.5255,
-        7.2424
+        46.4234,
+        18.7752
       ],
-      "radius_km": 2.2,
-      "max_dbz": 34.1,
-      "echo_top_km": 8.1,
-      "vil": 0.0,
-      "rain_rate": 4.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 11.6,
+      "radius_km": 9.3,
+      "max_dbz": 56.8,
+      "echo_top_km": 12.2,
+      "vil": 0.1,
+      "rain_rate": 128.7,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (132/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
       "history_track": [
         [
-          46.3801,
-          7.3694
-        ],
-        [
-          46.4105,
-          7.7115
-        ],
-        [
-          46.5414,
-          7.1828
-        ],
-        [
-          46.5298,
-          7.2166
-        ],
-        [
-          46.5131,
-          7.0313
-        ],
-        [
-          46.601,
-          7.0899
-        ],
-        [
-          46.5298,
-          7.2166
-        ],
-        [
-          46.5311,
-          7.2312
-        ],
-        [
-          46.5331,
-          7.2741
-        ],
-        [
-          46.5015,
-          7.2574
-        ],
-        [
-          46.4159,
-          7.6341
-        ],
-        [
-          46.5255,
-          7.2424
+          46.4234,
+          18.7752
         ]
       ],
       "predictive_vector": [
-        46.8135,
-        7.0624
+        46.4234,
+        18.7752
       ],
-      "eta_rome_min": 3375,
-      "cep_km": 1.7
+      "eta_rome_min": 1491,
+      "cep_km": 2.3
     },
     {
-      "id": "TC_S136F",
+      "id": "TC_S159F",
       "centroid": [
-        46.7634,
-        9.0632
+        46.7825,
+        9.1765
       ],
-      "radius_km": 5.0,
-      "max_dbz": 34.1,
-      "echo_top_km": 8.1,
+      "radius_km": 10.5,
+      "max_dbz": 49.1,
+      "echo_top_km": 10.8,
       "vil": 0.0,
-      "rain_rate": 4.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 4.9,
+      "rain_rate": 42.8,
+      "hail_probability": 53,
+      "flash_rate": "Elevato (44/m)",
+      "stage": "Matura",
+      "speed_kmh": 17.2,
       "history_track": [
-        [
-          46.7471,
-          9.2359
-        ],
-        [
-          46.7892,
-          9.1951
-        ],
-        [
-          46.7639,
-          9.1734
-        ],
-        [
-          46.741,
-          9.2326
-        ],
-        [
-          46.7873,
-          9.1698
-        ],
-        [
-          46.7873,
-          9.1698
-        ],
-        [
-          46.7174,
-          9.1076
-        ],
-        [
-          46.7895,
-          9.0751
-        ],
-        [
-          46.771,
-          9.05
-        ],
-        [
-          46.7667,
-          9.0478
-        ],
-        [
-          46.8276,
-          8.9876
-        ],
-        [
-          46.7634,
-          9.0632
-        ]
-      ],
-      "predictive_vector": [
-        46.7238,
-        9.248
-      ],
-      "eta_rome_min": 3602,
-      "cep_km": 1.4
-    },
-    {
-      "id": "TC_S141F",
-      "centroid": [
-        46.7513,
-        9.4211
-      ],
-      "radius_km": 8.4,
-      "max_dbz": 40.9,
-      "echo_top_km": 9.4,
-      "vil": 0.0,
-      "rain_rate": 13.1,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (13/m)",
-      "stage": "Sviluppo",
-      "speed_kmh": 31.0,
-      "history_track": [
-        [
-          46.7455,
-          9.3913
-        ],
-        [
-          46.7391,
-          9.4812
-        ],
-        [
-          46.7731,
-          9.4084
-        ],
-        [
-          46.7405,
-          9.3977
-        ],
-        [
-          46.7586,
-          9.4226
-        ],
-        [
-          46.7586,
-          9.4226
-        ],
-        [
-          46.7493,
-          9.4117
-        ],
-        [
-          46.7391,
-          9.4153
-        ],
-        [
-          46.8149,
-          9.4626
-        ],
-        [
-          46.7513,
-          9.4211
-        ]
-      ],
-      "predictive_vector": [
-        45.9881,
-        8.9231
-      ],
-      "eta_rome_min": 1137,
-      "cep_km": 2.4
-    },
-    {
-      "id": "TC_S143F",
-      "centroid": [
-        46.7488,
-        9.1488
-      ],
-      "radius_km": 4.8,
-      "max_dbz": 36.2,
-      "echo_top_km": 8.5,
-      "vil": 0.0,
-      "rain_rate": 6.7,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (6/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 25.1,
-      "history_track": [
-        [
-          46.7639,
-          9.1734
-        ],
         [
           46.741,
           9.2326
@@ -2546,232 +3158,52 @@
         [
           46.7488,
           9.1488
+        ],
+        [
+          46.7825,
+          9.1765
         ]
       ],
       "predictive_vector": [
-        47.2108,
-        9.8688
+        47.1869,
+        9.5089
       ],
-      "eta_rome_min": 1425,
-      "cep_km": 2.2
-    },
-    {
-      "id": "TC_S145F",
-      "centroid": [
-        46.7763,
-        9.2746
-      ],
-      "radius_km": 5.4,
-      "max_dbz": 46.5,
-      "echo_top_km": 10.4,
-      "vil": 0.0,
-      "rain_rate": 29.3,
-      "hail_probability": 33,
-      "flash_rate": "Elevato (30/m)",
-      "stage": "Sviluppo",
-      "speed_kmh": 16.5,
-      "history_track": [
-        [
-          46.7471,
-          9.2359
-        ],
-        [
-          46.7892,
-          9.1951
-        ],
-        [
-          46.7639,
-          9.1734
-        ],
-        [
-          46.741,
-          9.2326
-        ],
-        [
-          46.7873,
-          9.1698
-        ],
-        [
-          46.741,
-          9.2326
-        ],
-        [
-          46.7645,
-          9.264
-        ],
-        [
-          46.8046,
-          9.3183
-        ],
-        [
-          46.856,
-          9.25
-        ],
-        [
-          46.8083,
-          9.3018
-        ],
-        [
-          46.7763,
-          9.2746
-        ]
-      ],
-      "predictive_vector": [
-        46.3923,
-        8.9482
-      ],
-      "eta_rome_min": 2163,
+      "eta_rome_min": 2088,
       "cep_km": 1.9
-    },
-    {
-      "id": "TC_S149F",
-      "centroid": [
-        46.9051,
-        8.6677
-      ],
-      "radius_km": 2.0,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
-      "vil": 0.0,
-      "rain_rate": 4.4,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 64.5,
-      "history_track": [
-        [
-          46.9673,
-          8.8778
-        ],
-        [
-          46.9837,
-          8.8208
-        ],
-        [
-          46.9241,
-          8.921
-        ],
-        [
-          47.0502,
-          8.9849
-        ],
-        [
-          47.0592,
-          8.7913
-        ],
-        [
-          47.0592,
-          8.7913
-        ],
-        [
-          46.9069,
-          8.6585
-        ],
-        [
-          47.08,
-          8.7359
-        ],
-        [
-          47.0704,
-          8.7718
-        ],
-        [
-          47.0331,
-          8.7677
-        ],
-        [
-          46.9051,
-          8.6677
-        ],
-        [
-          47.0301,
-          8.7573
-        ]
-      ],
-      "predictive_vector": [
-        45.3691,
-        7.4677
-      ],
-      "eta_rome_min": 583,
-      "cep_km": 3.8
-    },
-    {
-      "id": "TC_S152F",
-      "centroid": [
-        46.8978,
-        8.9078
-      ],
-      "radius_km": 3.0,
-      "max_dbz": 38.2,
-      "echo_top_km": 8.9,
-      "vil": 0.0,
-      "rain_rate": 8.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (9/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 39.5,
-      "history_track": [
-        [
-          46.7471,
-          9.2359
-        ],
-        [
-          46.7892,
-          9.1951
-        ],
-        [
-          46.7639,
-          9.1734
-        ],
-        [
-          46.741,
-          9.2326
-        ],
-        [
-          46.7873,
-          9.1698
-        ],
-        [
-          46.7873,
-          9.1698
-        ],
-        [
-          46.7174,
-          9.1076
-        ],
-        [
-          46.7895,
-          9.0751
-        ],
-        [
-          46.771,
-          9.05
-        ],
-        [
-          46.7667,
-          9.0478
-        ],
-        [
-          46.8276,
-          8.9876
-        ],
-        [
-          46.8978,
-          8.9078
-        ]
-      ],
-      "predictive_vector": [
-        47.7402,
-        7.9502
-      ],
-      "eta_rome_min": 939,
-      "cep_km": 2.8
     },
     {
       "id": "TC_S163F",
       "centroid": [
-        46.9749,
-        9.4232
+        46.8466,
+        18.4987
+      ],
+      "radius_km": 7.0,
+      "max_dbz": 63.5,
+      "echo_top_km": 13.4,
+      "vil": 0.2,
+      "rain_rate": 340.8,
+      "hail_probability": 100,
+      "flash_rate": "Molto Alto (180/m)",
+      "stage": "Severa / Supercella",
+      "speed_kmh": 28.0,
+      "history_track": [
+        [
+          46.8466,
+          18.4987
+        ]
+      ],
+      "predictive_vector": [
+        46.8466,
+        18.4987
+      ],
+      "eta_rome_min": 1531,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S165F",
+      "centroid": [
+        46.9081,
+        8.6676
       ],
       "radius_km": 2.2,
       "max_dbz": 33.2,
@@ -2781,288 +3213,8 @@
       "hail_probability": 0,
       "flash_rate": "Basso (<5/m)",
       "stage": "Iniziazione",
-      "speed_kmh": 27.0,
+      "speed_kmh": 1.3,
       "history_track": [
-        [
-          47.054,
-          9.4326
-        ],
-        [
-          47.1145,
-          9.5339
-        ],
-        [
-          47.3115,
-          9.8462
-        ],
-        [
-          47.2684,
-          9.342
-        ],
-        [
-          47.0474,
-          9.6669
-        ],
-        [
-          47.0474,
-          9.6669
-        ],
-        [
-          46.9537,
-          9.6273
-        ],
-        [
-          46.9118,
-          9.5837
-        ],
-        [
-          47.025,
-          9.4735
-        ],
-        [
-          46.9749,
-          9.4232
-        ],
-        [
-          46.9757,
-          9.6172
-        ],
-        [
-          47.0548,
-          9.402
-        ]
-      ],
-      "predictive_vector": [
-        46.3737,
-        8.8196
-      ],
-      "eta_rome_min": 1356,
-      "cep_km": 2.3
-    },
-    {
-      "id": "TC_S167F",
-      "centroid": [
-        46.97,
-        9.0733
-      ],
-      "radius_km": 2.1,
-      "max_dbz": 32.6,
-      "echo_top_km": 7.9,
-      "vil": 0.0,
-      "rain_rate": 4.0,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 14.6,
-      "history_track": [
-        [
-          46.8849,
-          9.0687
-        ],
-        [
-          46.8777,
-          9.0346
-        ],
-        [
-          46.9107,
-          9.0857
-        ],
-        [
-          46.9402,
-          9.1232
-        ],
-        [
-          46.9402,
-          9.1232
-        ],
-        [
-          46.9397,
-          9.122
-        ],
-        [
-          46.9202,
-          9.0961
-        ],
-        [
-          46.9502,
-          9.1115
-        ],
-        [
-          46.97,
-          9.0733
-        ]
-      ],
-      "predictive_vector": [
-        47.2076,
-        8.6149
-      ],
-      "eta_rome_min": 2549,
-      "cep_km": 1.8
-    },
-    {
-      "id": "TC_S169F",
-      "centroid": [
-        46.9757,
-        9.6172
-      ],
-      "radius_km": 2.4,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
-      "vil": 0.0,
-      "rain_rate": 4.4,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 48.8,
-      "history_track": [
-        [
-          47.054,
-          9.4326
-        ],
-        [
-          47.1145,
-          9.5339
-        ],
-        [
-          47.3115,
-          9.8462
-        ],
-        [
-          47.2684,
-          9.342
-        ],
-        [
-          47.0474,
-          9.6669
-        ],
-        [
-          47.0474,
-          9.6669
-        ],
-        [
-          46.9537,
-          9.6273
-        ],
-        [
-          46.9118,
-          9.5837
-        ],
-        [
-          47.025,
-          9.4735
-        ],
-        [
-          46.9749,
-          9.4232
-        ],
-        [
-          46.9757,
-          9.6172
-        ],
-        [
-          47.0548,
-          9.402
-        ]
-      ],
-      "predictive_vector": [
-        46.3841,
-        11.3416
-      ],
-      "eta_rome_min": 743,
-      "cep_km": 3.2
-    },
-    {
-      "id": "TC_S174F",
-      "centroid": [
-        47.0548,
-        9.402
-      ],
-      "radius_km": 2.1,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
-      "vil": 0.0,
-      "rain_rate": 4.4,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 25.4,
-      "history_track": [
-        [
-          47.054,
-          9.4326
-        ],
-        [
-          47.1145,
-          9.5339
-        ],
-        [
-          47.3115,
-          9.8462
-        ],
-        [
-          47.2684,
-          9.342
-        ],
-        [
-          47.0474,
-          9.6669
-        ],
-        [
-          47.0474,
-          9.6669
-        ],
-        [
-          46.9537,
-          9.6273
-        ],
-        [
-          46.9118,
-          9.5837
-        ],
-        [
-          47.025,
-          9.4735
-        ],
-        [
-          46.9749,
-          9.4232
-        ],
-        [
-          46.9757,
-          9.6172
-        ],
-        [
-          47.0548,
-          9.402
-        ]
-      ],
-      "predictive_vector": [
-        47.4124,
-        8.544
-      ],
-      "eta_rome_min": 1462,
-      "cep_km": 2.2
-    },
-    {
-      "id": "TC_S175F",
-      "centroid": [
-        47.0301,
-        8.7573
-      ],
-      "radius_km": 3.6,
-      "max_dbz": 36.8,
-      "echo_top_km": 8.6,
-      "vil": 0.0,
-      "rain_rate": 7.2,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (7/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 3.4,
-      "history_track": [
-        [
-          46.9673,
-          8.8778
-        ],
         [
           46.9837,
           8.8208
@@ -3106,43 +3258,175 @@
         [
           47.0301,
           8.7573
+        ],
+        [
+          46.9081,
+          8.6676
         ]
       ],
       "predictive_vector": [
-        46.9941,
-        8.6325
+        46.9441,
+        8.6664
       ],
-      "eta_rome_min": 3820,
+      "eta_rome_min": 3768,
       "cep_km": 1.3
+    },
+    {
+      "id": "TC_S169F",
+      "centroid": [
+        46.9586,
+        9.4492
+      ],
+      "radius_km": 2.7,
+      "max_dbz": 35.3,
+      "echo_top_km": 8.4,
+      "vil": 0.0,
+      "rain_rate": 5.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (6/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 10.7,
+      "history_track": [
+        [
+          47.1145,
+          9.5339
+        ],
+        [
+          47.3115,
+          9.8462
+        ],
+        [
+          47.2684,
+          9.342
+        ],
+        [
+          47.0474,
+          9.6669
+        ],
+        [
+          47.0474,
+          9.6669
+        ],
+        [
+          46.9537,
+          9.6273
+        ],
+        [
+          46.9118,
+          9.5837
+        ],
+        [
+          47.025,
+          9.4735
+        ],
+        [
+          46.9749,
+          9.4232
+        ],
+        [
+          46.9757,
+          9.6172
+        ],
+        [
+          47.0548,
+          9.402
+        ],
+        [
+          46.9586,
+          9.4492
+        ]
+      ],
+      "predictive_vector": [
+        46.763,
+        9.7612
+      ],
+      "eta_rome_min": 3408,
+      "cep_km": 1.6
     },
     {
       "id": "TC_S178F",
       "centroid": [
-        46.9827,
-        8.9146
+        46.7772,
+        9.4453
       ],
-      "radius_km": 5.7,
-      "max_dbz": 38.2,
-      "echo_top_km": 8.9,
+      "radius_km": 9.0,
+      "max_dbz": 43.5,
+      "echo_top_km": 9.8,
       "vil": 0.0,
-      "rain_rate": 8.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (9/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 28.6,
+      "rain_rate": 19.2,
+      "hail_probability": 11,
+      "flash_rate": "Moderato (19/m)",
+      "stage": "Sviluppo",
+      "speed_kmh": 13.7,
       "history_track": [
         [
-          46.9415,
-          8.9314
+          46.7455,
+          9.3913
         ],
         [
-          46.9673,
-          8.8778
+          46.7391,
+          9.4812
         ],
         [
-          46.9837,
-          8.8208
+          46.7731,
+          9.4084
         ],
+        [
+          46.7405,
+          9.3977
+        ],
+        [
+          46.7586,
+          9.4226
+        ],
+        [
+          46.7586,
+          9.4226
+        ],
+        [
+          46.7493,
+          9.4117
+        ],
+        [
+          46.7391,
+          9.4153
+        ],
+        [
+          46.8149,
+          9.4626
+        ],
+        [
+          46.7513,
+          9.4211
+        ],
+        [
+          46.7772,
+          9.4453
+        ]
+      ],
+      "predictive_vector": [
+        47.088,
+        9.7357
+      ],
+      "eta_rome_min": 2582,
+      "cep_km": 1.7
+    },
+    {
+      "id": "TC_S181F",
+      "centroid": [
+        46.9425,
+        8.9715
+      ],
+      "radius_km": 4.1,
+      "max_dbz": 40.9,
+      "echo_top_km": 9.4,
+      "vil": 0.0,
+      "rain_rate": 13.1,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (13/m)",
+      "stage": "Sviluppo",
+      "speed_kmh": 24.9,
+      "history_track": [
         [
           46.9241,
           8.921
@@ -3178,22 +3462,106 @@
         [
           46.9827,
           8.9146
+        ],
+        [
+          46.9425,
+          8.9715
+        ],
+        [
+          46.9708,
+          8.9162
+        ],
+        [
+          47.0067,
+          8.8971
         ]
       ],
       "predictive_vector": [
-        46.8627,
-        7.7986
+        46.4601,
+        9.6543
       ],
-      "eta_rome_min": 1315,
-      "cep_km": 2.3
+      "eta_rome_min": 1496,
+      "cep_km": 2.2
     },
     {
-      "id": "TC_S180F",
+      "id": "TC_S192F",
       "centroid": [
-        47.0827,
-        10.2568
+        46.9708,
+        8.9162
       ],
-      "radius_km": 2.1,
+      "radius_km": 2.9,
+      "max_dbz": 36.8,
+      "echo_top_km": 8.6,
+      "vil": 0.0,
+      "rain_rate": 7.2,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (7/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 5.3,
+      "history_track": [
+        [
+          46.9241,
+          8.921
+        ],
+        [
+          47.0502,
+          8.9849
+        ],
+        [
+          46.9947,
+          8.9656
+        ],
+        [
+          46.9947,
+          8.9656
+        ],
+        [
+          46.9464,
+          8.9816
+        ],
+        [
+          46.9896,
+          8.8905
+        ],
+        [
+          46.9689,
+          8.9619
+        ],
+        [
+          46.9927,
+          9.0076
+        ],
+        [
+          46.9827,
+          8.9146
+        ],
+        [
+          46.9425,
+          8.9715
+        ],
+        [
+          46.9708,
+          8.9162
+        ],
+        [
+          47.0067,
+          8.8971
+        ]
+      ],
+      "predictive_vector": [
+        46.828,
+        8.9354
+      ],
+      "eta_rome_min": 3753,
+      "cep_km": 1.4
+    },
+    {
+      "id": "TC_S193F",
+      "centroid": [
+        47.0539,
+        8.7396
+      ],
+      "radius_km": 2.6,
       "max_dbz": 33.2,
       "echo_top_km": 8.0,
       "vil": 0.0,
@@ -3201,76 +3569,224 @@
       "hail_probability": 0,
       "flash_rate": "Basso (<5/m)",
       "stage": "Iniziazione",
-      "speed_kmh": 4.9,
+      "speed_kmh": 11.9,
       "history_track": [
         [
-          47.3986,
-          10.8311
+          46.9837,
+          8.8208
         ],
         [
-          47.4215,
-          10.8605
+          46.9241,
+          8.921
         ],
         [
-          47.0982,
-          10.2931
+          47.0502,
+          8.9849
         ],
         [
-          47.4185,
-          10.8517
+          47.0592,
+          8.7913
         ],
         [
-          47.0919,
-          10.2631
+          47.0592,
+          8.7913
         ],
         [
-          47.0919,
-          10.2631
+          46.9069,
+          8.6585
         ],
         [
-          47.1045,
-          10.2377
+          47.08,
+          8.7359
         ],
         [
-          47.0934,
-          10.2906
+          47.0704,
+          8.7718
         ],
         [
-          47.0912,
-          10.267
+          47.0331,
+          8.7677
         ],
         [
-          47.0827,
-          10.2568
+          46.9051,
+          8.6677
+        ],
+        [
+          47.0301,
+          8.7573
+        ],
+        [
+          47.0539,
+          8.7396
         ]
       ],
       "predictive_vector": [
-        46.9807,
-        10.1344
+        47.3395,
+        8.5272
       ],
-      "eta_rome_min": 3602,
-      "cep_km": 1.4
+      "eta_rome_min": 3224,
+      "cep_km": 1.7
     },
     {
-      "id": "TC_S203F",
+      "id": "TC_S196F",
       "centroid": [
-        47.1648,
-        8.7609
+        47.0067,
+        8.8971
       ],
-      "radius_km": 4.5,
-      "max_dbz": 52.1,
-      "echo_top_km": 11.4,
+      "radius_km": 3.1,
+      "max_dbz": 36.8,
+      "echo_top_km": 8.6,
       "vil": 0.0,
-      "rain_rate": 65.4,
-      "hail_probability": 75,
-      "flash_rate": "Elevato (67/m)",
-      "stage": "Matura",
-      "speed_kmh": 5.3,
+      "rain_rate": 7.2,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (7/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 11.9,
       "history_track": [
         [
-          47.143,
-          8.271
+          46.9241,
+          8.921
         ],
+        [
+          47.0502,
+          8.9849
+        ],
+        [
+          46.9947,
+          8.9656
+        ],
+        [
+          46.9947,
+          8.9656
+        ],
+        [
+          46.9464,
+          8.9816
+        ],
+        [
+          46.9896,
+          8.8905
+        ],
+        [
+          46.9689,
+          8.9619
+        ],
+        [
+          46.9927,
+          9.0076
+        ],
+        [
+          46.9827,
+          8.9146
+        ],
+        [
+          46.9425,
+          8.9715
+        ],
+        [
+          46.9708,
+          8.9162
+        ],
+        [
+          47.0067,
+          8.8971
+        ]
+      ],
+      "predictive_vector": [
+        47.2947,
+        8.6871
+      ],
+      "eta_rome_min": 3175,
+      "cep_km": 1.7
+    },
+    {
+      "id": "TC_S207F",
+      "centroid": [
+        47.1118,
+        9.7994
+      ],
+      "radius_km": 2.6,
+      "max_dbz": 34.1,
+      "echo_top_km": 8.1,
+      "vil": 0.0,
+      "rain_rate": 4.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (5/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 81.9,
+      "history_track": [
+        [
+          47.1145,
+          9.5339
+        ],
+        [
+          47.3115,
+          9.8462
+        ],
+        [
+          47.2684,
+          9.342
+        ],
+        [
+          47.0474,
+          9.6669
+        ],
+        [
+          47.0474,
+          9.6669
+        ],
+        [
+          46.9537,
+          9.6273
+        ],
+        [
+          46.9118,
+          9.5837
+        ],
+        [
+          47.025,
+          9.4735
+        ],
+        [
+          46.9749,
+          9.4232
+        ],
+        [
+          46.9757,
+          9.6172
+        ],
+        [
+          47.0548,
+          9.402
+        ],
+        [
+          47.1118,
+          9.7994
+        ]
+      ],
+      "predictive_vector": [
+        48.745,
+        11.9858
+      ],
+      "eta_rome_min": 449,
+      "cep_km": 4.5
+    },
+    {
+      "id": "TC_S243F",
+      "centroid": [
+        47.2389,
+        8.7191
+      ],
+      "radius_km": 2.7,
+      "max_dbz": 36.2,
+      "echo_top_km": 8.5,
+      "vil": 0.0,
+      "rain_rate": 6.7,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (6/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 35.3,
+      "history_track": [
         [
           47.277,
           8.7039
@@ -3314,162 +3830,26 @@
         [
           47.1648,
           8.7609
+        ],
+        [
+          47.2389,
+          8.7191
         ]
       ],
       "predictive_vector": [
-        47.1492,
-        8.9709
+        48.1281,
+        8.2175
       ],
-      "eta_rome_min": 3898,
-      "cep_km": 1.4
+      "eta_rome_min": 1119,
+      "cep_km": 2.6
     },
     {
-      "id": "TC_S207F",
+      "id": "TC_S262F",
       "centroid": [
-        47.2114,
-        8.5701
+        47.2941,
+        9.7821
       ],
-      "radius_km": 2.7,
-      "max_dbz": 40.9,
-      "echo_top_km": 9.4,
-      "vil": 0.0,
-      "rain_rate": 13.1,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (13/m)",
-      "stage": "Sviluppo",
-      "speed_kmh": 30.6,
-      "history_track": [
-        [
-          47.143,
-          8.271
-        ],
-        [
-          47.277,
-          8.7039
-        ],
-        [
-          47.2496,
-          8.7068
-        ],
-        [
-          47.1931,
-          8.7537
-        ],
-        [
-          47.2219,
-          8.6736
-        ],
-        [
-          47.2862,
-          8.5381
-        ],
-        [
-          47.2219,
-          8.6736
-        ],
-        [
-          47.1551,
-          8.5879
-        ],
-        [
-          47.1698,
-          8.7152
-        ],
-        [
-          47.1661,
-          8.7434
-        ],
-        [
-          47.1655,
-          8.6454
-        ],
-        [
-          47.2114,
-          8.5701
-        ]
-      ],
-      "predictive_vector": [
-        47.7622,
-        7.6665
-      ],
-      "eta_rome_min": 1295,
-      "cep_km": 2.4
-    },
-    {
-      "id": "TC_S228F",
-      "centroid": [
-        47.2974,
-        10.7702
-      ],
-      "radius_km": 2.1,
-      "max_dbz": 32.6,
-      "echo_top_km": 7.9,
-      "vil": 0.0,
-      "rain_rate": 4.0,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 82.5,
-      "history_track": [
-        [
-          47.3986,
-          10.8311
-        ],
-        [
-          47.4215,
-          10.8605
-        ],
-        [
-          47.0982,
-          10.2931
-        ],
-        [
-          47.4185,
-          10.8517
-        ],
-        [
-          47.4025,
-          10.8475
-        ],
-        [
-          47.4025,
-          10.8475
-        ],
-        [
-          47.4194,
-          10.8541
-        ],
-        [
-          47.4121,
-          10.8291
-        ],
-        [
-          47.4613,
-          10.8985
-        ],
-        [
-          47.2974,
-          10.7702
-        ],
-        [
-          47.3487,
-          10.7121
-        ]
-      ],
-      "predictive_vector": [
-        45.3306,
-        9.2306
-      ],
-      "eta_rome_min": 446,
-      "cep_km": 4.5
-    },
-    {
-      "id": "TC_S235F",
-      "centroid": [
-        47.2868,
-        9.1136
-      ],
-      "radius_km": 2.0,
+      "radius_km": 2.5,
       "max_dbz": 34.1,
       "echo_top_km": 8.1,
       "vil": 0.0,
@@ -3477,152 +3857,8 @@
       "hail_probability": 0,
       "flash_rate": "Moderato (5/m)",
       "stage": "Iniziazione",
-      "speed_kmh": 48.6,
+      "speed_kmh": 38.0,
       "history_track": [
-        [
-          47.2684,
-          9.342
-        ],
-        [
-          47.2613,
-          9.3551
-        ],
-        [
-          47.3075,
-          9.5548
-        ],
-        [
-          47.5121,
-          9.3574
-        ],
-        [
-          47.2613,
-          9.3551
-        ],
-        [
-          47.2179,
-          9.0926
-        ],
-        [
-          47.2824,
-          9.3835
-        ],
-        [
-          47.3145,
-          9.3225
-        ],
-        [
-          47.2628,
-          9.343
-        ],
-        [
-          47.2164,
-          9.2366
-        ],
-        [
-          47.2576,
-          9.3595
-        ],
-        [
-          47.2868,
-          9.1136
-        ]
-      ],
-      "predictive_vector": [
-        48.1316,
-        7.6376
-      ],
-      "eta_rome_min": 803,
-      "cep_km": 3.1
-    },
-    {
-      "id": "TC_S255F",
-      "centroid": [
-        47.3487,
-        10.7121
-      ],
-      "radius_km": 3.1,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
-      "vil": 0.0,
-      "rain_rate": 4.4,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 75.3,
-      "history_track": [
-        [
-          47.3986,
-          10.8311
-        ],
-        [
-          47.4215,
-          10.8605
-        ],
-        [
-          47.0982,
-          10.2931
-        ],
-        [
-          47.4185,
-          10.8517
-        ],
-        [
-          47.4025,
-          10.8475
-        ],
-        [
-          47.4025,
-          10.8475
-        ],
-        [
-          47.4194,
-          10.8541
-        ],
-        [
-          47.4121,
-          10.8291
-        ],
-        [
-          47.4613,
-          10.8985
-        ],
-        [
-          47.2974,
-          10.7702
-        ],
-        [
-          47.3487,
-          10.7121
-        ]
-      ],
-      "predictive_vector": [
-        45.9975,
-        8.4753
-      ],
-      "eta_rome_min": 494,
-      "cep_km": 4.2
-    },
-    {
-      "id": "TC_S263F",
-      "centroid": [
-        47.3493,
-        9.8784
-      ],
-      "radius_km": 3.2,
-      "max_dbz": 34.1,
-      "echo_top_km": 8.1,
-      "vil": 0.0,
-      "rain_rate": 4.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 12.9,
-      "history_track": [
-        [
-          47.1145,
-          9.5339
-        ],
         [
           47.3115,
           9.8462
@@ -3666,179 +3902,251 @@
         [
           47.3493,
           9.8784
+        ],
+        [
+          47.2941,
+          9.7821
         ]
       ],
       "predictive_vector": [
-        47.6853,
-        10.0116
+        46.6317,
+        8.6265
       ],
-      "eta_rome_min": 2962,
-      "cep_km": 1.7
+      "eta_rome_min": 1000,
+      "cep_km": 2.7
     },
     {
-      "id": "TC_S270F",
+      "id": "TC_S267F",
       "centroid": [
-        47.3478,
-        9.5418
+        47.3471,
+        10.9912
       ],
-      "radius_km": 4.1,
-      "max_dbz": 63.5,
-      "echo_top_km": 13.4,
-      "vil": 0.2,
-      "rain_rate": 340.8,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (180/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 16.7,
-      "history_track": [
-        [
-          47.3115,
-          9.8462
-        ],
-        [
-          47.2684,
-          9.342
-        ],
-        [
-          47.2613,
-          9.3551
-        ],
-        [
-          47.3075,
-          9.5548
-        ],
-        [
-          47.5121,
-          9.3574
-        ],
-        [
-          47.3075,
-          9.5548
-        ],
-        [
-          47.3211,
-          9.4935
-        ],
-        [
-          47.4112,
-          9.5336
-        ],
-        [
-          47.3133,
-          9.5202
-        ],
-        [
-          47.3478,
-          9.5418
-        ],
-        [
-          47.5014,
-          9.3772
-        ],
-        [
-          47.6944,
-          9.3426
-        ]
-      ],
-      "predictive_vector": [
-        47.7618,
-        9.801
-      ],
-      "eta_rome_min": 2317,
-      "cep_km": 1.9
-    },
-    {
-      "id": "TC_S283F",
-      "centroid": [
-        47.5014,
-        9.3772
-      ],
-      "radius_km": 2.1,
-      "max_dbz": 60.3,
-      "echo_top_km": 12.9,
-      "vil": 0.1,
-      "rain_rate": 213.9,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (180/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 94.1,
-      "history_track": [
-        [
-          47.3115,
-          9.8462
-        ],
-        [
-          47.2684,
-          9.342
-        ],
-        [
-          47.2613,
-          9.3551
-        ],
-        [
-          47.3075,
-          9.5548
-        ],
-        [
-          47.5121,
-          9.3574
-        ],
-        [
-          47.3075,
-          9.5548
-        ],
-        [
-          47.3211,
-          9.4935
-        ],
-        [
-          47.4112,
-          9.5336
-        ],
-        [
-          47.3133,
-          9.5202
-        ],
-        [
-          47.3478,
-          9.5418
-        ],
-        [
-          47.5014,
-          9.3772
-        ],
-        [
-          47.6944,
-          9.3426
-        ]
-      ],
-      "predictive_vector": [
-        49.7586,
-        7.6612
-      ],
-      "eta_rome_min": 424,
-      "cep_km": 5.0
-    },
-    {
-      "id": "TC_S288F",
-      "centroid": [
-        47.478,
-        6.6032
-      ],
-      "radius_km": 4.3,
-      "max_dbz": 37.4,
-      "echo_top_km": 8.7,
+      "radius_km": 2.5,
+      "max_dbz": 49.1,
+      "echo_top_km": 10.8,
       "vil": 0.0,
-      "rain_rate": 7.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (8/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 19.4,
+      "rain_rate": 42.8,
+      "hail_probability": 53,
+      "flash_rate": "Elevato (44/m)",
+      "stage": "Matura",
+      "speed_kmh": 70.2,
       "history_track": [
         [
-          46.8842,
-          6.7534
+          47.3986,
+          10.8311
         ],
+        [
+          47.4215,
+          10.8605
+        ],
+        [
+          47.0982,
+          10.2931
+        ],
+        [
+          47.4185,
+          10.8517
+        ],
+        [
+          47.4025,
+          10.8475
+        ],
+        [
+          47.4025,
+          10.8475
+        ],
+        [
+          47.4194,
+          10.8541
+        ],
+        [
+          47.4121,
+          10.8291
+        ],
+        [
+          47.4613,
+          10.8985
+        ],
+        [
+          47.2974,
+          10.7702
+        ],
+        [
+          47.3487,
+          10.7121
+        ],
+        [
+          47.3471,
+          10.9912
+        ]
+      ],
+      "predictive_vector": [
+        47.9435,
+        13.6432
+      ],
+      "eta_rome_min": 526,
+      "cep_km": 4.0
+    },
+    {
+      "id": "TC_S268F",
+      "centroid": [
+        47.2841,
+        9.5166
+      ],
+      "radius_km": 5.8,
+      "max_dbz": 34.1,
+      "echo_top_km": 8.1,
+      "vil": 0.0,
+      "rain_rate": 4.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (5/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 29.3,
+      "history_track": [
+        [
+          47.2684,
+          9.342
+        ],
+        [
+          47.2613,
+          9.3551
+        ],
+        [
+          47.3075,
+          9.5548
+        ],
+        [
+          47.5121,
+          9.3574
+        ],
+        [
+          47.3075,
+          9.5548
+        ],
+        [
+          47.3211,
+          9.4935
+        ],
+        [
+          47.4112,
+          9.5336
+        ],
+        [
+          47.3133,
+          9.5202
+        ],
+        [
+          47.3478,
+          9.5418
+        ],
+        [
+          47.5014,
+          9.3772
+        ],
+        [
+          47.6944,
+          9.3426
+        ],
+        [
+          47.2841,
+          9.5166
+        ]
+      ],
+      "predictive_vector": [
+        46.5197,
+        9.2142
+      ],
+      "eta_rome_min": 1308,
+      "cep_km": 2.4
+    },
+    {
+      "id": "TC_S290F",
+      "centroid": [
+        47.3804,
+        10.7966
+      ],
+      "radius_km": 3.3,
+      "max_dbz": 34.1,
+      "echo_top_km": 8.1,
+      "vil": 0.0,
+      "rain_rate": 4.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (5/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 29.1,
+      "history_track": [
+        [
+          47.4215,
+          10.8605
+        ],
+        [
+          47.0982,
+          10.2931
+        ],
+        [
+          47.4185,
+          10.8517
+        ],
+        [
+          47.4025,
+          10.8475
+        ],
+        [
+          47.4025,
+          10.8475
+        ],
+        [
+          47.4194,
+          10.8541
+        ],
+        [
+          47.4121,
+          10.8291
+        ],
+        [
+          47.4613,
+          10.8985
+        ],
+        [
+          47.2974,
+          10.7702
+        ],
+        [
+          47.3487,
+          10.7121
+        ],
+        [
+          47.3804,
+          10.7966
+        ],
+        [
+          47.4903,
+          10.951
+        ]
+      ],
+      "predictive_vector": [
+        47.7608,
+        11.8106
+      ],
+      "eta_rome_min": 1283,
+      "cep_km": 2.4
+    },
+    {
+      "id": "TC_S313F",
+      "centroid": [
+        47.4357,
+        6.2932
+      ],
+      "radius_km": 3.9,
+      "max_dbz": 43.5,
+      "echo_top_km": 9.8,
+      "vil": 0.0,
+      "rain_rate": 19.2,
+      "hail_probability": 11,
+      "flash_rate": "Moderato (19/m)",
+      "stage": "Sviluppo",
+      "speed_kmh": 95.1,
+      "history_track": [
         [
           46.9529,
           6.9456
@@ -3882,35 +4190,107 @@
         [
           47.8385,
           6.474
+        ],
+        [
+          47.4357,
+          6.2932
         ]
       ],
       "predictive_vector": [
-        47.808,
-        6.0044
+        46.9281,
+        2.5732
       ],
-      "eta_rome_min": 2356,
-      "cep_km": 2.0
+      "eta_rome_min": 487,
+      "cep_km": 5.0
     },
     {
-      "id": "TC_S301F",
+      "id": "TC_S314F",
       "centroid": [
-        47.5553,
-        8.0372
+        47.4903,
+        10.951
       ],
-      "radius_km": 4.0,
-      "max_dbz": 36.2,
-      "echo_top_km": 8.5,
+      "radius_km": 2.8,
+      "max_dbz": 33.2,
+      "echo_top_km": 8.0,
       "vil": 0.0,
-      "rain_rate": 6.7,
+      "rain_rate": 4.4,
       "hail_probability": 0,
-      "flash_rate": "Moderato (6/m)",
+      "flash_rate": "Basso (<5/m)",
       "stage": "Iniziazione",
-      "speed_kmh": 37.7,
+      "speed_kmh": 95.5,
       "history_track": [
         [
-          47.4986,
-          8.3302
+          47.4215,
+          10.8605
         ],
+        [
+          47.0982,
+          10.2931
+        ],
+        [
+          47.4185,
+          10.8517
+        ],
+        [
+          47.4025,
+          10.8475
+        ],
+        [
+          47.4025,
+          10.8475
+        ],
+        [
+          47.4194,
+          10.8541
+        ],
+        [
+          47.4121,
+          10.8291
+        ],
+        [
+          47.4613,
+          10.8985
+        ],
+        [
+          47.2974,
+          10.7702
+        ],
+        [
+          47.3487,
+          10.7121
+        ],
+        [
+          47.3804,
+          10.7966
+        ],
+        [
+          47.4903,
+          10.951
+        ]
+      ],
+      "predictive_vector": [
+        49.1895,
+        13.8178
+      ],
+      "eta_rome_min": 397,
+      "cep_km": 5.0
+    },
+    {
+      "id": "TC_S324F",
+      "centroid": [
+        47.5173,
+        8.0331
+      ],
+      "radius_km": 3.3,
+      "max_dbz": 34.1,
+      "echo_top_km": 8.1,
+      "vil": 0.0,
+      "rain_rate": 4.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (5/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 16.9,
+      "history_track": [
         [
           47.5609,
           8.2008
@@ -3954,524 +4334,24 @@
         [
           47.5553,
           8.0372
+        ],
+        [
+          47.5173,
+          8.0331
         ]
       ],
       "predictive_vector": [
-        48.0245,
-        9.3728
+        47.0613,
+        7.9839
       ],
-      "eta_rome_min": 1133,
-      "cep_km": 2.7
+      "eta_rome_min": 2515,
+      "cep_km": 1.9
     },
     {
-      "id": "TC_S318F",
+      "id": "TC_S403F",
       "centroid": [
-        47.6944,
-        9.3426
-      ],
-      "radius_km": 2.5,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
-      "vil": 0.0,
-      "rain_rate": 4.4,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 177.7,
-      "history_track": [
-        [
-          47.3115,
-          9.8462
-        ],
-        [
-          47.2684,
-          9.342
-        ],
-        [
-          47.2613,
-          9.3551
-        ],
-        [
-          47.3075,
-          9.5548
-        ],
-        [
-          47.5121,
-          9.3574
-        ],
-        [
-          47.3075,
-          9.5548
-        ],
-        [
-          47.3211,
-          9.4935
-        ],
-        [
-          47.4112,
-          9.5336
-        ],
-        [
-          47.3133,
-          9.5202
-        ],
-        [
-          47.3478,
-          9.5418
-        ],
-        [
-          47.5014,
-          9.3772
-        ],
-        [
-          47.6944,
-          9.3426
-        ]
-      ],
-      "predictive_vector": [
-        52.2676,
-        7.2114
-      ],
-      "eta_rome_min": 231,
-      "cep_km": 8.3
-    },
-    {
-      "id": "TC_S373F",
-      "centroid": [
-        47.8385,
-        6.474
-      ],
-      "radius_km": 2.8,
-      "max_dbz": 38.2,
-      "echo_top_km": 8.9,
-      "vil": 0.0,
-      "rain_rate": 8.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (9/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 180.7,
-      "history_track": [
-        [
-          46.8842,
-          6.7534
-        ],
-        [
-          46.9529,
-          6.9456
-        ],
-        [
-          47.1087,
-          6.8655
-        ],
-        [
-          47.1087,
-          6.8655
-        ],
-        [
-          47.2432,
-          6.3828
-        ],
-        [
-          47.2382,
-          6.399
-        ],
-        [
-          46.8974,
-          6.64
-        ],
-        [
-          46.9736,
-          6.7826
-        ],
-        [
-          47.2305,
-          6.4047
-        ],
-        [
-          47.4505,
-          6.6531
-        ],
-        [
-          47.478,
-          6.6032
-        ],
-        [
-          47.8385,
-          6.474
-        ]
-      ],
-      "predictive_vector": [
-        52.4945,
-        4.3248
-      ],
-      "eta_rome_min": 265,
-      "cep_km": 8.4
-    },
-    {
-      "id": "TC_S385F",
-      "centroid": [
-        47.8788,
-        10.604
-      ],
-      "radius_km": 2.0,
-      "max_dbz": 34.1,
-      "echo_top_km": 8.1,
-      "vil": 0.0,
-      "rain_rate": 4.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 198.9,
-      "history_track": [
-        [
-          48.1975,
-          9.9395
-        ],
-        [
-          48.3268,
-          10.0431
-        ],
-        [
-          48.1251,
-          10.0551
-        ],
-        [
-          48.2417,
-          10.2144
-        ],
-        [
-          47.8788,
-          10.604
-        ],
-        [
-          47.9521,
-          10.4071
-        ],
-        [
-          48.1544,
-          10.5205
-        ],
-        [
-          48.1147,
-          9.9585
-        ],
-        [
-          48.2311,
-          10.1556
-        ],
-        [
-          48.2135,
-          10.0695
-        ],
-        [
-          48.2489,
-          10.3756
-        ],
-        [
-          48.3513,
-          10.3218
-        ]
-      ],
-      "predictive_vector": [
-        43.524,
-        15.2792
-      ],
-      "eta_rome_min": 204,
-      "cep_km": 9.2
-    },
-    {
-      "id": "TC_S412F",
-      "centroid": [
-        47.9284,
-        8.4138
-      ],
-      "radius_km": 2.5,
-      "max_dbz": 55.6,
-      "echo_top_km": 12.0,
-      "vil": 0.1,
-      "rain_rate": 108.7,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (111/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 104.8,
-      "history_track": [
-        [
-          47.9491,
-          8.4757
-        ],
-        [
-          47.9835,
-          8.6725
-        ],
-        [
-          48.012,
-          8.4436
-        ],
-        [
-          48.0169,
-          8.5569
-        ],
-        [
-          48.0169,
-          8.5569
-        ],
-        [
-          47.9131,
-          8.5727
-        ],
-        [
-          47.9825,
-          8.6942
-        ],
-        [
-          47.9901,
-          8.6773
-        ],
-        [
-          47.904,
-          8.7635
-        ],
-        [
-          48.0165,
-          8.8425
-        ],
-        [
-          48.0948,
-          8.6909
-        ],
-        [
-          47.9284,
-          8.4138
-        ]
-      ],
-      "predictive_vector": [
-        48.2212,
-        4.2174
-      ],
-      "eta_rome_min": 421,
-      "cep_km": 5.4
-    },
-    {
-      "id": "TC_S424F",
-      "centroid": [
-        47.9521,
-        10.4071
-      ],
-      "radius_km": 2.0,
-      "max_dbz": 34.1,
-      "echo_top_km": 8.1,
-      "vil": 0.0,
-      "rain_rate": 4.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 141.0,
-      "history_track": [
-        [
-          48.1975,
-          9.9395
-        ],
-        [
-          48.3268,
-          10.0431
-        ],
-        [
-          48.1251,
-          10.0551
-        ],
-        [
-          48.2417,
-          10.2144
-        ],
-        [
-          47.8788,
-          10.604
-        ],
-        [
-          47.9521,
-          10.4071
-        ],
-        [
-          48.1544,
-          10.5205
-        ],
-        [
-          48.1147,
-          9.9585
-        ],
-        [
-          48.2311,
-          10.1556
-        ],
-        [
-          48.2135,
-          10.0695
-        ],
-        [
-          48.2489,
-          10.3756
-        ],
-        [
-          48.3513,
-          10.3218
-        ]
-      ],
-      "predictive_vector": [
-        44.4769,
-        12.7195
-      ],
-      "eta_rome_min": 293,
-      "cep_km": 6.8
-    },
-    {
-      "id": "TC_S507F",
-      "centroid": [
-        48.1544,
-        10.5205
-      ],
-      "radius_km": 2.3,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
-      "vil": 0.0,
-      "rain_rate": 4.4,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 98.8,
-      "history_track": [
-        [
-          48.1975,
-          9.9395
-        ],
-        [
-          48.3268,
-          10.0431
-        ],
-        [
-          48.1251,
-          10.0551
-        ],
-        [
-          48.2417,
-          10.2144
-        ],
-        [
-          47.8788,
-          10.604
-        ],
-        [
-          47.9521,
-          10.4071
-        ],
-        [
-          48.1544,
-          10.5205
-        ],
-        [
-          48.1147,
-          9.9585
-        ],
-        [
-          48.2311,
-          10.1556
-        ],
-        [
-          48.2135,
-          10.0695
-        ],
-        [
-          48.2489,
-          10.3756
-        ],
-        [
-          48.3513,
-          10.3218
-        ]
-      ],
-      "predictive_vector": [
-        47.1068,
-        14.1937
-      ],
-      "eta_rome_min": 431,
-      "cep_km": 5.2
-    },
-    {
-      "id": "TC_S522F",
-      "centroid": [
-        48.1439,
-        7.5792
-      ],
-      "radius_km": 2.9,
-      "max_dbz": 34.1,
-      "echo_top_km": 8.1,
-      "vil": 0.0,
-      "rain_rate": 4.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 25.7,
-      "history_track": [
-        [
-          48.4822,
-          7.7284
-        ],
-        [
-          48.2362,
-          7.521
-        ],
-        [
-          48.2362,
-          7.521
-        ],
-        [
-          48.1875,
-          7.4097
-        ],
-        [
-          48.021,
-          7.1703
-        ],
-        [
-          48.1107,
-          7.2621
-        ],
-        [
-          48.1591,
-          7.6967
-        ],
-        [
-          48.2599,
-          7.0808
-        ],
-        [
-          48.1406,
-          7.7264
-        ],
-        [
-          48.1983,
-          7.6088
-        ],
-        [
-          48.1439,
-          7.5792
-        ],
-        [
-          48.3019,
-          7.6304
-        ]
-      ],
-      "predictive_vector": [
-        47.4911,
-        7.224
-      ],
-      "eta_rome_min": 1830,
-      "cep_km": 2.2
-    },
-    {
-      "id": "TC_S524F",
-      "centroid": [
-        48.1848,
-        12.6325
+        47.8458,
+        10.7954
       ],
       "radius_km": 2.2,
       "max_dbz": 34.1,
@@ -4481,27 +4361,203 @@
       "hail_probability": 0,
       "flash_rate": "Moderato (5/m)",
       "stage": "Iniziazione",
+      "speed_kmh": 59.0,
+      "history_track": [
+        [
+          48.3268,
+          10.0431
+        ],
+        [
+          48.1251,
+          10.0551
+        ],
+        [
+          48.2417,
+          10.2144
+        ],
+        [
+          47.8788,
+          10.604
+        ],
+        [
+          47.9521,
+          10.4071
+        ],
+        [
+          48.1544,
+          10.5205
+        ],
+        [
+          48.1147,
+          9.9585
+        ],
+        [
+          48.2311,
+          10.1556
+        ],
+        [
+          48.2135,
+          10.0695
+        ],
+        [
+          48.2489,
+          10.3756
+        ],
+        [
+          48.3513,
+          10.3218
+        ],
+        [
+          47.8458,
+          10.7954
+        ]
+      ],
+      "predictive_vector": [
+        47.4498,
+        13.0922
+      ],
+      "eta_rome_min": 684,
+      "cep_km": 3.6
+    },
+    {
+      "id": "TC_S521F",
+      "centroid": [
+        47.959,
+        11.6951
+      ],
+      "radius_km": 7.6,
+      "max_dbz": 49.1,
+      "echo_top_km": 10.8,
+      "vil": 0.0,
+      "rain_rate": 42.8,
+      "hail_probability": 53,
+      "flash_rate": "Elevato (44/m)",
+      "stage": "Matura",
       "speed_kmh": 28.0,
+      "history_track": [
+        [
+          47.959,
+          11.6951
+        ]
+      ],
+      "predictive_vector": [
+        47.959,
+        11.6951
+      ],
+      "eta_rome_min": 1448,
+      "cep_km": 2.3
+    },
+    {
+      "id": "TC_S536F",
+      "centroid": [
+        48.0935,
+        10.4616
+      ],
+      "radius_km": 3.3,
+      "max_dbz": 34.1,
+      "echo_top_km": 8.1,
+      "vil": 0.0,
+      "rain_rate": 4.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (5/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 32.2,
+      "history_track": [
+        [
+          48.3268,
+          10.0431
+        ],
+        [
+          48.1251,
+          10.0551
+        ],
+        [
+          48.2417,
+          10.2144
+        ],
+        [
+          47.8788,
+          10.604
+        ],
+        [
+          47.9521,
+          10.4071
+        ],
+        [
+          48.1544,
+          10.5205
+        ],
+        [
+          48.1147,
+          9.9585
+        ],
+        [
+          48.2311,
+          10.1556
+        ],
+        [
+          48.2135,
+          10.0695
+        ],
+        [
+          48.2489,
+          10.3756
+        ],
+        [
+          48.3513,
+          10.3218
+        ],
+        [
+          48.0935,
+          10.4616
+        ]
+      ],
+      "predictive_vector": [
+        47.3627,
+        9.7548
+      ],
+      "eta_rome_min": 1313,
+      "cep_km": 2.5
+    },
+    {
+      "id": "TC_S577F",
+      "centroid": [
+        48.1505,
+        12.6192
+      ],
+      "radius_km": 4.9,
+      "max_dbz": 34.1,
+      "echo_top_km": 8.1,
+      "vil": 0.0,
+      "rain_rate": 4.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (5/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 15.8,
       "history_track": [
         [
           48.1848,
           12.6325
+        ],
+        [
+          48.1505,
+          12.6192
         ]
       ],
       "predictive_vector": [
-        48.1848,
-        12.6325
+        47.7389,
+        12.4596
       ],
-      "eta_rome_min": 1497,
-      "cep_km": 2.3
+      "eta_rome_min": 2638,
+      "cep_km": 1.8
     },
     {
-      "id": "TC_S534F",
+      "id": "TC_S581F",
       "centroid": [
-        48.1147,
-        9.9585
+        48.1089,
+        9.9912
       ],
-      "radius_km": 7.9,
+      "radius_km": 11.0,
       "max_dbz": 34.1,
       "echo_top_km": 8.1,
       "vil": 0.0,
@@ -4509,12 +4565,8 @@
       "hail_probability": 0,
       "flash_rate": "Moderato (5/m)",
       "stage": "Iniziazione",
-      "speed_kmh": 94.7,
+      "speed_kmh": 10.0,
       "history_track": [
-        [
-          48.1975,
-          9.9395
-        ],
         [
           48.3268,
           10.0431
@@ -4558,166 +4610,26 @@
         [
           48.3513,
           10.3218
+        ],
+        [
+          48.1089,
+          9.9912
         ]
       ],
       "predictive_vector": [
-        46.5907,
-        6.8877
+        48.0393,
+        10.3836
       ],
-      "eta_rome_min": 453,
-      "cep_km": 5.0
+      "eta_rome_min": 4288,
+      "cep_km": 1.6
     },
     {
-      "id": "TC_S551F",
+      "id": "TC_S610F",
       "centroid": [
-        48.2311,
-        10.1556
+        48.2578,
+        9.8626
       ],
       "radius_km": 2.1,
-      "max_dbz": 34.1,
-      "echo_top_km": 8.1,
-      "vil": 0.0,
-      "rain_rate": 4.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 18.0,
-      "history_track": [
-        [
-          48.1975,
-          9.9395
-        ],
-        [
-          48.3268,
-          10.0431
-        ],
-        [
-          48.1251,
-          10.0551
-        ],
-        [
-          48.2417,
-          10.2144
-        ],
-        [
-          47.8788,
-          10.604
-        ],
-        [
-          47.9521,
-          10.4071
-        ],
-        [
-          48.1544,
-          10.5205
-        ],
-        [
-          48.1147,
-          9.9585
-        ],
-        [
-          48.2311,
-          10.1556
-        ],
-        [
-          48.2135,
-          10.0695
-        ],
-        [
-          48.2489,
-          10.3756
-        ],
-        [
-          48.3513,
-          10.3218
-        ]
-      ],
-      "predictive_vector": [
-        48.1039,
-        9.45
-      ],
-      "eta_rome_min": 2415,
-      "cep_km": 1.9
-    },
-    {
-      "id": "TC_S552F",
-      "centroid": [
-        48.2135,
-        10.0695
-      ],
-      "radius_km": 3.4,
-      "max_dbz": 34.1,
-      "echo_top_km": 8.1,
-      "vil": 0.0,
-      "rain_rate": 4.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 44.7,
-      "history_track": [
-        [
-          48.1975,
-          9.9395
-        ],
-        [
-          48.3268,
-          10.0431
-        ],
-        [
-          48.1251,
-          10.0551
-        ],
-        [
-          48.2417,
-          10.2144
-        ],
-        [
-          47.8788,
-          10.604
-        ],
-        [
-          47.9521,
-          10.4071
-        ],
-        [
-          48.1544,
-          10.5205
-        ],
-        [
-          48.1147,
-          9.9585
-        ],
-        [
-          48.2311,
-          10.1556
-        ],
-        [
-          48.2135,
-          10.0695
-        ],
-        [
-          48.2489,
-          10.3756
-        ],
-        [
-          48.3513,
-          10.3218
-        ]
-      ],
-      "predictive_vector": [
-        47.8751,
-        8.3307
-      ],
-      "eta_rome_min": 972,
-      "cep_km": 3.0
-    },
-    {
-      "id": "TC_S575F",
-      "centroid": [
-        48.3019,
-        7.6304
-      ],
-      "radius_km": 2.2,
       "max_dbz": 33.2,
       "echo_top_km": 8.0,
       "vil": 0.0,
@@ -4725,152 +4637,8 @@
       "hail_probability": 0,
       "flash_rate": "Basso (<5/m)",
       "stage": "Iniziazione",
-      "speed_kmh": 46.5,
+      "speed_kmh": 64.4,
       "history_track": [
-        [
-          48.4822,
-          7.7284
-        ],
-        [
-          48.2362,
-          7.521
-        ],
-        [
-          48.2362,
-          7.521
-        ],
-        [
-          48.1875,
-          7.4097
-        ],
-        [
-          48.021,
-          7.1703
-        ],
-        [
-          48.1107,
-          7.2621
-        ],
-        [
-          48.1591,
-          7.6967
-        ],
-        [
-          48.2599,
-          7.0808
-        ],
-        [
-          48.1406,
-          7.7264
-        ],
-        [
-          48.1983,
-          7.6088
-        ],
-        [
-          48.1439,
-          7.5792
-        ],
-        [
-          48.3019,
-          7.6304
-        ]
-      ],
-      "predictive_vector": [
-        49.5451,
-        7.8896
-      ],
-      "eta_rome_min": 1028,
-      "cep_km": 3.1
-    },
-    {
-      "id": "TC_S586F",
-      "centroid": [
-        48.2973,
-        12.4307
-      ],
-      "radius_km": 2.2,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
-      "vil": 0.0,
-      "rain_rate": 4.4,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 204.8,
-      "history_track": [
-        [
-          48.2656,
-          11.8918
-        ],
-        [
-          48.0274,
-          12.5599
-        ],
-        [
-          48.3919,
-          11.8937
-        ],
-        [
-          48.4027,
-          11.8987
-        ],
-        [
-          48.4003,
-          11.8825
-        ],
-        [
-          48.4003,
-          11.8825
-        ],
-        [
-          48.1991,
-          12.5143
-        ],
-        [
-          48.3917,
-          11.8417
-        ],
-        [
-          48.4616,
-          11.8008
-        ],
-        [
-          48.46,
-          11.7833
-        ],
-        [
-          48.2973,
-          12.4307
-        ]
-      ],
-      "predictive_vector": [
-        46.3449,
-        20.1995
-      ],
-      "eta_rome_min": 208,
-      "cep_km": 9.4
-    },
-    {
-      "id": "TC_S587F",
-      "centroid": [
-        48.2489,
-        10.3756
-      ],
-      "radius_km": 9.1,
-      "max_dbz": 34.1,
-      "echo_top_km": 8.1,
-      "vil": 0.0,
-      "rain_rate": 4.9,
-      "hail_probability": 0,
-      "flash_rate": "Moderato (5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 47.9,
-      "history_track": [
-        [
-          48.1975,
-          9.9395
-        ],
         [
           48.3268,
           10.0431
@@ -4914,94 +4682,26 @@
         [
           48.3513,
           10.3218
+        ],
+        [
+          48.2578,
+          9.8626
         ]
       ],
       "predictive_vector": [
-        48.3353,
-        12.31
+        48.7894,
+        7.3798
       ],
-      "eta_rome_min": 905,
-      "cep_km": 3.1
+      "eta_rome_min": 682,
+      "cep_km": 3.8
     },
     {
-      "id": "TC_S608F",
+      "id": "TC_S651F",
       "centroid": [
-        48.3513,
-        10.3218
+        48.3069,
+        9.5707
       ],
-      "radius_km": 2.2,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
-      "vil": 0.0,
-      "rain_rate": 4.4,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 58.2,
-      "history_track": [
-        [
-          48.1975,
-          9.9395
-        ],
-        [
-          48.3268,
-          10.0431
-        ],
-        [
-          48.1251,
-          10.0551
-        ],
-        [
-          48.2417,
-          10.2144
-        ],
-        [
-          47.8788,
-          10.604
-        ],
-        [
-          47.9521,
-          10.4071
-        ],
-        [
-          48.1544,
-          10.5205
-        ],
-        [
-          48.1147,
-          9.9585
-        ],
-        [
-          48.2311,
-          10.1556
-        ],
-        [
-          48.2135,
-          10.0695
-        ],
-        [
-          48.2489,
-          10.3756
-        ],
-        [
-          48.3513,
-          10.3218
-        ]
-      ],
-      "predictive_vector": [
-        49.6665,
-        11.6106
-      ],
-      "eta_rome_min": 757,
-      "cep_km": 3.5
-    },
-    {
-      "id": "TC_S635F",
-      "centroid": [
-        48.4074,
-        9.807
-      ],
-      "radius_km": 2.2,
+      "radius_km": 2.4,
       "max_dbz": 34.1,
       "echo_top_km": 8.1,
       "vil": 0.0,
@@ -5009,12 +4709,8 @@
       "hail_probability": 0,
       "flash_rate": "Moderato (5/m)",
       "stage": "Iniziazione",
-      "speed_kmh": 80.0,
+      "speed_kmh": 83.0,
       "history_track": [
-        [
-          48.0956,
-          9.7122
-        ],
         [
           48.1348,
           9.6946
@@ -5054,206 +4750,30 @@
         [
           48.4074,
           9.807
+        ],
+        [
+          48.3069,
+          9.5707
+        ],
+        [
+          48.4762,
+          9.671
         ]
       ],
       "predictive_vector": [
-        47.8014,
-        6.6882
+        47.1009,
+        6.7351
       ],
-      "eta_rome_min": 562,
-      "cep_km": 4.4
+      "eta_rome_min": 538,
+      "cep_km": 4.5
     },
     {
-      "id": "TC_S640F",
+      "id": "TC_S660F",
       "centroid": [
-        48.415,
-        19.1656
+        48.2498,
+        10.2231
       ],
-      "radius_km": 3.8,
-      "max_dbz": 55.6,
-      "echo_top_km": 12.0,
-      "vil": 0.1,
-      "rain_rate": 108.7,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (111/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 49.2,
-      "history_track": [
-        [
-          48.5072,
-          18.8403
-        ],
-        [
-          48.4866,
-          18.8974
-        ],
-        [
-          48.4754,
-          19.3053
-        ],
-        [
-          48.415,
-          19.1656
-        ]
-      ],
-      "predictive_vector": [
-        47.6902,
-        17.4892
-      ],
-      "eta_rome_min": 1067,
-      "cep_km": 3.2
-    },
-    {
-      "id": "TC_S642F",
-      "centroid": [
-        48.4115,
-        7.4464
-      ],
-      "radius_km": 3.0,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
-      "vil": 0.0,
-      "rain_rate": 4.4,
-      "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
-      "stage": "Iniziazione",
-      "speed_kmh": 101.7,
-      "history_track": [
-        [
-          48.5687,
-          7.4259
-        ],
-        [
-          48.5559,
-          7.7857
-        ],
-        [
-          48.6219,
-          7.5942
-        ],
-        [
-          48.6219,
-          7.5942
-        ],
-        [
-          48.6,
-          7.6868
-        ],
-        [
-          48.7509,
-          7.3517
-        ],
-        [
-          48.8981,
-          7.5565
-        ],
-        [
-          48.7566,
-          7.3553
-        ],
-        [
-          48.5886,
-          7.2288
-        ],
-        [
-          48.7739,
-          6.9671
-        ],
-        [
-          48.4115,
-          7.4464
-        ],
-        [
-          48.5061,
-          6.8956
-        ]
-      ],
-      "predictive_vector": [
-        46.2863,
-        10.0576
-      ],
-      "eta_rome_min": 480,
-      "cep_km": 5.3
-    },
-    {
-      "id": "TC_S661F",
-      "centroid": [
-        48.5061,
-        6.8956
-      ],
-      "radius_km": 4.6,
-      "max_dbz": 54.4,
-      "echo_top_km": 11.8,
-      "vil": 0.0,
-      "rain_rate": 91.7,
-      "hail_probability": 93,
-      "flash_rate": "Molto Alto (94/m)",
-      "stage": "Matura",
-      "speed_kmh": 104.8,
-      "history_track": [
-        [
-          48.5687,
-          7.4259
-        ],
-        [
-          48.5559,
-          7.7857
-        ],
-        [
-          48.6219,
-          7.5942
-        ],
-        [
-          48.6219,
-          7.5942
-        ],
-        [
-          48.6,
-          7.6868
-        ],
-        [
-          48.7509,
-          7.3517
-        ],
-        [
-          48.8981,
-          7.5565
-        ],
-        [
-          48.7566,
-          7.3553
-        ],
-        [
-          48.5886,
-          7.2288
-        ],
-        [
-          48.7739,
-          6.9671
-        ],
-        [
-          48.4115,
-          7.4464
-        ],
-        [
-          48.5061,
-          6.8956
-        ]
-      ],
-      "predictive_vector": [
-        47.5161,
-        2.8972
-      ],
-      "eta_rome_min": 482,
-      "cep_km": 5.4
-    },
-    {
-      "id": "TC_S678F",
-      "centroid": [
-        48.6217,
-        8.2516
-      ],
-      "radius_km": 2.8,
+      "radius_km": 6.0,
       "max_dbz": 34.1,
       "echo_top_km": 8.1,
       "vil": 0.0,
@@ -5261,268 +4781,440 @@
       "hail_probability": 0,
       "flash_rate": "Moderato (5/m)",
       "stage": "Iniziazione",
-      "speed_kmh": 128.4,
+      "speed_kmh": 21.7,
       "history_track": [
         [
-          48.1054,
-          7.7846
+          48.3268,
+          10.0431
         ],
         [
-          48.3499,
-          7.6146
+          48.1251,
+          10.0551
         ],
         [
-          48.2893,
-          7.5905
+          48.2417,
+          10.2144
         ],
         [
-          48.4435,
-          7.8038
+          47.8788,
+          10.604
         ],
         [
-          48.4822,
-          7.7284
+          47.9521,
+          10.4071
         ],
         [
-          48.2362,
-          7.521
+          48.1544,
+          10.5205
         ],
         [
-          48.4822,
-          7.7284
+          48.1147,
+          9.9585
         ],
         [
-          48.3998,
-          7.616
+          48.2311,
+          10.1556
         ],
         [
-          48.357,
-          7.7187
+          48.2135,
+          10.0695
         ],
         [
-          48.5454,
-          7.8305
+          48.2489,
+          10.3756
         ],
         [
-          48.6217,
-          8.2516
+          48.3513,
+          10.3218
         ],
         [
-          48.6367,
-          7.5821
+          48.2498,
+          10.2231
         ]
       ],
       "predictive_vector": [
-        49.5373,
-        13.3048
+        48.4742,
+        11.0331
       ],
-      "eta_rome_min": 378,
-      "cep_km": 6.3
+      "eta_rome_min": 2006,
+      "cep_km": 2.1
     },
     {
-      "id": "TC_S679F",
+      "id": "TC_S668F",
       "centroid": [
-        48.6367,
-        7.5821
+        47.9941,
+        10.4883
       ],
-      "radius_km": 2.1,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
+      "radius_km": 14.8,
+      "max_dbz": 37.4,
+      "echo_top_km": 8.7,
       "vil": 0.0,
-      "rain_rate": 4.4,
+      "rain_rate": 7.9,
       "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
+      "flash_rate": "Moderato (8/m)",
       "stage": "Iniziazione",
-      "speed_kmh": 83.5,
+      "speed_kmh": 30.5,
       "history_track": [
         [
-          48.1054,
-          7.7846
+          48.3268,
+          10.0431
         ],
         [
-          48.3499,
-          7.6146
+          48.1251,
+          10.0551
         ],
         [
-          48.2893,
-          7.5905
+          48.2417,
+          10.2144
         ],
         [
-          48.4435,
-          7.8038
+          47.8788,
+          10.604
         ],
         [
-          48.4822,
-          7.7284
+          47.9521,
+          10.4071
         ],
         [
-          48.2362,
-          7.521
+          48.1544,
+          10.5205
         ],
         [
-          48.4822,
-          7.7284
+          48.1147,
+          9.9585
         ],
         [
-          48.3998,
-          7.616
+          48.2311,
+          10.1556
         ],
         [
-          48.357,
-          7.7187
+          48.2135,
+          10.0695
         ],
         [
-          48.5454,
-          7.8305
+          48.2489,
+          10.3756
         ],
         [
-          48.6217,
-          8.2516
+          48.3513,
+          10.3218
         ],
         [
-          48.6367,
-          7.5821
+          47.9941,
+          10.4883
         ]
       ],
       "predictive_vector": [
-        49.7323,
-        4.6013
+        48.4981,
+        11.4627
       ],
-      "eta_rome_min": 597,
-      "cep_km": 4.5
+      "eta_rome_min": 1364,
+      "cep_km": 2.4
     },
     {
-      "id": "TC_S680F",
+      "id": "TC_S707F",
       "centroid": [
-        48.5736,
-        19.0901
+        48.4092,
+        10.5409
       ],
-      "radius_km": 9.0,
-      "max_dbz": 55.6,
-      "echo_top_km": 12.0,
-      "vil": 0.1,
-      "rain_rate": 108.7,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (111/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 61.8,
+      "radius_km": 5.0,
+      "max_dbz": 34.1,
+      "echo_top_km": 8.1,
+      "vil": 0.0,
+      "rain_rate": 4.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (5/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 69.6,
       "history_track": [
         [
-          48.613,
-          18.8792
+          48.3268,
+          10.0431
         ],
         [
-          48.6046,
-          18.8853
+          48.1251,
+          10.0551
         ],
         [
-          48.5736,
-          19.0901
+          48.2417,
+          10.2144
+        ],
+        [
+          47.8788,
+          10.604
+        ],
+        [
+          47.9521,
+          10.4071
+        ],
+        [
+          48.1544,
+          10.5205
+        ],
+        [
+          48.1147,
+          9.9585
+        ],
+        [
+          48.2311,
+          10.1556
+        ],
+        [
+          48.2135,
+          10.0695
+        ],
+        [
+          48.2489,
+          10.3756
+        ],
+        [
+          48.3513,
+          10.3218
+        ],
+        [
+          48.4092,
+          10.5409
         ]
       ],
       "predictive_vector": [
-        48.2016,
-        21.5477
+        49.104,
+        13.1701
       ],
-      "eta_rome_min": 860,
-      "cep_km": 3.7
+      "eta_rome_min": 636,
+      "cep_km": 4.0
     },
     {
-      "id": "TC_S688F",
+      "id": "TC_S717F",
       "centroid": [
-        48.6576,
-        10.3242
+        48.4762,
+        9.671
+      ],
+      "radius_km": 2.3,
+      "max_dbz": 52.1,
+      "echo_top_km": 11.4,
+      "vil": 0.0,
+      "rain_rate": 65.4,
+      "hail_probability": 75,
+      "flash_rate": "Elevato (67/m)",
+      "stage": "Matura",
+      "speed_kmh": 50.4,
+      "history_track": [
+        [
+          48.1348,
+          9.6946
+        ],
+        [
+          48.1221,
+          9.6761
+        ],
+        [
+          48.1982,
+          9.7472
+        ],
+        [
+          48.1639,
+          9.6349
+        ],
+        [
+          48.1639,
+          9.6349
+        ],
+        [
+          48.1975,
+          9.9395
+        ],
+        [
+          48.3268,
+          10.0431
+        ],
+        [
+          48.4078,
+          10.2949
+        ],
+        [
+          48.4579,
+          10.0669
+        ],
+        [
+          48.4074,
+          9.807
+        ],
+        [
+          48.3069,
+          9.5707
+        ],
+        [
+          48.4762,
+          9.671
+        ]
+      ],
+      "predictive_vector": [
+        49.3018,
+        8.039
+      ],
+      "eta_rome_min": 904,
+      "cep_km": 3.2
+    },
+    {
+      "id": "TC_S733F",
+      "centroid": [
+        48.501,
+        6.8971
+      ],
+      "radius_km": 3.6,
+      "max_dbz": 40.9,
+      "echo_top_km": 9.4,
+      "vil": 0.0,
+      "rain_rate": 13.1,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (13/m)",
+      "stage": "Sviluppo",
+      "speed_kmh": 2.3,
+      "history_track": [
+        [
+          48.6219,
+          7.5942
+        ],
+        [
+          48.6219,
+          7.5942
+        ],
+        [
+          48.6,
+          7.6868
+        ],
+        [
+          48.7509,
+          7.3517
+        ],
+        [
+          48.8981,
+          7.5565
+        ],
+        [
+          48.7566,
+          7.3553
+        ],
+        [
+          48.5886,
+          7.2288
+        ],
+        [
+          48.7739,
+          6.9671
+        ],
+        [
+          48.4115,
+          7.4464
+        ],
+        [
+          48.5061,
+          6.8956
+        ],
+        [
+          48.501,
+          6.8971
+        ],
+        [
+          48.8529,
+          7.0303
+        ]
+      ],
+      "predictive_vector": [
+        48.4398,
+        6.9151
+      ],
+      "eta_rome_min": 5050,
+      "cep_km": 1.3
+    },
+    {
+      "id": "TC_S747F",
+      "centroid": [
+        48.5684,
+        8.2649
       ],
       "radius_km": 2.4,
-      "max_dbz": 33.2,
-      "echo_top_km": 8.0,
+      "max_dbz": 34.1,
+      "echo_top_km": 8.1,
       "vil": 0.0,
-      "rain_rate": 4.4,
+      "rain_rate": 4.9,
       "hail_probability": 0,
-      "flash_rate": "Basso (<5/m)",
+      "flash_rate": "Moderato (5/m)",
       "stage": "Iniziazione",
-      "speed_kmh": 31.4,
+      "speed_kmh": 24.0,
       "history_track": [
         [
-          48.7735,
-          10.2795
+          48.3499,
+          7.6146
         ],
         [
-          48.7684,
-          10.3006
+          48.2893,
+          7.5905
         ],
         [
-          48.6867,
-          10.1959
+          48.4435,
+          7.8038
         ],
         [
-          48.7846,
-          10.3428
+          48.4822,
+          7.7284
         ],
         [
-          48.8656,
-          10.1731
+          48.2362,
+          7.521
         ],
         [
-          48.7846,
-          10.3428
+          48.4822,
+          7.7284
         ],
         [
-          48.7819,
-          10.4085
+          48.3998,
+          7.616
         ],
         [
-          48.8195,
-          10.2836
+          48.357,
+          7.7187
         ],
         [
-          48.7995,
-          10.338
+          48.5454,
+          7.8305
         ],
         [
-          48.6113,
-          10.2436
+          48.6217,
+          8.2516
         ],
         [
-          48.7408,
-          10.4152
+          48.6367,
+          7.5821
         ],
         [
-          48.6576,
-          10.3242
+          48.5684,
+          8.2649
         ]
       ],
       "predictive_vector": [
-        49.2132,
-        11.2914
+        47.9288,
+        8.4245
       ],
-      "eta_rome_min": 1467,
-      "cep_km": 2.5
+      "eta_rome_min": 2009,
+      "cep_km": 2.2
     },
     {
-      "id": "TC_S702F",
+      "id": "TC_S773F",
       "centroid": [
-        48.5701,
-        10.0974
+        48.5021,
+        10.0018
       ],
-      "radius_km": 14.6,
-      "max_dbz": 56.8,
-      "echo_top_km": 12.2,
-      "vil": 0.1,
-      "rain_rate": 128.7,
-      "hail_probability": 100,
-      "flash_rate": "Molto Alto (132/m)",
-      "stage": "Severa / Supercella",
-      "speed_kmh": 8.1,
+      "radius_km": 12.4,
+      "max_dbz": 52.1,
+      "echo_top_km": 11.4,
+      "vil": 0.0,
+      "rain_rate": 65.4,
+      "hail_probability": 75,
+      "flash_rate": "Elevato (67/m)",
+      "stage": "Matura",
+      "speed_kmh": 41.3,
       "history_track": [
-        [
-          48.6472,
-          10.3352
-        ],
-        [
-          48.7735,
-          10.2795
-        ],
         [
           48.7684,
           10.3006
@@ -5562,50 +5254,238 @@
         [
           48.5701,
           10.0974
+        ],
+        [
+          48.5021,
+          10.0018
+        ],
+        [
+          48.7399,
+          9.9385
         ]
       ],
       "predictive_vector": [
-        48.4861,
-        10.4034
+        47.6861,
+        8.8546
       ],
-      "eta_rome_min": 4572,
-      "cep_km": 1.5
+      "eta_rome_min": 1099,
+      "cep_km": 2.9
     },
     {
-      "id": "TC_S711F",
+      "id": "TC_S780F",
       "centroid": [
-        48.8204,
-        18.9877
+        48.7399,
+        9.9385
       ],
-      "radius_km": 10.2,
-      "max_dbz": 53.2,
-      "echo_top_km": 11.6,
+      "radius_km": 3.9,
+      "max_dbz": 34.1,
+      "echo_top_km": 8.1,
       "vil": 0.0,
-      "rain_rate": 77.5,
-      "hail_probability": 84,
-      "flash_rate": "Elevato (79/m)",
-      "stage": "Matura",
-      "speed_kmh": 40.5,
+      "rain_rate": 4.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (5/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 88.8,
       "history_track": [
         [
-          48.8799,
-          18.6766
+          48.7684,
+          10.3006
         ],
         [
-          48.8815,
-          18.885
+          48.6867,
+          10.1959
         ],
         [
-          48.8204,
-          18.9877
+          48.7846,
+          10.3428
+        ],
+        [
+          48.8656,
+          10.1731
+        ],
+        [
+          48.6867,
+          10.1959
+        ],
+        [
+          48.7271,
+          9.8882
+        ],
+        [
+          48.7338,
+          9.8897
+        ],
+        [
+          48.5771,
+          10.0719
+        ],
+        [
+          48.7373,
+          9.918
+        ],
+        [
+          48.5701,
+          10.0974
+        ],
+        [
+          48.5021,
+          10.0018
+        ],
+        [
+          48.7399,
+          9.9385
         ]
       ],
       "predictive_vector": [
-        48.0872,
-        20.2201
+        50.7775,
+        8.0317
       ],
-      "eta_rome_min": 1339,
-      "cep_km": 2.8
+      "eta_rome_min": 529,
+      "cep_km": 4.8
+    },
+    {
+      "id": "TC_S790F",
+      "centroid": [
+        48.8529,
+        7.0303
+      ],
+      "radius_km": 2.0,
+      "max_dbz": 38.2,
+      "echo_top_km": 8.9,
+      "vil": 0.0,
+      "rain_rate": 8.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (9/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 159.2,
+      "history_track": [
+        [
+          48.6219,
+          7.5942
+        ],
+        [
+          48.6219,
+          7.5942
+        ],
+        [
+          48.6,
+          7.6868
+        ],
+        [
+          48.7509,
+          7.3517
+        ],
+        [
+          48.8981,
+          7.5565
+        ],
+        [
+          48.7566,
+          7.3553
+        ],
+        [
+          48.5886,
+          7.2288
+        ],
+        [
+          48.7739,
+          6.9671
+        ],
+        [
+          48.4115,
+          7.4464
+        ],
+        [
+          48.5061,
+          6.8956
+        ],
+        [
+          48.501,
+          6.8971
+        ],
+        [
+          48.8529,
+          7.0303
+        ]
+      ],
+      "predictive_vector": [
+        53.0145,
+        8.6467
+      ],
+      "eta_rome_min": 327,
+      "cep_km": 7.6
+    },
+    {
+      "id": "TC_S799F",
+      "centroid": [
+        48.898,
+        7.4529
+      ],
+      "radius_km": 3.0,
+      "max_dbz": 34.1,
+      "echo_top_km": 8.1,
+      "vil": 0.0,
+      "rain_rate": 4.9,
+      "hail_probability": 0,
+      "flash_rate": "Moderato (5/m)",
+      "stage": "Iniziazione",
+      "speed_kmh": 122.2,
+      "history_track": [
+        [
+          48.3499,
+          7.6146
+        ],
+        [
+          48.2893,
+          7.5905
+        ],
+        [
+          48.4435,
+          7.8038
+        ],
+        [
+          48.4822,
+          7.7284
+        ],
+        [
+          48.2362,
+          7.521
+        ],
+        [
+          48.4822,
+          7.7284
+        ],
+        [
+          48.3998,
+          7.616
+        ],
+        [
+          48.357,
+          7.7187
+        ],
+        [
+          48.5454,
+          7.8305
+        ],
+        [
+          48.6217,
+          8.2516
+        ],
+        [
+          48.6367,
+          7.5821
+        ],
+        [
+          48.898,
+          7.4529
+        ]
+      ],
+      "predictive_vector": [
+        52.0336,
+        5.9025
+      ],
+      "eta_rome_min": 422,
+      "cep_km": 6.1
     }
   ]
 }
