@@ -15,7 +15,7 @@ def num2deg(xtile, ytile, zoom):
     return lat_deg, lon_deg
 
 def process_live_radar():
-    print("Download e vettorializzazione Mosaico Radar Reale...")
+    print("Download e vettorializzazione Mosaico Radar Reale Italia...")
     
     # 1. Recupero metadati radar
     try:
@@ -32,23 +32,20 @@ def process_live_radar():
         print(f"Errore recupero API radar: {e}")
         return
 
-    # Griglia di Tile Zoom 5 per coprire Spagna Est, Francia Sud, Italia e Mediterraneo
-    # Row 0 (Nord): Y=11 | Row 1 (Sud): Y=12
-    # Col 0 (Ovest): X=15 | Col 1 (Est): X=16
-    zoom = 5
+    # Griglia di Tile Zoom 6 specifica per l'Italia (Nord, Centro, Sud e Isole)
+    # X: 32 -> 34 | Y: 22 -> 24
+    zoom = 6
     tiles_grid = [
-        [(15, 11), (16, 11)],
-        [(15, 12), (16, 12)]
+        [(32, 22), (33, 22), (34, 22)],
+        [(32, 23), (33, 23), (34, 23)],
+        [(32, 24), (33, 24), (34, 24)]
     ]
     
-    # Calcolo Bounding Box Geografico esatto
-    top_left_lat, top_left_lon = num2deg(15, 11, zoom)
-    bottom_right_lat, bottom_right_lon = num2deg(17, 13, zoom)
-    
-    max_lat, min_lat = top_left_lat, bottom_right_lat
-    min_lon, max_lon = top_left_lon, bottom_right_lon
+    # Bounding Box Geografico esatto per la griglia Zoom 6
+    max_lat, min_lon = num2deg(32, 22, zoom)
+    min_lat, max_lon = num2deg(35, 25, zoom)
 
-    canvas = np.zeros((1024, 1024, 3), dtype=np.uint8)
+    canvas = np.zeros((1536, 1536, 3), dtype=np.uint8)
     
     for row_idx, row in enumerate(tiles_grid):
         for col_idx, (tx, ty) in enumerate(row):
@@ -68,15 +65,15 @@ def process_live_radar():
     cells = []
     
     try:
-        # Maschera HSV per isolare la riflettività radar (giallo, arancione, rosso, viola)
+        # Isoliamo i pixel con precipitazioni attive
         hsv = cv2.cvtColor(canvas, cv2.COLOR_BGR2HSV)
         
-        # Filtro più ampio per intercettare tutti i nuclei precipitativi (da verde intenso a rosso)
-        lower_bound = np.array([5, 50, 50])
-        upper_bound = np.array([179, 255, 255])
+        # Soglia colore per rilevare da verde/giallo a arancione e rosso (≥ 30 dBZ)
+        lower_bound = np.array([10, 50, 50])
+        upper_bound = np.array([170, 255, 255])
         mask = cv2.inRange(hsv, lower_bound, upper_bound)
         
-        # Operazioni morfologiche per unire le celle temporalesche ed eliminare rumore
+        # Pulizia rumore
         kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
         mask_clean = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
         
@@ -85,7 +82,7 @@ def process_live_radar():
         h_img, w_img, _ = canvas.shape
         
         for idx, cnt in enumerate(contours):
-            if cv2.contourArea(cnt) < 15: # Scarta pixel isolati
+            if cv2.contourArea(cnt) < 12: # Filtra i disturbi minimi
                 continue
                 
             epsilon = 0.012 * cv2.arcLength(cnt, True)
@@ -101,7 +98,6 @@ def process_live_radar():
             cx = M["m10"] / M["m00"]
             cy = M["m01"] / M["m00"]
             
-            # Conversione coordinate pixel -> Latitudine / Longitudine
             lat_c = max_lat - (cy / h_img) * (max_lat - min_lat)
             lon_c = min_lon + (cx / w_img) * (max_lon - min_lon)
             
