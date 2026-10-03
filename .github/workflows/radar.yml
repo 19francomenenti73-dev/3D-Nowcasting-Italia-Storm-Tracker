@@ -31,6 +31,6 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add storm_cells.json
-          git commit -m "Aggiornamento dati nowcasting 3D [skip ci]" || exit 0
+          git commit -m "Aggiornamento ora celle 3D [skip ci]" || exit 0
           git push
           
