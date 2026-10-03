@@ -8,28 +8,25 @@
   <!-- MapLibre GL JS -->
   <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
   <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
-  
-  <!-- Three.js per Grafica 3D e Fulmini Procedurali -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
-    body { margin: 0; padding: 0; background: #05080c; font-family: 'Segoe UI', Arial, sans-serif; overflow: hidden; }
+    body { margin: 0; padding: 0; background: #070b10; font-family: 'Roboto', 'Segoe UI', sans-serif; color: #fff; overflow: hidden; }
     #map { position: absolute; top: 0; bottom: 0; width: 100%; }
 
-    /* HUD Overlay di Telemetria Stile Pro */
+    /* HUD Telemetria Stile Militare/Radar Pro */
     .storm-hud {
       position: absolute;
-      bottom: 30px;
+      bottom: 25px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(10, 16, 26, 0.92);
-      border: 1px solid rgba(0, 230, 255, 0.5);
+      background: rgba(10, 15, 24, 0.92);
+      border: 1px solid rgba(0, 230, 255, 0.6);
       box-shadow: 0 0 25px rgba(0,0,0,0.9), inset 0 0 15px rgba(0,230,255,0.15);
       color: #ffffff;
-      padding: 14px 22px;
+      padding: 12px 20px;
       border-radius: 8px;
       font-size: 13px;
-      line-height: 1.6;
+      line-height: 1.5;
       pointer-events: auto;
       display: none;
       backdrop-filter: blur(10px);
@@ -46,11 +43,11 @@
     }
     .storm-hud span.val { color: #ffcc00; font-weight: bold; }
 
-    /* Cerchio Centroide Rosso Pulsante */
+    /* Centroide Rosso Pulsante */
     .pulsing-centroid {
       display: block;
       border-radius: 50%;
-      background: rgba(255, 30, 30, 0.85);
+      background: rgba(255, 30, 30, 0.9);
       border: 2px solid #ffffff;
       box-shadow: 0 0 0 rgba(255, 30, 30, 0.8);
       animation: pulse-ring 1.2s infinite;
@@ -59,7 +56,7 @@
 
     @keyframes pulse-ring {
       0% { box-shadow: 0 0 0 0 rgba(255, 30, 30, 0.9); transform: scale(0.95); }
-      70% { box-shadow: 0 0 0 22px rgba(255, 30, 30, 0); transform: scale(1.05); }
+      70% { box-shadow: 0 0 0 20px rgba(255, 30, 30, 0); transform: scale(1.05); }
       100% { box-shadow: 0 0 0 0 rgba(255, 30, 30, 0); transform: scale(0.95); }
     }
   </style>
@@ -70,18 +67,41 @@
 
 <!-- Telemetria HUD -->
 <div id="hud" class="storm-hud">
-  <div id="hud-content">Seleziona una cella temporalesca per analizzare i dati TITANS...</div>
+  <div id="hud-content">Seleziona un centroide per analizzare i parametri TITANS...</div>
 </div>
 
 <script>
-  // Inizializzazione Mappa Italia in 3D
+  // Mappa Dark / Satellite per Nowcasting Professionale
   const map = new maplibregl.Map({
     container: 'map',
-    style: 'https://demotiles.maplibre.org/style.json',
+    style: {
+      version: 8,
+      sources: {
+        'carto-dark': {
+          type: 'raster',
+          tiles: [
+            'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
+            'https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png',
+            'https://c.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png'
+          ],
+          tileSize: 256,
+          attribution: '&copy; CartoDB &copy; OpenStreetMap contributors'
+        }
+      },
+      layers: [
+        {
+          id: 'carto-dark-layer',
+          type: 'raster',
+          source: 'carto-dark',
+          minzoom: 0,
+          maxzoom: 19
+        }
+      ]
+    },
     center: [12.50, 41.90],
-    zoom: 6.8,
-    pitch: 58,
-    bearing: -8
+    zoom: 6.5,
+    pitch: 52,
+    bearing: -5
   });
 
   map.addControl(new maplibregl.NavigationControl());
@@ -89,9 +109,6 @@
   const DATA_URL = "storm_cells.json";
   let activeMarkers = [];
 
-  // --------------------------------------------------------------------------
-  // CARICAMENTO ED ELABORAZIONE DATI JSON
-  // --------------------------------------------------------------------------
   async function fetchAndRenderStorms() {
     try {
       const response = await fetch(DATA_URL + '?nocache=' + Date.now());
@@ -113,14 +130,14 @@
   function renderStormCells(cells) {
     if (!cells) return;
 
-    cells.forEach((cell, i) => {
+    cells.forEach((cell) => {
       const cellLat = cell.centroid[0];
       const cellLon = cell.centroid[1];
 
-      // 1. Centroide Rosso Pulsante (Cerchio scalato sulla dimensione reale)
+      // 1. Centroide Rosso Pulsante
       const el = document.createElement('div');
       el.className = 'pulsing-centroid';
-      const diameterPx = Math.max(20, Math.min(60, cell.radius_km * 3));
+      const diameterPx = Math.max(22, Math.min(65, cell.radius_km * 3.2));
       el.style.width = `${diameterPx}px`;
       el.style.height = `${diameterPx}px`;
 
@@ -130,7 +147,7 @@
 
       activeMarkers.push(marker);
 
-      // Evento Click sul Centroide per Attivazione HUD
+      // Evento Click sul Centroide per Telemetria
       el.addEventListener('click', (e) => {
         e.stopPropagation();
         const hud = document.getElementById('hud');
@@ -140,11 +157,11 @@
           <b>Echo Top (ET):</b> <span class="val">${cell.echo_top_km} km</span> | <b>VIL:</b> <span class="val">${cell.vil} kg/m²</span><br/>
           <b>GPE (Precip):</b> <span class="val">${cell.rain_rate} mm/h</span> | <b>Flash Rate:</b> <span class="val">${cell.flash_rate}</span><br/>
           <b>Velocità:</b> <span class="val">${cell.speed_kmh} km/h</span> | <b>Grandine:</b> <span class="val">${cell.hail_probability}%</span><br/>
-          <b>ETA Roma:</b> <span class="val">${cell.eta_rome_min} min</span> | <b>CEP (Incertezza):</b> <span class="val">${cell.cep_km} km</span>
+          <b>ETA Roma:</b> <span class="val">${cell.eta_rome_min} min</span> | <b>CEP:</b> <span class="val">${cell.cep_km} km</span>
         `;
       });
 
-      // 2. Vettore Storico Reale a passi di 15 Minuti (Linea Turchese Continua)
+      // 2. Vettore Storico Reale 15 min (Linea Turchese Continua)
       if (cell.history_track && cell.history_track.length > 1) {
         const historyCoordinates = cell.history_track.map(pt => [pt[1], pt[0]]);
         const histSourceId = `hist-src-${cell.id}`;
@@ -161,12 +178,12 @@
             id: `hist-layer-${cell.id}`,
             type: 'line',
             source: histSourceId,
-            paint: { 'line-color': '#00f3ff', 'line-width': 3.5 }
+            paint: { 'line-color': '#00f3ff', 'line-width': 4 }
           });
         }
       }
 
-      // 3. Vettore Predittivo a 3 Ore (Linea Arancione Tratteggiata)
+      // 3. Vettore Predittivo 3 Ore (Linea Arancione Tratteggiata)
       const predCoordinates = [
         [cellLon, cellLat],
         [cell.predictive_vector[1], cell.predictive_vector[0]]
@@ -187,7 +204,7 @@
           source: predSourceId,
           paint: {
             'line-color': '#ff9900',
-            'line-width': 2.5,
+            'line-width': 3,
             'line-dasharray': [3, 2]
           }
         });
@@ -195,14 +212,13 @@
     });
   }
 
-  // Nasconde l'HUD quando si clicca sulla mappa vuota
   map.on('click', () => {
     document.getElementById('hud').style.display = 'none';
   });
 
   map.on('load', () => {
     fetchAndRenderStorms();
-    setInterval(fetchAndRenderStorms, 30000); // Polling aggiornamenti ogni 30s
+    setInterval(fetchAndRenderStorms, 30000);
   });
 </script>
 </body>
