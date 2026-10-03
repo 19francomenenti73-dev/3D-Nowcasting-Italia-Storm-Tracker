@@ -2,252 +2,104 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Nowcasting Italia - Lario 3D Storm Tracker</title>
+  <title>3D Storm Tracker Italia</title>
   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-  
-  <!-- MapLibre GL JS -->
   <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
   <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
-
   <style>
-    body { margin: 0; padding: 0; background: #000; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #fff; overflow: hidden; }
+    body { margin: 0; padding: 0; background: #0a0e17; font-family: sans-serif; overflow: hidden; }
     #map { position: absolute; top: 0; bottom: 0; width: 100%; }
-
-    /* HUD Telemetria */
-    .storm-hud {
-      position: absolute;
-      bottom: 25px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(10, 15, 24, 0.92);
-      border: 1px solid rgba(0, 230, 255, 0.6);
-      box-shadow: 0 0 25px rgba(0,0,0,0.9), inset 0 0 15px rgba(0,230,255,0.15);
-      color: #ffffff;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 13px;
-      line-height: 1.5;
-      pointer-events: auto;
-      display: none;
-      backdrop-filter: blur(10px);
-      z-index: 2000;
-      white-space: nowrap;
-    }
-    .storm-hud .header { 
-      font-size: 14px; 
-      font-weight: bold; 
-      color: #00e6ff; 
-      border-bottom: 1px solid rgba(0, 230, 255, 0.3);
-      padding-bottom: 4px;
-      margin-bottom: 6px;
-    }
-    .storm-hud span.val { color: #ffcc00; font-weight: bold; }
-
-    /* Centroide Rosso Pulsante */
     .pulsing-centroid {
       display: block;
       border-radius: 50%;
       background: rgba(255, 30, 30, 0.9);
       border: 2px solid #ffffff;
-      box-shadow: 0 0 0 rgba(255, 30, 30, 0.8);
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
       animation: pulse-ring 1.2s infinite;
       cursor: pointer;
     }
-
     @keyframes pulse-ring {
-      0% { box-shadow: 0 0 0 0 rgba(255, 30, 30, 0.9); transform: scale(0.95); }
-      70% { box-shadow: 0 0 0 20px rgba(255, 30, 30, 0); transform: scale(1.05); }
-      100% { box-shadow: 0 0 0 0 rgba(255, 30, 30, 0); transform: scale(0.95); }
+      0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 30, 30, 0.9); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(255, 30, 30, 0); }
+      100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 30, 30, 0); }
     }
   </style>
 </head>
 <body>
-
 <div id="map"></div>
-
-<!-- Telemetria HUD -->
-<div id="hud" class="storm-hud">
-  <div id="hud-content">Seleziona un centroide per analizzare i parametri TITANS...</div>
-</div>
-
 <script>
-  async function initMap() {
-    // 1. Recupera l'ultimo layer radar disponibile da RainViewer
-    let radarPath = '';
-    try {
-      const apiRes = await fetch('https://api.rainviewer.com/public/weather-maps.json');
-      const apiData = await apiRes.json();
-      if (apiData.radar && apiData.radar.past && apiData.radar.past.length > 0) {
-        radarPath = apiData.radar.past[apiData.radar.past.length - 1].path;
-      }
-    } catch (e) {
-      console.warn("Impossibile caricare i timestamp RainViewer, uso basemap di backup.");
-    }
-
-    // 2. Costruzione sorgenti per MapLibre: Mappa OpenStreetMap + Overlay Radar RainViewer
-    const mapSources = {
-      'osm-tiles': {
+  const map = new maplibregl.Map({
+    container: 'map',
+    style: {
+      version: 8,
+      sources: {
+        'dark-tiles': {
+          type: 'raster',
+          tiles: [
+            'https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png'
+          ],
+          tileSize: 256,
+          attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+        }
+      },
+      layers: [{
+        id: 'dark-layer',
         type: 'raster',
-        tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-        tileSize: 256,
-        attribution: '&copy; OpenStreetMap'
-      }
-    };
-
-    const mapLayers = [
-      {
-        id: 'osm-layer',
-        type: 'raster',
-        source: 'osm-tiles',
+        source: 'dark-tiles',
         minzoom: 0,
         maxzoom: 19
-      }
-    ];
+      }]
+    },
+    center: [12.50, 41.90],
+    zoom: 6,
+    pitch: 45
+  });
 
-    if (radarPath) {
-      mapSources['rainviewer-radar'] = {
-        type: 'raster',
-        tiles: [`https://tilecache.rainviewer.com${radarPath}/256/{z}/{x}/{y}/2/1_1.png`],
-        tileSize: 256
-      };
-      mapLayers.push({
-        id: 'rainviewer-layer',
-        type: 'raster',
-        source: 'rainviewer-radar',
-        minzoom: 0,
-        maxzoom: 19,
-        paint: { 'raster-opacity': 0.65 }
-      });
-    }
+  map.addControl(new maplibregl.NavigationControl());
 
-    window.map = new maplibregl.Map({
-      container: 'map',
-      style: { version: 8, sources: mapSources, layers: mapLayers },
-      center: [12.50, 41.90],
-      zoom: 6.5,
-      pitch: 45,
-      bearing: 0
-    });
-
-    map.addControl(new maplibregl.NavigationControl());
-
-    map.on('click', () => {
-      document.getElementById('hud').style.display = 'none';
-    });
-
-    map.on('load', () => {
-      fetchAndRenderStorms();
-      setInterval(fetchAndRenderStorms, 30000);
-    });
-  }
-
-  const DATA_URL = "storm_cells.json";
-  let activeMarkers = [];
-
-  async function fetchAndRenderStorms() {
+  async function loadStorms() {
     try {
-      const response = await fetch(DATA_URL + '?nocache=' + Date.now());
-      if (!response.ok) return;
-      const data = await response.json();
-      
-      clearExistingLayers();
-      renderStormCells(data.cells);
-    } catch (e) {
-      console.log("In attesa del feed di dati radar...");
-    }
-  }
+      const res = await fetch('storm_cells.json?v=' + Date.now());
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data.cells) return;
 
-  function clearExistingLayers() {
-    activeMarkers.forEach(m => m.remove());
-    activeMarkers = [];
-  }
+      data.cells.forEach(cell => {
+        const el = document.createElement('div');
+        el.className = 'pulsing-centroid';
+        el.style.width = '28px';
+        el.style.height = '28px';
 
-  function renderStormCells(cells) {
-    if (!cells) return;
+        new maplibregl.Marker({ element: el })
+          .setLngLat([cell.centroid[1], cell.centroid[0]])
+          .addTo(map);
 
-    cells.forEach((cell) => {
-      const cellLat = cell.centroid[0];
-      const cellLon = cell.centroid[1];
-
-      // Centroide Rosso Pulsante
-      const el = document.createElement('div');
-      el.className = 'pulsing-centroid';
-      const diameterPx = Math.max(22, Math.min(65, cell.radius_km * 3.2));
-      el.style.width = `${diameterPx}px`;
-      el.style.height = `${diameterPx}px`;
-
-      const marker = new maplibregl.Marker({ element: el })
-        .setLngLat([cellLon, cellLat])
-        .addTo(map);
-
-      activeMarkers.push(marker);
-
-      el.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const hud = document.getElementById('hud');
-        hud.style.display = 'block';
-        document.getElementById('hud-content').innerHTML = `
-          <div class="header">ID Cella: ${cell.id} | Stadio: <span class="val">${cell.stage}</span></div>
-          <b>Echo Top (ET):</b> <span class="val">${cell.echo_top_km} km</span> | <b>VIL:</b> <span class="val">${cell.vil} kg/m²</span><br/>
-          <b>GPE (Precip):</b> <span class="val">${cell.rain_rate} mm/h</span> | <b>Flash Rate:</b> <span class="val">${cell.flash_rate}</span><br/>
-          <b>Velocità:</b> <span class="val">${cell.speed_kmh} km/h</span> | <b>Grandine:</b> <span class="val">${cell.hail_probability}%</span><br/>
-          <b>ETA Roma:</b> <span class="val">${cell.eta_rome_min} min</span> | <b>CEP:</b> <span class="val">${cell.cep_km} km</span>
-        `;
-      });
-
-      // Vettore Storico Reale 15 min (Linea Turchese Continua)
-      if (cell.history_track && cell.history_track.length > 1) {
-        const historyCoordinates = cell.history_track.map(pt => [pt[1], pt[0]]);
-        const histSourceId = `hist-src-${cell.id}`;
-        
-        if (!map.getSource(histSourceId)) {
-          map.addSource(histSourceId, {
+        if (cell.predictive_vector) {
+          map.addSource('pred-' + cell.id, {
             type: 'geojson',
             data: {
               type: 'Feature',
-              geometry: { type: 'LineString', coordinates: historyCoordinates }
+              geometry: {
+                type: 'LineString',
+                coordinates: [
+                  [cell.centroid[1], cell.centroid[0]],
+                  [cell.predictive_vector[1], cell.predictive_vector[0]]
+                ]
+              }
             }
           });
           map.addLayer({
-            id: `hist-layer-${cell.id}`,
+            id: 'pred-line-' + cell.id,
             type: 'line',
-            source: histSourceId,
-            paint: { 'line-color': '#00f3ff', 'line-width': 4 }
+            source: 'pred-' + cell.id,
+            paint: { 'line-color': '#ff9900', 'line-width': 3, 'line-dasharray': [2, 2] }
           });
         }
-      }
-
-      // Vettore Predittivo 3 Ore (Linea Arancione Tratteggiata)
-      const predCoordinates = [
-        [cellLon, cellLat],
-        [cell.predictive_vector[1], cell.predictive_vector[0]]
-      ];
-      const predSourceId = `pred-src-${cell.id}`;
-
-      if (!map.getSource(predSourceId)) {
-        map.addSource(predSourceId, {
-          type: 'geojson',
-          data: {
-            type: 'Feature',
-            geometry: { type: 'LineString', coordinates: predCoordinates }
-          }
-        });
-        map.addLayer({
-          id: `pred-layer-${cell.id}`,
-          type: 'line',
-          source: predSourceId,
-          paint: {
-            'line-color': '#ff9900',
-            'line-width': 3,
-            'line-dasharray': [3, 2]
-          }
-        });
-      }
-    });
+      });
+    } catch (e) {}
   }
 
-  // Avvio dell'applicazione
-  initMap();
+  map.on('load', loadStorms);
 </script>
 </body>
 </html>
