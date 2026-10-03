@@ -110,7 +110,6 @@ def rgba_to_dbz(rgba_img):
     alpha = rgba_img[:, :, 3]
     rgb = rgba_img[:, :, :3]
 
-    # Stima quantitativa Z basata su luminosità e saturazione del segnale
     gray = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY).astype(np.float32)
     dbz_matrix = np.where(alpha > 30, (gray / 255.0) * 75.0, 0.0)
 
@@ -124,8 +123,8 @@ def rgba_to_dbz(rgba_img):
 # ==============================================================================
 def run_titans_algorithm(dbz_matrix, binary_mask, bounds):
     """
-    Identifica le celle temporalesche, ne calcola il centroide (cerchio/area),
-    l'Echo Top (ET), il VIL, il Rain Rate (GPE), la probabilità di grandine e il Flash Rate.
+    Identifica le celle temporalesche, ne calcola il centroide, la sagoma poligonale reale,
+    l'Echo Top (ET), il VIL, il Rain Rate, la probabilità di grandine e il Flash Rate.
     """
     min_lat, max_lat, min_lon, max_lon = bounds
     h_px, w_px = binary_mask.shape
@@ -133,7 +132,6 @@ def run_titans_algorithm(dbz_matrix, binary_mask, bounds):
     contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     detected_cells = []
 
-    # Calcolo approssimativo risoluzione spaziale del pixel in km
     deg_lat_tot = max_lat - min_lat
     deg_lon_tot = max_lon - min_lon
     km_per_pixel_lat = (deg_lat_tot * 111.2) / h_px
@@ -147,7 +145,6 @@ def run_titans_algorithm(dbz_matrix, binary_mask, bounds):
         if area_km2 < MIN_CELL_AREA_KM2:
             continue
 
-        # Calcolo Momenti spaziali per il Centroide
         M = cv2.moments(cnt)
         if M["m00"] == 0:
             continue
@@ -155,29 +152,27 @@ def run_titans_algorithm(dbz_matrix, binary_mask, bounds):
         cx_px = M["m10"] / M["m00"]
         cy_px = M["m01"] / M["m00"]
 
-        # Conversione Pixel -> Latitudine / Longitudine
         cell_lat = max_lat - (cy_px / h_px) * deg_lat_tot
         cell_lon = min_lon + (cx_px / w_px) * deg_lon_tot
         radius_km = round(math.sqrt(area_km2 / math.pi), 1)
 
-        # Estrazione Valore Z Max all'interno del contorno della cella
+        # Conversione del contorno OpenCV in coordinate geografiche reali (Lat, Lon)
+        polygon_coords = []
+        for pt in cnt:
+            px, py = pt[0][0], pt[0][1]
+            pt_lat = max_lat - (py / h_px) * deg_lat_tot
+            pt_lon = min_lon + (px / w_px) * deg_lon_tot
+            polygon_coords.append([round(pt_lat, 4), round(pt_lon, 4)])
+
         cell_mask = np.zeros_like(binary_mask)
         cv2.drawContours(cell_mask, [cnt], -1, 255, -1)
         z_max = float(np.max(dbz_matrix[cell_mask == 255])) if np.any(cell_mask == 255) else DBZ_THRESHOLD
 
-        # 1. Echo Top (ET in km): Formula empirica radar derivata
         echo_top_km = round(min(16.5, max(3.0, 2.0 + 0.18 * z_max)), 1)
-
-        # 2. Vertically Integrated Liquid (VIL in kg/m²)
         vil_kg_m2 = round(3.44e-6 * (10 ** (0.057 * z_max)) * (echo_top_km - 1.5), 1)
-
-        # 3. GPE / Instant Rain Rate (Formula di Marshall-Palmer: Z = 200 * R^1.6)
         rain_rate_mmh = round(((10 ** (z_max / 10.0)) / 200.0) ** (1.0 / 1.6), 1)
-
-        # 4. Probabilità Grandine (POSH - Probability of Severe Hail)
         hail_prob = int(min(100, max(0, (z_max - 42.0) * 7.5)))
 
-        # 5. Flash Rate (Attività elettrica stimata)
         flashes_per_min = int(min(180, 0.04 * (10 ** (0.062 * z_max))))
         if flashes_per_min < 5:
             flash_str = "Basso (<5/m)"
@@ -188,7 +183,6 @@ def run_titans_algorithm(dbz_matrix, binary_mask, bounds):
         else:
             flash_str = f"Molto Alto ({flashes_per_min}/m)"
 
-        # 6. Stadio Evolutivo
         if z_max < 40.0:
             stage = "Iniziazione"
         elif z_max < 48.0:
@@ -201,6 +195,7 @@ def run_titans_algorithm(dbz_matrix, binary_mask, bounds):
         detected_cells.append({
             "id": f"TC_S{idx+1:02d}F",
             "centroid": [round(cell_lat, 4), round(cell_lon, 4)],
+            "polygon": polygon_coords,  # Sagoma radar reale esportata nel JSON
             "radius_km": radius_km,
             "max_dbz": round(z_max, 1),
             "echo_top_km": echo_top_km,
@@ -217,17 +212,13 @@ def run_titans_algorithm(dbz_matrix, binary_mask, bounds):
 # ALGORITMO DI TRACCIAMENTO LAGRANGIANO (VETTORI REALI E PREDITTIVI)
 # ==============================================================================
 def apply_lagrangian_tracking(current_cells, previous_state):
-    """
-    Calcola la cross-correlazione dello spostamento dei centroidi tra t-15m e t.
-    Mantiene la traccia reale dei segmenti passati e proietta il vettore a +3 ore.
-    """
     tracked_cells = []
     prev_cells = previous_state.get("cells", [])
 
     for cell in current_cells:
         c_lat, c_lon = cell["centroid"]
         best_match = None
-        min_dist_km = 65.0  # Raggio massimo di correlazione spaziale in 15 min (~260 km/h)
+        min_dist_km = 65.0
 
         for p_cell in prev_cells:
             p_lat, p_lon = p_cell["centroid"]
@@ -241,27 +232,23 @@ def apply_lagrangian_tracking(current_cells, previous_state):
             d_lon = c_lon - best_match["centroid"][1]
             speed_kmh = round((min_dist_km / (TIME_INTERVAL_MIN / 60.0)), 1)
             
-            # Recupero e aggiornamento dei segmenti di percorso REALE (Passi di 15 min)
             history_track = best_match.get("history_track", [])
             history_track.append([c_lat, c_lon])
-            if len(history_track) > 12:  # Conserva gli ultimi 12 punti reali (3 ore trascorse)
+            if len(history_track) > 12:
                 history_track.pop(0)
         else:
             d_lat, d_lon = 0.0, 0.0
-            speed_kmh = 28.0  # Velocità di derivazione iniziale predefinita
+            speed_kmh = 28.0
             history_track = [[c_lat, c_lon]]
 
-        # Vettore Predittivo Proiettato a +3 Ore (Lagrangiano)
-        steps_3h = int((PREDICTIVE_HOURS * 60) / TIME_INTERVAL_MIN)  # 12 passi da 15 min
+        steps_3h = int((PREDICTIVE_HOURS * 60) / TIME_INTERVAL_MIN)
         pred_lat_3h = round(c_lat + (d_lat * steps_3h), 4)
         pred_lon_3h = round(c_lon + (d_lon * steps_3h), 4)
 
-        # Calcolo Stima ETA su Roma
         dist_rome_km = math.hypot((ROME_LAT - c_lat) * 111.2, (ROME_LON - c_lon) * 111.2 * math.cos(math.radians(c_lat)))
         effective_speed = max(speed_kmh, 10.0)
         eta_rome_min = max(5, int((dist_rome_km / effective_speed) * 60))
 
-        # CEP (Circular Error Probable) - Incertezza spaziale progressiva
         cep_uncertainty_km = round(1.2 + (speed_kmh * 0.04), 1)
 
         cell["speed_kmh"] = speed_kmh
@@ -308,7 +295,7 @@ def main():
         with open(STATE_FILE, "w") as f:
             json.dump(output_payload, f)
 
-        print(f"[{datetime.now()}] Elaborazione TITANS completata: {len(final_tracked_cells)} celle individuate.")
+        print(f"[{datetime.now()}] Elaborazione TITANS completata: {len(final_tracked_cells)} celle individuate con contorni poligonali.")
 
     except Exception as e:
         print(f"Errore durante la pipeline Nowcasting: {str(e)}")
@@ -316,4 +303,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-  
+    
