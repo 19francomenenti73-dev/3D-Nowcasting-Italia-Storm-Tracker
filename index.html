@@ -15,15 +15,11 @@
       padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: bold;
       box-shadow: 0 4px 6px rgba(0,0,0,0.4);
     }
-    .maplibregl-popup-content {
-      background: #0f172a !important; color: #f8fafc !important;
-      border: 1px solid #334155; border-radius: 8px; padding: 10px; font-size: 11px;
-    }
   </style>
 </head>
 <body>
 
-<div id="ui-panel">Caricamento dati...</div>
+<div id="ui-panel">Caricamento in corso...</div>
 <div id="map"></div>
 
 <script>
@@ -45,36 +41,27 @@
   });
 
   function fetchAndRender() {
-    // Bypass forzato della cache tramite timestamp
-    var jsonUrl = './storm_cells.json?nocache=' + new Date().getTime();
+    // Forziamo il bypass della cache chiedendo 'celle_tempestose.json'
+    var jsonUrl = './celle_tempestose.json?v=' + Date.now();
     
     fetch(jsonUrl)
       .then(res => {
-        if (!res.ok) throw new Error("HTTP Status " + res.status);
+        if (!res.ok) throw new Error("HTTP " + res.status);
         return res.json();
       })
       .then(data => {
-        // Estrazione flessibile delle celle
-        var cells = [];
-        if (Array.isArray(data)) {
-          cells = data;
-        } else if (data && Array.isArray(data.cells)) {
-          cells = data.cells;
-        } else if (data && Array.isArray(data.data)) {
-          cells = data.data;
-        }
+        var cellule = data.cellule || data.cells || [];
+        var percorsoRadar = data.percorso_radar || data.radar_path;
 
-        document.getElementById('ui-panel').innerHTML = `Celle 3D Attive (≥32 dBZ): ${cells.length}`;
-
-        renderLayers(cells, data.radar_path);
+        document.getElementById('ui-panel').innerHTML = `Celle 3D Attive (≥32 dBZ): ${cellule.length}`;
+        renderLayers(cellule, percorsoRadar);
       })
       .catch(err => {
-        document.getElementById('ui-panel').innerHTML = "Errore caricamento JSON (" + err.message + ")";
+        document.getElementById('ui-panel').innerHTML = "Errore: " + err.message;
       });
   }
 
-  function renderLayers(cells, radarPath) {
-    // Pulizia layer preesistenti
+  function renderLayers(cellule, percorsoRadar) {
     ['cells-3d-walls', 'cells-3d-top', 'cells-vectors-blue', 'cells-vectors-red', 'centroid-green-circle', 'radar-tile-layer'].forEach(l => {
       if (map.getLayer(l)) map.removeLayer(l);
     });
@@ -82,33 +69,31 @@
       if (map.getSource(s)) map.removeSource(s);
     });
 
-    // Mosaico Radar di fondo se presente
-    if (radarPath) {
+    if (percorsoRadar) {
       map.addSource('radar-tile-source', {
         'type': 'raster',
-        'tiles': ['https://tile.rainviewer.com' + radarPath + '/256/{z}/{x}/{y}/2/1_1.png'],
+        'tiles': ['https://tile.rainviewer.com' + percorsoRadar + '/256/{z}/{x}/{y}/2/1_1.png'],
         'tileSize': 256
       });
       map.addLayer({
         'id': 'radar-tile-layer',
         'type': 'raster',
         'source': 'radar-tile-source',
-        'paint': { 'raster-opacity': 0.6 }
+        'paint': { 'raster-opacity': 0.65 }
       });
     }
 
-    if (!cells || cells.length === 0) return;
+    if (!cellule || cellule.length === 0) return;
 
     var cellFeatures = [];
     var vectorFeatures = [];
     var centroidFeatures = [];
 
-    cells.forEach(cell => {
-      // Supporta sia contour_real che poly_base o coordinates
-      var rawPoly = cell.contour_real || cell.poly_base || cell.geometry?.coordinates;
+    cellule.forEach(cell => {
+      var rawPoly = cell.contorno_reale || cell.contour_real || cell.poly_base;
       if (!rawPoly || rawPoly.length < 3) return;
 
-      var ring = rawPoly.map(pt => Array.isArray(pt) ? [pt[1], pt[0]] : [pt.lng, pt.lat]);
+      var ring = rawPoly.map(pt => [pt[1], pt[0]]);
       ring.push(ring[0]);
 
       var dbz = cell.max_dbz || 35;
@@ -121,54 +106,47 @@
           'id': cell.id || 'TC',
           'color': color,
           'height': topHeight,
-          'dbz': dbz,
-          'stage': cell.stage || 'In osservazione',
-          'wind': cell.wind_speed_kmh || 0,
-          'eta': cell.eta_target || 'N/A'
+          'dbz': dbz
         },
         'geometry': { 'type': 'Polygon', 'coordinates': [ring] }
       });
 
-      if (cell.movement_vector && cell.movement_vector.length === 2) {
+      var vecMov = cell.vettore_movimento || cell.movement_vector;
+      if (vecMov && vecMov.length === 2) {
         vectorFeatures.push({
           'type': 'Feature',
           'properties': { 'type': 'blue' },
           'geometry': {
             'type': 'LineString',
-            'coordinates': [[cell.movement_vector[0][1], cell.movement_vector[0][0]], [cell.movement_vector[1][1], cell.movement_vector[1][0]]]
+            'coordinates': [[vecMov[0][1], vecMov[0][0]], [vecMov[1][1], vecMov[1][0]]]
           }
         });
       }
 
-      if (cell.predictive_vector && cell.predictive_vector.length === 2) {
+      var vecPred = cell.vettore_predittivo || cell.predictive_vector;
+      if (vecPred && vecPred.length === 2) {
         vectorFeatures.push({
           'type': 'Feature',
           'properties': { 'type': 'red' },
           'geometry': {
             'type': 'LineString',
-            'coordinates': [[cell.predictive_vector[0][1], cell.predictive_vector[0][0]], [cell.predictive_vector[1][1], cell.predictive_vector[1][0]]]
+            'coordinates': [[vecPred[0][1], vecPred[0][0]], [vecPred[1][1], vecPred[1][0]]]
           }
         });
       }
 
-      if (cell.centroid) {
+      var centroide = cell.centroide || cell.centroid;
+      if (centroide) {
         centroidFeatures.push({
           'type': 'Feature',
-          'properties': {
-            'id': cell.id || 'TC',
-            'dbz': dbz,
-            'stage': cell.stage || 'In osservazione',
-            'wind': cell.wind_speed_kmh || 0,
-            'eta': cell.eta_target || 'N/A'
-          },
-          'geometry': { 'type': 'Point', 'coordinates': [cell.centroid[1], cell.centroid[0]] }
+          'properties': { 'id': cell.id || 'TC' },
+          'geometry': { 'type': 'Point', 'coordinates': [centroide[1], centroide[0]] }
         });
       }
     });
 
     if (cellFeatures.length > 0) {
       map.addSource('cells-src', { 'type': 'geojson', 'data': { 'type': 'FeatureCollection', 'features': cellFeatures } });
-      
       map.addLayer({
         'id': 'cells-3d-walls',
         'type': 'fill-extrusion',
@@ -180,7 +158,6 @@
           'fill-extrusion-opacity': 0.35
         }
       });
-
       map.addLayer({
         'id': 'cells-3d-top',
         'type': 'fill-extrusion',
@@ -224,14 +201,6 @@
           'circle-stroke-width': 3,
           'circle-stroke-color': '#22c55e'
         }
-      });
-
-      map.on('click', 'centroid-green-circle', function (e) {
-        var p = e.features[0].properties;
-        new maplibregl.Popup()
-          .setLngLat(e.lngLat)
-          .setHTML(`<b>ID:</b> ${p.id}<br><b>Riflettività:</b> ${p.dbz} dBZ<br><b>Stadio:</b> ${p.stage}<br><b>ETA:</b> ${p.eta}`)
-          .addTo(map);
       });
     }
   }
