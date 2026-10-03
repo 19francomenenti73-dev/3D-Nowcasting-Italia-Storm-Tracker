@@ -1,5 +1,7 @@
 {
-  "timestamp": "2026-10-03T13:35:43.390378+00:00",
-  "radar_path": "/v2/radar/c2e874592f87",
+  "timestamp": "2026-10-03T13:52:20.150725+00:00",
+  "percorso_radar": "/v2/radar/8d4ea6433da2",
+  "radar_path": "/v2/radar/8d4ea6433da2",
+  "cellule": [],
   "cells": []
 }
