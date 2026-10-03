@@ -97,7 +97,9 @@ def process_live_radar():
                 cells.append({
                     "id": f"TC_{idx+1:03d}",
                     "centroid": [round(lat_c, 4), round(lon_c, 4)],
+                    "centroide": [round(lat_c, 4), round(lon_c, 4)],
                     "contour_real": poly_coords,
+                    "contorno_reale": poly_coords,
                     "max_dbz": max_dbz,
                     "echo_top_km": echo_top,
                     "vil": vil,
@@ -105,7 +107,9 @@ def process_live_radar():
                     "stage": stage,
                     "wind_speed_kmh": wind_speed,
                     "movement_vector": mov_vec,
+                    "vettore_movimento": mov_vec,
                     "predictive_vector": pred_vec,
+                    "vettore_predittivo": pred_vec,
                     "eta_target": "Settore Interno / Costa (<20 min)"
                 })
     except Exception as e:
@@ -113,14 +117,19 @@ def process_live_radar():
 
     output = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
+        "percorso_radar": radar_path,
         "radar_path": radar_path,
+        "cellule": cells,
         "cells": cells
     }
     
-    with open("storm_cells.json", "w") as f:
-        json.dump(output, f, indent=2)
-    print(f"Salvato storm_cells.json con {len(cells)} celle reali.")
+    # Salva sia col nome italiano che inglese per garantire la compatibilità totale
+    for filename in ["celle_tempestose.json", "storm_cells.json"]:
+        with open(filename, "w") as f:
+            json.dump(output, f, indent=2)
+            
+    print(f"Generati file JSON ('celle_tempestose.json' e 'storm_cells.json') con {len(cells)} celle reali.")
 
 if __name__ == "__main__":
     process_live_radar()
-    
+                
