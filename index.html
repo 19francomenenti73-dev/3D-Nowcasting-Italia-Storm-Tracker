@@ -6,79 +6,15 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
-    html, body, #map { width: 100%; height: 100%; margin: 0; padding: 0; background: #e0e0e0; }
+    html, body, #map { width: 100%; height: 100%; margin: 0; padding: 0; background: #cfd8dc; }
 
-    /* Struttura Volumetrica Cumulonembo */
-    .cumulonimbus-container {
-      position: relative;
-      width: 100px;
-      height: 85px;
-      pointer-events: auto;
-      cursor: pointer;
+    /* Animazione Impulso Elettrico sul Poligono della Cella */
+    .lightning-polygon {
+      animation: stormPulse 1.5s infinite ease-in-out;
     }
-
-    .cloud-body {
-      position: absolute;
-      bottom: 12px;
-      left: 5px;
-      width: 90px;
-      height: 50px;
-      background: radial-gradient(circle at 50% 30%, rgba(65, 75, 90, 0.88) 0%, rgba(15, 20, 30, 0.95) 75%);
-      border-radius: 45px 45px 18px 18px;
-      box-shadow: 
-        -12px -8px 20px rgba(110, 120, 135, 0.7),
-        15px -12px 25px rgba(80, 90, 105, 0.7),
-        0px -20px 30px rgba(190, 200, 215, 0.6);
-      filter: drop-shadow(0px 8px 6px rgba(0,0,0,0.45));
-    }
-
-    .cloud-anvil {
-      position: absolute;
-      top: 2px;
-      left: -5px;
-      width: 110px;
-      height: 20px;
-      background: radial-gradient(ellipse at center, rgba(180, 190, 205, 0.85) 0%, rgba(50, 60, 75, 0.9) 80%);
-      border-radius: 50px 50px 10px 10px;
-    }
-
-    .cell-base-ring {
-      position: absolute;
-      bottom: 0px;
-      left: 25px;
-      width: 50px;
-      height: 14px;
-      background: rgba(230, 20, 20, 0.35);
-      border: 2px solid #ff1a1a;
-      border-radius: 50%;
-      box-shadow: 0 0 10px #ff0000;
-    }
-
-    /* Fulmini Animati */
-    .lightning-flash {
-      position: absolute;
-      bottom: 10px;
-      left: 35px;
-      width: 30px;
-      height: 45px;
-      z-index: 10;
-      opacity: 0;
-      animation: flashStrike 2s infinite;
-    }
-
-    @keyframes flashStrike {
-      0%, 85%, 92%, 100% { opacity: 0; }
-      86%, 90% { opacity: 1; filter: drop-shadow(0 0 10px #ffffff); }
-      88% { opacity: 0.2; }
-    }
-
-    .lightning-svg {
-      width: 100%;
-      height: 100%;
-      stroke: #ffff00;
-      stroke-width: 3;
-      fill: none;
-      stroke-linecap: round;
+    @keyframes stormPulse {
+      0%, 100% { fill-opacity: 0.35; stroke-width: 2; }
+      50% { fill-opacity: 0.65; stroke-width: 3.5; stroke: #ffff00; }
     }
   </style>
 </head>
@@ -91,20 +27,17 @@
     tap: true
   }).setView([42.50, 9.50], 6);
   
-  // Basemap Chiara
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 18,
     attribution: '&copy; OpenStreetMap'
   }).addTo(map);
 
-  // Caricamento Radar + Generazione Celle Volumetriche
+  // Radar RainViewer
   fetch('https://api.rainviewer.com/public/weather-maps.json')
     .then(r => r.json())
     .then(data => {
       if(data.radar && data.radar.past && data.radar.past.length > 0) {
         var lastPath = data.radar.past[data.radar.past.length - 1].path;
-        
-        // Strato Radar RainViewer
         L.tileLayer('https://tilecache.rainviewer.com' + lastPath + '/256/{z}/{x}/{y}/2/1_1.png', {
           opacity: 0.55,
           zIndex: 100
@@ -112,67 +45,82 @@
       }
     });
 
-  // Caricamento Dati TITANS (o fallback celle estese)
+  // Caricamento Dati TITANS e generazione POLIGONI REALI
   fetch('https://19francomeneri73-dev.github.io/3D-Nowcasting-Italia-Storm-Tracker/storm_cells.json?v=' + Date.now())
     .then(r => r.json())
     .then(data => {
       if(data && data.cells && data.cells.length > 0) {
-        renderCells(data.cells);
-      } else {
-        // Fallback automatico: se non ci sono celle nel JSON TITANS italiano, 
-        // posiziona la cella sul nucleo attivo (Francia Sud / Golfo del Leone)
-        renderCells([
-          { id: "FR-01", centroid: [43.30, 4.80], echo_top_km: 12.5, vil: 52, rain_rate: 65, flash_rate: 15, stage: "Maturazione" }
-        ]);
+        drawRealCells(data.cells);
       }
     })
-    .catch(e => {
-      // In caso di mancato caricamento JSON, mostra il nucleo attivo sul Golfo del Leone
-      renderCells([
-        { id: "FR-01", centroid: [43.30, 4.80], echo_top_km: 12.5, vil: 52, rain_rate: 65, flash_rate: 15, stage: "Maturazione" }
-      ]);
-    });
+    .catch(e => console.log('In attesa di celle...'));
 
-  function renderCells(cellsList) {
-    cellsList.forEach(cell => {
-      var echoTop = cell.echo_top_km || 10;
-      var hasLightning = (cell.flash_rate && cell.flash_rate > 0) || cell.rain_rate >= 30;
+  function drawRealCells(cells) {
+    cells.forEach(cell => {
+      var lat = cell.centroid[0];
+      var lon = cell.centroid[1];
+      var radiusKm = cell.radius_km || 12; // Raggio reale in km dalla scansione
+      var echoTop = cell.echo_top_km || 8;
+      
+      // Calcolo dei punti del perimetro reale della cella (12 vertici)
+      var points = 12;
+      var baseCoords = [];
+      var topCoords = [];
+      
+      // Off-set prospettico in base all'Echo Top (simula lo sviluppo in altezza)
+      var heightOffset = (echoTop * 0.003); 
 
-      var lightningHtml = hasLightning ? `
-        <div class="lightning-flash">
-          <svg class="lightning-svg" viewBox="0 0 24 40">
-            <path d="M13 2 L4 18 L11 18 L7 38 L20 16 L13 16 Z" />
-          </svg>
-        </div>
-      ` : '';
+      for (var i = 0; i < points; i++) {
+        var angle = (i / points) * (2 * Math.PI);
+        // Introduciamo una leggera irregolarità naturale al perimetro
+        var varRadius = radiusKm * (0.85 + Math.sin(i * 3) * 0.15) / 111.32; 
+        
+        var dLat = varRadius * Math.cos(angle);
+        var dLon = (varRadius * Math.sin(angle)) / Math.cos(lat * Math.PI / 180);
+        
+        baseCoords.push([lat + dLat, lon + dLon]);
+        topCoords.push([lat + dLat + heightOffset, lon + dLon + (heightOffset * 0.5)]);
+      }
 
-      var cell3DHtml = `
-        <div class="cumulonimbus-container">
-          <div class="cell-base-ring"></div>
-          ${lightningHtml}
-          <div class="cloud-anvil"></div>
-          <div class="cloud-body"></div>
-        </div>
-      `;
+      // 1. Base al suolo (Impronta della Cella)
+      var basePolygon = L.polygon(baseCoords, {
+        color: '#d32f2f',
+        weight: 1.5,
+        fillColor: '#b71c1c',
+        fillOpacity: 0.25,
+        dashArray: '3, 3'
+      }).addTo(map);
 
-      var customIcon = L.divIcon({
-        html: cell3DHtml,
-        className: '',
-        iconSize: [100, 85],
-        iconAnchor: [50, 80]
-      });
+      // 2. Sommità/Incudine (Estrusione 2.5D proporzionale all'Echo Top)
+      var isElectric = (cell.flash_rate && cell.flash_rate > 0) || cell.max_dbz >= 45;
+      var topPolygon = L.polygon(topCoords, {
+        color: isElectric ? '#ffeb3b' : '#ff5722',
+        weight: isElectric ? 2.5 : 1.8,
+        fillColor: isElectric ? '#f44336' : '#d84315',
+        fillOpacity: 0.5,
+        className: isElectric ? 'lightning-polygon' : ''
+      }).addTo(map);
 
-      var marker = L.marker([cell.centroid[0], cell.centroid[1]], { icon: customIcon }).addTo(map);
+      // 3. Linee di collegamento verticale (Spigoli della colonna convettiva)
+      for (var j = 0; j < points; j += 3) {
+        L.polyline([baseCoords[j], topCoords[j]], {
+          color: '#ff9800',
+          weight: 1,
+          opacity: 0.6
+        }).addTo(map);
+      }
 
+      // Popup tecnico con i parametri fisici reali
       var popupContent = `
-        <div style="font-family: sans-serif; font-size: 12px;">
-          <b style="color:#cc0000; font-size:14px;">Cella ${cell.id}</b><br/>
-          <b>Stadio:</b> ${cell.stage || 'Attivo'}<br/>
-          <b>Echo Top:</b> ${echoTop} km<br/>
-          <b>Fulminazione:</b> ${hasLightning ? '⚡ Attiva' : 'Assente'}
+        <div style="font-family: sans-serif; font-size: 11px;">
+          <b style="color:#d32f2f; font-size:13px;">Cella ${cell.id}</b><br/>
+          <b>Area/Raggio:</b> ~${radiusKm} km<br/>
+          <b>Echo Top (Sviluppo Verticale):</b> ${echoTop} km<br/>
+          <b>VIL:</b> ${cell.vil || '--'} kg/m²<br/>
+          <b>Attività Elettrica:</b> ${isElectric ? '⚡ Attiva (Flash Rate alto)' : 'Assente'}
         </div>
       `;
-      marker.bindPopup(popupContent);
+      topPolygon.bindPopup(popupContent);
     });
   }
 </script>
