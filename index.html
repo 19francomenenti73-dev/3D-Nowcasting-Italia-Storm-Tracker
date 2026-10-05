@@ -128,7 +128,7 @@
                         .bindPopup(popupContent)
                         .addTo(cellsLayer);
                 });
-            } e {
+            } catch (e) {
                 console.error("Errore caricamento storm_cells.json:", e);
             }
         }
