@@ -31,7 +31,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             color: #1e293b;
             display: flex;
             align-items: center;
@@ -48,7 +48,7 @@
 
     <div id="map"></div>
     <div id="counter-badge" class="tracker-counter">
-        <span>Storm Tracker: Caricamento in corso...</span>
+        <span>Inizializzazione Tracker...</span>
     </div>
 
     <!-- Leaflet JS -->
@@ -65,13 +65,13 @@
             maxZoom: 18
         }).addTo(map);
 
+        // Caricamento tile radar di sfondo
         fetch('https://api.rainviewer.com/public/weather-maps.json')
             .then(res => res.json())
             .then(data => {
                 if (data.radar && data.radar.past && data.radar.past.length > 0) {
                     const latestRadar = data.radar.past[data.radar.past.length - 1];
-                    const radarHost = data.host;
-                    L.tileLayer(`${radarHost}${latestRadar.path}/256/{z}/{x}/{y}/2/1_1.png`, {
+                    L.tileLayer(`${data.host}${latestRadar.path}/256/{z}/{x}/{y}/2/1_1.png`, {
                         opacity: 0.55,
                         zIndex: 200,
                         attribution: '&copy; RainViewer'
@@ -81,10 +81,20 @@
             .catch(err => console.log("Errore tile radar:", err));
 
         function loadStormCells() {
-            fetch('storm_cells.json?t=' + new Date().getTime())
-                .then(response => response.json())
+            // Tentativo di lettura del file JSON generato dal backend
+            const jsonUrl = 'storm_cells.json?t=' + new Date().getTime();
+            
+            fetch(jsonUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`File JSON non trovato (${response.status})`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    if (!data.macro_structures) return;
+                    if (!data.macro_structures) {
+                        throw new Error("Struttura JSON non valida");
+                    }
 
                     const count = data.macro_structures.length;
                     document.getElementById('counter-badge').innerHTML = `
@@ -142,13 +152,17 @@
                         `;
                         marker.bindPopup(popupContent);
                     });
-                }
-            })
-            .catch(error => console.error("Errore caricamento storm_cells.json:", error));
+                })
+                .catch(error => {
+                    console.error("Errore di caricamento:", error);
+                    document.getElementById('counter-badge').innerHTML = `
+                        <span style="width: 10px; height: 10px; background-color: #ef4444; border-radius: 50%; display: inline-block;"></span>
+                        <b style="color: #dc2626;">Errore:</b> ${error.message}
+                    `;
+                });
         }
 
         loadStormCells();
-        setInterval(loadStormCells, 300000);
     </script>
 </body>
 </html>
