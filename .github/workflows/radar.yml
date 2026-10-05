@@ -26,13 +26,13 @@ jobs:
           pip install requests numpy opencv-python-headless Pillow
 
       - name: Run tracker script
-        run: python tracker.py
+        run: python process_radar.py
 
       - name: Commit and push changes
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-          git add centroids.json profiles/
+          git add storm_cells.json profiles/
           git status
           git diff --staged --quiet || git commit -m "Auto-update 3D radar data and profiles [skip ci]"
           git push || echo "Nessun aggiornamento da inviare o push già allineato"
