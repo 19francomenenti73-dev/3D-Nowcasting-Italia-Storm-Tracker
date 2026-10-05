@@ -3,5 +3,42 @@
     "host": "https://tilecache.rainviewer.com",
     "path": "/v2/radar/1710000000"
   },
-  "macro_structures": []
+  "macro_structures": [
+    {
+      "id": "Storm-Alps-01",
+      "center": [46.2, 9.8],
+      "speed_kmh": 55,
+      "direction_deg": 70,
+      "intensity": ">= 45 dBZ — Temporale Forte",
+      "vil": 48.2,
+      "echo_top": 13.5,
+      "profile_image": "",
+      "actual_path": [[46.0, 9.2], [46.1, 9.5], [46.2, 9.8]],
+      "forecast_path": [[46.3, 10.2], [46.4, 10.6], [46.5, 11.0]]
+    },
+    {
+      "id": "Storm-France-02",
+      "center": [47.5, 3.2],
+      "speed_kmh": 60,
+      "direction_deg": 45,
+      "intensity": ">= 50 dBZ — Supercella",
+      "vil": 55.0,
+      "echo_top": 14.8,
+      "profile_image": "",
+      "actual_path": [[47.1, 2.5], [47.3, 2.8], [47.5, 3.2]],
+      "forecast_path": [[47.7, 3.7], [47.9, 4.2], [48.1, 4.7]]
+    },
+    {
+      "id": "Storm-Rome-03",
+      "center": [41.9, 12.5],
+      "speed_kmh": 40,
+      "direction_deg": 120,
+      "intensity": ">= 38 dBZ — Convezione Locale",
+      "vil": 32.1,
+      "echo_top": 10.5,
+      "profile_image": "",
+      "actual_path": [[41.8, 12.3], [41.85, 12.4], [41.9, 12.5]],
+      "forecast_path": [[41.95, 12.65], [42.0, 12.8], [42.05, 12.95]]
+    }
+  ]
 }
