@@ -179,7 +179,7 @@ def analyze_radar():
                     
                     for cnt in contours:
                         area = cv2.contourArea(cnt)
-                        if area > 60: # Soglia pulita per evitare micro-rumore
+                        if area > 35: # Soglia ottimizzata per non perdere celle isolate e forti di medie dimensioni
                             x_c, y_c, w, h = cv2.boundingRect(cnt)
                             
                             x_min = max(0, int(x_c))
@@ -191,7 +191,6 @@ def analyze_radar():
                             grid_matrix = []
                             max_grid_val = 2
                             
-                            # Ancoraggio millimetrico sul pixel di picco massimo di riflettività
                             peak_local_x = w // 2
                             peak_local_y = h // 2
                             highest_val_found = -1
@@ -221,85 +220,86 @@ def analyze_radar():
                                         row_vals.append(val)
                                 grid_matrix.append(row_vals)
 
-                            # Centroide ancorato rigorosamente sul picco di massima intensità radar
-                            exact_px = x_min + peak_local_x
-                            exact_py = y_min + peak_local_y
-                            lat, lon = tile_pixel_to_latlon(z, x, y, exact_px, exact_py)
+                            # Filtro rigoroso: elabora solo nuclei che superano la soglia >= 32 dBZ (max_grid_val >= 4)
+                            if max_grid_val >= 4:
+                                exact_px = x_min + peak_local_x
+                                exact_py = y_min + peak_local_y
+                                lat, lon = tile_pixel_to_latlon(z, x, y, exact_px, exact_py)
 
-                            if 36.0 <= lat <= 48.5 and -9.5 <= lon <= 26.0:
-                                convective_type = classify_storm_morphology(cnt, area, w, h)
+                                if 36.0 <= lat <= 48.5 and -9.5 <= lon <= 26.0:
+                                    convective_type = classify_storm_morphology(cnt, area, w, h)
 
-                                dbz_mapping = {
-                                    12: "58 dBZ (Estremo / Magenta)",
-                                    10: "52 dBZ (Molto Elevato / Rosso)",
-                                    8:  "44 dBZ (Elevato / Giallo)",
-                                    6:  "38 dBZ (Moderato / Verde)",
-                                    4:  "32 dBZ (Debole / Ciano)",
-                                    2:  "26 dBZ (Molto Debole / Blu)"
-                                }
-                                intensity_str = dbz_mapping.get(max_grid_val, f"{20 + max_grid_val*2} dBZ")
+                                    dbz_mapping = {
+                                        12: "58 dBZ (Estremo / Magenta)",
+                                        10: "52 dBZ (Molto Elevato / Rosso)",
+                                        8:  "44 dBZ (Elevato / Giallo)",
+                                        6:  "38 dBZ (Moderato / Verde)",
+                                        4:  "32 dBZ (Debole / Ciano)",
+                                        2:  "26 dBZ (Molto Debole / Blu)"
+                                    }
+                                    intensity_str = dbz_mapping.get(max_grid_val, f"{20 + max_grid_val*2} dBZ")
 
-                                approx_dbz = 20 + (max_grid_val * 3.1)
-                                z_param = 10.0 ** (approx_dbz / 10.0)
-                                rain_rate_val = round(max(0.0, (z_param / 200.0) ** (1.0 / 1.6)), 1)
-                                accumulation_val = round(rain_rate_val * 0.4 + (area * 0.05), 1)
+                                    approx_dbz = 20 + (max_grid_val * 3.1)
+                                    z_param = 10.0 ** (approx_dbz / 10.0)
+                                    rain_rate_val = round(max(0.0, (z_param / 200.0) ** (1.0 / 1.6)), 1)
+                                    accumulation_val = round(rain_rate_val * 0.4 + (area * 0.05), 1)
 
-                                hull = cv2.convexHull(cnt)
-                                hull_area = cv2.contourArea(hull)
-                                solidity = float(area) / hull_area if hull_area > 0 else 1.0
-                                confidence_score = round(min(98.5, max(65.0, 50.0 + (area * 0.03) + (max_grid_val * 2.0) + (solidity * 20))), 1)
-                                confidence_str = f"{confidence_score}% (Alta Affidabilità)" if confidence_score > 78 else f"{confidence_score}% (Moderata)"
+                                    hull = cv2.convexHull(cnt)
+                                    hull_area = cv2.contourArea(hull)
+                                    solidity = float(area) / hull_area if hull_area > 0 else 1.0
+                                    confidence_score = round(min(98.5, max(65.0, 50.0 + (area * 0.03) + (max_grid_val * 2.0) + (solidity * 20))), 1)
+                                    confidence_str = f"{confidence_score}% (Alta Affidabilità)" if confidence_score > 78 else f"{confidence_score}% (Moderata)"
 
-                                vil_val = round(min(70.0, 8.0 + (max_grid_val * 3.5) + (area * 0.1)), 1)
-                                echo_top_val = round(min(16.0, 6.0 + (max_grid_val * 0.6) + (area * 0.02)), 1)
-                                speed_val = int(30 + (max_grid_val * 2) + (area % 20))
-                                direction_deg = int((lat * 22 + lon * 18) % 360)
-                                
-                                rad_dir = np.radians(direction_deg)
-                                
-                                actual_path = []
-                                for t_hours in [-0.5, -0.25, 0.0]:
-                                    dist_km = speed_val * t_hours
-                                    d_lat = dist_km * deg_per_km * np.cos(rad_dir)
-                                    d_lon = dist_km * deg_per_km * np.sin(rad_dir) / np.cos(np.radians(lat))
-                                    actual_path.append([lat + d_lat, lon + d_lon])
+                                    vil_val = round(min(70.0, 8.0 + (max_grid_val * 3.5) + (area * 0.1)), 1)
+                                    echo_top_val = round(min(16.0, 6.0 + (max_grid_val * 0.6) + (area * 0.02)), 1)
+                                    speed_val = int(30 + (max_grid_val * 2) + (area % 20))
+                                    direction_deg = int((lat * 22 + lon * 18) % 360)
+                                    
+                                    rad_dir = np.radians(direction_deg)
+                                    
+                                    actual_path = []
+                                    for t_hours in [-0.5, -0.25, 0.0]:
+                                        dist_km = speed_val * t_hours
+                                        d_lat = dist_km * deg_per_km * np.cos(rad_dir)
+                                        d_lon = dist_km * deg_per_km * np.sin(rad_dir) / np.cos(np.radians(lat))
+                                        actual_path.append([lat + d_lat, lon + d_lon])
 
-                                forecast_path = [[lat, lon]]
-                                for t_hours in [0.25, 0.5, 0.75, 1.0]:
-                                    dist_km = speed_val * t_hours
-                                    d_lat = dist_km * deg_per_km * np.cos(rad_dir)
-                                    d_lon = dist_km * deg_per_km * np.sin(rad_dir) / np.cos(np.radians(lat))
-                                    forecast_path.append([lat + d_lat, lon + d_lon])
+                                    forecast_path = [[lat, lon]]
+                                    for t_hours in [0.25, 0.5, 0.75, 1.0]:
+                                        dist_km = speed_val * t_hours
+                                        d_lat = dist_km * deg_per_km * np.cos(rad_dir)
+                                        d_lon = dist_km * deg_per_km * np.sin(rad_dir) / np.cos(np.radians(lat))
+                                        forecast_path.append([lat + d_lat, lon + d_lon])
 
-                                track_id = f"Core-Z5-{cell_id_counter}"
-                                img_filename = f"profiles/{track_id}.png"
-                                save_iso_profile_image(grid_matrix, img_filename)
+                                    track_id = f"Core-Z5-{cell_id_counter}"
+                                    img_filename = f"profiles/{track_id}.png"
+                                    save_iso_profile_image(grid_matrix, img_filename)
 
-                                data_item = {
-                                    "id": track_id,
-                                    "center": [lat, lon],
-                                    "speed_kmh": speed_val,
-                                    "direction_deg": direction_deg,
-                                    "intensity": intensity_str,
-                                    "convective_type": convective_type,
-                                    "vil": vil_val,
-                                    "echo_top": echo_top_val,
-                                    "rain_rate_h": rain_rate_val,
-                                    "total_accumulation_mm": accumulation_val,
-                                    "confidence": confidence_str,
-                                    "profile_image": img_filename,
-                                    "actual_path": actual_path,
-                                    "forecast_path": forecast_path
-                                }
-                                
-                                if not any(abs(c["center"][0] - lat) < 0.15 and abs(c["center"][1] - lon) < 0.15 for c in macro_structures):
-                                    macro_structures.append(data_item)
-                                    cell_id_counter += 1
+                                    data_item = {
+                                        "id": track_id,
+                                        "center": [lat, lon],
+                                        "speed_kmh": speed_val,
+                                        "direction_deg": direction_deg,
+                                        "intensity": intensity_str,
+                                        "convective_type": convective_type,
+                                        "vil": vil_val,
+                                        "echo_top": echo_top_val,
+                                        "rain_rate_h": rain_rate_val,
+                                        "total_accumulation_mm": accumulation_val,
+                                        "confidence": confidence_str,
+                                        "profile_image": img_filename,
+                                        "actual_path": actual_path,
+                                        "forecast_path": forecast_path
+                                    }
+                                    
+                                    if not any(abs(c["center"][0] - lat) < 0.15 and abs(c["center"][1] - lon) < 0.15 for c in macro_structures):
+                                        macro_structures.append(data_item)
+                                        cell_id_counter += 1
             except Exception as tile_err:
                 print(f"Nota tile: {tile_err}")
 
-        # Selezioniamo i nuclei più significativi ordinati per intensità
-        macro_structures = sorted(macro_structures, key=lambda x: x["vil"], reverse=True)[:5]
+        # Ordinamento per intensità ma SENZA ALCUN TAGLIO: elabora e restituisce tutti i nuclei trovati
+        macro_structures = sorted(macro_structures, key=lambda x: x["vil"], reverse=True)
 
         if not macro_structures:
             create_fallback_data("Nessun nucleo intenso nell'area")
@@ -319,4 +319,4 @@ def analyze_radar():
 if __name__ == "__main__":
     analyze_radar()
     sys.exit(0)
-    
+                                    
