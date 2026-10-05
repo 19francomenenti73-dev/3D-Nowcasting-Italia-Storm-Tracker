@@ -88,13 +88,12 @@
 
         L.control.zoom({ position: 'topright' }).addTo(map);
 
-        // Mappa di base stradale/orografica
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
             maxZoom: 18
         }).addTo(map);
 
-        // UNICA AGGIUNTA: Livello Satellitare in Trasparenza
+        // Livello Satellitare in Trasparenza
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Source: Esri, Maxar, Earthstar Geographics',
             maxZoom: 18,
