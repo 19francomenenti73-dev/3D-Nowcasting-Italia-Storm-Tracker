@@ -35,16 +35,16 @@ def save_iso_profile_image(grid_data, filename):
         rows = len(grid_data) if grid_data else 0
         cols = len(grid_data[0]) if rows > 0 else 0
         
-        # Dimensioni dinamiche della canvas in base alla grandezza reale della cella
-        img_w = max(180, cols * 5 + 60)
-        img_h = max(110, rows * 3 + cols * 2 + 40)
+        # Canvas dinamico calibrato sull'estensione reale della cella
+        img_w = max(160, cols * 6 + 50)
+        img_h = max(100, rows * 3 + cols * 3 + 30)
         
         img = Image.new("RGBA", (img_w, img_h), (0, 0, 0, 0))
         draw = ImageDraw.Draw(img)
         
         if rows > 0 and cols > 0:
-            tileW = 7
-            tileH = 3.5
+            tileW = 8
+            tileH = 4
             startX = img_w // 2
             startY = 15
 
@@ -60,13 +60,13 @@ def save_iso_profile_image(grid_data, filename):
             for r in range(rows):
                 for c in range(cols):
                     val = grid_data[r][c]
-                    if val >= 4:  # Mostra dal ciano in su per coprire tutta la struttura della cella
+                    if val > 0:
                         isoX = startX + (c - r) * (tileW / 2)
                         isoY = startY + (c + r) * (tileH / 2)
                         color = get_color(val)
                         if color:
                             for h in range(val):
-                                hY = isoY - (h * 2.5)
+                                hY = isoY - (h * 3.2)  # Altezza tridimensionale proporzionale alla riflettività
                                 draw.ellipse([isoX - 2.5, hY - 2.5, isoX + 2.5, hY + 2.5], fill=color)
 
         img.save(filename, format="PNG")
@@ -181,7 +181,7 @@ def analyze_radar():
                                     [lat + lat_dir * step_dist * 24, lon + lon_dir * step_dist * 24]
                                 ]
 
-                                # Estrazione dell'INTERA cella basata sulla bounding box reale (w, h) anziché blocco fisso 15x15
+                                # Estrazione dell'intera cella basata sui limiti geometrici effettivi
                                 x_min = max(0, int(x_c))
                                 x_max = min(arr.shape[1], int(x_c + w))
                                 y_min = max(0, int(y_c))
@@ -196,12 +196,12 @@ def analyze_radar():
                                         if pa < 50:
                                             row_vals.append(0)
                                         else:
-                                            if pr > 200 and pb > 200: row_vals.append(12)
-                                            elif pr > 200 and pg < 100: row_vals.append(10)
-                                            elif pr > 200 and pg > 150: row_vals.append(8)
-                                            elif pg > 200: row_vals.append(6)
-                                            elif pb > 200 and pg > 150: row_vals.append(4)
-                                            elif pb > 150: row_vals.append(2)
+                                            if pr > 200 and pb > 200: row_vals.append(12)      # Magenta
+                                            elif pr > 200 and pg < 100: row_vals.append(10)   # Rosso
+                                            elif pr > 200 and pg > 150: row_vals.append(8)    # Giallo
+                                            elif pg > 200: row_vals.append(6)                 # Verde
+                                            elif pb > 200 and pg > 150: row_vals.append(4)    # Ciano
+                                            elif pb > 150: row_vals.append(2)                 # Blu
                                             else: row_vals.append(1)
                                     grid_matrix.append(row_vals)
 
@@ -248,4 +248,4 @@ def analyze_radar():
 if __name__ == "__main__":
     analyze_radar()
     sys.exit(0)
-        
+    
