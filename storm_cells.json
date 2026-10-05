@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-10-05T01:37:04.172583+00:00",
-  "percorso_radar": "/v2/radar/3f4f143d85bb",
-  "radar_path": "/v2/radar/3f4f143d85bb",
-  "cellule": [],
-  "cells": []
+  "radar_tile": {
+    "host": "https://tilecache.rainviewer.com",
+    "path": "/v2/radar/1710000000"
+  },
+  "macro_structures": []
 }
