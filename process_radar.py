@@ -35,17 +35,17 @@ def save_iso_profile_image(grid_data, filename):
         rows = len(grid_data) if grid_data else 0
         cols = len(grid_data[0]) if rows > 0 else 0
         
-        img_w = max(160, cols * 6 + 50)
-        img_h = max(100, rows * 3 + cols * 3 + 30)
+        img_w = 120
+        img_h = 75
         
         img = Image.new("RGBA", (img_w, img_h), (0, 0, 0, 0))
         draw = ImageDraw.Draw(img)
         
         if rows > 0 and cols > 0:
-            tileW = 8
-            tileH = 4
+            tileW = 6
+            tileH = 3
             startX = img_w // 2
-            startY = 15
+            startY = 10
 
             def get_color(val):
                 if val >= 12: return (255, 0, 255, 250)      # Magenta
@@ -65,8 +65,8 @@ def save_iso_profile_image(grid_data, filename):
                         color = get_color(val)
                         if color:
                             for h in range(val):
-                                hY = isoY - (h * 3.2)
-                                draw.ellipse([isoX - 2.5, hY - 2.5, isoX + 2.5, hY + 2.5], fill=color)
+                                hY = isoY - (h * 2.5)
+                                draw.ellipse([isoX - 2, hY - 2, isoX + 2, hY + 2], fill=color)
 
         img.save(filename, format="PNG")
     except Exception as e:
@@ -75,7 +75,7 @@ def save_iso_profile_image(grid_data, filename):
 def create_fallback_data(reason="Standby"):
     default_id = "Core-Standby-01"
     default_img = f"profiles/{default_id}.png"
-    save_iso_profile_image([[0]*15 for _ in range(15)], default_img)
+    save_iso_profile_image([[0]*10 for _ in range(10)], default_img)
     
     data = {
         "generated_at": datetime.utcnow().isoformat() + "Z",
@@ -86,17 +86,15 @@ def create_fallback_data(reason="Standby"):
         "macro_structures": [
             {
                 "id": default_id,
-                "center": [45.0, 10.0],
+                "center": [42.0, 12.5],
                 "speed_kmh": 40,
                 "direction_deg": 45,
                 "intensity": f"Sistema operativo ({reason})",
                 "vil": 0.0,
                 "echo_top": 0.0,
-                "width_px": 15,
-                "height_px": 15,
                 "profile_image": default_img,
-                "actual_path": [[44.9, 9.9], [44.95, 9.95], [45.0, 10.0]],
-                "forecast_path": [[45.0, 10.0], [45.3, 10.3], [45.6, 10.6]]
+                "actual_path": [[41.9, 12.4], [42.0, 12.5]],
+                "forecast_path": [[42.0, 12.5], [42.1, 12.6]]
             }
         ]
     }
@@ -141,7 +139,7 @@ def analyze_radar():
                     
                     for cnt in contours:
                         area = cv2.contourArea(cnt)
-                        if area > 10:
+                        if area > 15:
                             x_c, y_c, w, h = cv2.boundingRect(cnt)
                             lat, lon = tile_pixel_to_latlon(z, x, y, x_c + w / 2.0, y_c + h / 2.0)
                             
@@ -164,17 +162,17 @@ def analyze_radar():
                                 
                                 rad_dir = np.radians(direction_deg)
                                 
-                                # Reale (Storico cumulativo a intervalli di 15 min: -45m, -30m, -15m, 0)
+                                # Storico reale (ultimi 30 minuti)
                                 actual_path = []
-                                for t_hours in [-0.75, -0.5, -0.25, 0.0]:
+                                for t_hours in [-0.5, -0.25, 0.0]:
                                     dist_km = speed_val * t_hours
                                     d_lat = dist_km * deg_per_km * np.cos(rad_dir)
                                     d_lon = dist_km * deg_per_km * np.sin(rad_dir) / np.cos(np.radians(lat))
                                     actual_path.append([lat + d_lat, lon + d_lon])
 
-                                # Predittivo (Fino a 6 ore: +1.5h, +3h, +4.5h, +6h)
+                                # Predittivo a breve termine (1 ora max, step 15 minuti)
                                 forecast_path = [[lat, lon]]
-                                for t_hours in [1.5, 3.0, 4.5, 6.0]:
+                                for t_hours in [0.25, 0.5, 0.75, 1.0]:
                                     dist_km = speed_val * t_hours
                                     d_lat = dist_km * deg_per_km * np.cos(rad_dir)
                                     d_lon = dist_km * deg_per_km * np.sin(rad_dir) / np.cos(np.radians(lat))
@@ -215,8 +213,6 @@ def analyze_radar():
                                     "intensity": f">= 32 dBZ — {classification}",
                                     "vil": vil_val,
                                     "echo_top": echo_top_val,
-                                    "width_px": int(w),
-                                    "height_px": int(h),
                                     "profile_image": img_filename,
                                     "actual_path": actual_path,
                                     "forecast_path": forecast_path
