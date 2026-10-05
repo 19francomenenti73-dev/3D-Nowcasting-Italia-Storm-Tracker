@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nowcasting Italia 3D Storm Chaser Track</title>
+    <title>Nowcasting Europa 3D Storm Chaser Track</title>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <style>
@@ -130,7 +130,7 @@
 
     <div class="map-banner">
         <div class="banner-section">
-            <span><b>Storm Tracker 3D:</b> <span id="active-count" class="counter-badge">0</span> celle attive</span>
+            <span><b>Storm Tracker Europa:</b> <span id="active-count" class="counter-badge">0</span> celle attive</span>
             <span id="last-update" style="font-size: 11px; color: #64748b; border-left: 1px solid #cbd5e1; padding-left: 10px;">Sincronizzazione...</span>
         </div>
         <div class="banner-section" style="flex-wrap: wrap;">
@@ -144,7 +144,8 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
-        var map = L.map('map', { zoomControl: false }).setView([42.5, 12.5], 6);
+        // Vista centrata sull'Europa (Lat: 48.0, Lng: 10.0, Zoom: 4)
+        var map = L.map('map', { zoomControl: false }).setView([48.0, 10.0], 4);
         L.control.zoom({ position: 'topright' }).addTo(map);
 
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
@@ -175,22 +176,6 @@
             vectorsLayer.clearLayers();
 
             let structures = data.macro_structures || [];
-
-            if (structures.length === 0) {
-                structures = [{
-                    "id": "Core-Test-Roma",
-                    "center": [41.90, 12.50],
-                    "speed_kmh": 45,
-                    "direction_deg": 65,
-                    "intensity": ">= 32 dBZ — Test Operativo",
-                    "vil": 35.4,
-                    "echo_top": 11.2,
-                    "profile_image": "",
-                    "actual_path": [[41.82, 12.35], [41.85, 12.40], [41.88, 12.45], [41.90, 12.50]],
-                    "forecast_path": [[41.93, 12.55], [41.96, 12.60], [41.99, 12.65]]
-                }];
-            }
-
             let count = structures.length;
 
             structures.forEach(track => {
@@ -296,8 +281,9 @@
                     processAndRenderData(data);
                 })
                 .catch(error => {
-                    console.log('Uso fallback:', error);
-                    processAndRenderData({ macro_structures: [] });
+                    console.log('Errore caricamento:', error);
+                    document.getElementById('active-count').innerText = "0";
+                    document.getElementById('last-update').innerText = "Errore dati";
                 });
         }
 
