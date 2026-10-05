@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nowcasting Italia - 3D Storm Tracker & Multi-Risk Dashboard</title>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -26,17 +26,19 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 10px 20px;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(6px);
+            padding: 10px 18px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            font-weight: bold;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            font-weight: 600;
             font-size: 13px;
-            color: #1e293b;
+            color: #f8fafc;
             display: flex;
             align-items: center;
-            gap: 8px;
-            border: 1px solid rgba(0,0,0,0.1);
+            gap: 10px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            white-space: nowrap;
         }
         .custom-storm-marker {
             background: transparent;
@@ -76,20 +78,22 @@
 
     <div id="map"></div>
     <div id="counter-badge" class="tracker-counter">
-        <span>Inizializzazione Multi-Risk Dashboard...</span>
+        <span style="width: 10px; height: 10px; background-color: #38bdf8; border-radius: 50%; display: inline-block;"></span>
+        <span>Caricamento telemetria in corso...</span>
     </div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // Inizializzazione mappa senza forzare il reset dello zoom impostato dall'utente
         const map = L.map('map', {
             zoomControl: false,
             maxZoom: 19
-        }).setView([42.5, 12.5], 6);
+        }).setView([42.5, 12.5], 7);
 
         L.control.zoom({ position: 'topright' }).addTo(map);
 
-        // Risolto il problema dello zoom con maxNativeZoom (evita l'errore tile non supportate)
+        // Tile base Esri
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
             maxZoom: 19,
@@ -111,7 +115,8 @@
             })
             .catch(err => console.log("Errore tile radar:", err));
 
-        // Caricamento celle tempestose con etichetta tecnica professionale
+        const stormLayerGroup = L.layerGroup().addTo(map);
+
         function loadStormCells() {
             const jsonUrl = 'storm_cells.json?t=' + new Date().getTime();
             
@@ -130,169 +135,37 @@
                     const count = data.macro_structures.length;
                     document.getElementById('counter-badge').innerHTML = `
                         <span style="width: 10px; height: 10px; background-color: #22c55e; border-radius: 50%; display: inline-block;"></span>
-                        Storm Tracker: <b>${count}</b> celle attive
+                        <span>Storm Tracker: <b>${count}</b> celle attive</span>
                     `;
 
-                    data.macro_structures.forEach(cell => {
-                        // Estrae il valore numerico dei dBZ dalla stringa di intensità per renderlo pulito nel badge
-                        const dbzShort = cell.intensity ? cell.intensity.split(' ')[0] + ' dBZ' : '';
+                    stormLayerGroup.clearLayers();
 
+                    data.macro_structures.forEach(cell => {
+                        const dbzShort = cell.intensity ? cell.intensity.split(' ')[0] + ' dBZ' : '';
+                        const shortType = cell.convective_type ? cell.convective_type.split(' ')[0] : 'Cella';
+
+                        // Marker ingrandito per garantire la massima visibilità delle celle 3D su smartphone
                         const profileIcon = L.divIcon({
                             className: 'custom-storm-marker',
                             html: `
                                 <div style="text-align: center; pointer-events: auto; cursor: pointer;">
-                                    <img src="${cell.profile_image}" style="width: 80px; height: 48px; display: block; margin: 0 auto; filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.6));" alt="${cell.id}">
-                                    <div style="background: rgba(15, 23, 42, 0.95); color: #38bdf8; padding: 2px 6px; font-size: 10px; font-family: monospace; font-weight: bold; border-radius: 4px; border: 1px solid rgba(56, 189, 248, 0.5); white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.4);">
-                                        <span>${cell.id}</span> • <span style="color: #facc15;">${dbzShort}</span>
+                                    <img src="${cell.profile_image}" style="width: 120px; height: 75px; display: block; margin: 0 auto; filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.85)); image-rendering: crisp-edges;" alt="${cell.id}">
+                                    <div style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(4px); color: #f8fafc; padding: 4px 8px; font-size: 11px; font-family: monospace; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.5); box-shadow: c0 4px 8px rgba(0,0,0,0.6); white-space: nowrap; text-align: left; margin-top: 2px;">
+                                        <div style="font-weight: bold; color: #38bdf8; display: flex; justify-content: space-between; gap: 8px;">
+                                            <span>${cell.id}</span>
+                                            <span style="color: #facc15;">${dbzShort}</span>
+                                        </div>
+                                        <div style="font-size: 9.5px; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.15); margin-top: 3px; padding-top: 2px;">
+                                            ${shortType} • ${cell.speed_kmh} km/h
+                                        </div>
                                     </div>
                                 </div>
                             `,
-                            iconSize: [90, 75],
-                            iconAnchor: [45, 75]
+                            iconSize: [130, 115],
+                            iconAnchor: [65, 115]
                         });
 
-                        const marker = L.marker(cell.center, { icon: profileIcon }).addTo(map);
+                        const marker = L.marker(cell.center, { icon: profileIcon });
 
-                        // Vettore storico effettivo (blu tratteggiato)
-                        if (cell.actual_path && cell.actual_path.length > 0) {
-                            L.polyline(cell.actual_path, { color: '#38bdf8', weight: 3, dashArray: '4, 4', opacity: 0.8 }).addTo(map);
-                        }
-                        // Vettore previsionale (verde continuo)
-                        if (cell.forecast_path && cell.forecast_path.length > 0) {
-                            L.polyline(cell.forecast_path, { color: '#22c55e', weight: 4, opacity: 0.9 }).addTo(map);
-                        }
-
-                        // Cerchio perimetrale di attenzione attorno al centroide di picco
-                        L.circle(cell.center, {
-                            radius: 20000,
-                            color: '#22c55e',
-                            fillColor: '#22c55e',
-                            fillOpacity: 0.08,
-                            weight: 1,
-                            dashArray: '5, 5'
-                        }).addTo(map);
-
-                        // Popup completo di telemetria
-                        const popupContent = `
-                            <div style="font-family: sans-serif; font-size: 13px; line-height: 1.5; color: #1e293b; min-width: 220px;">
-                                <b style="font-size: 14px; color: #0f172a;">ID Cellula:</b> ${cell.id}<br>
-                                <b>Tipologia:</b> <span style="color: #2563eb; font-weight: bold;">${cell.convective_type}</span><br>
-                                <b>Intensità Picco:</b> <span style="color: #dc2626; font-weight: bold;">${cell.intensity}</span><br>
-                                <b>Velocità:</b> ${cell.speed_kmh} km/h<br>
-                                <b>Direzione:</b> ${cell.direction_deg}°<br>
-                                <hr style="margin: 4px 0; border: none; border-top: 1px solid #cbd5e1;">
-                                <b>🌧️️ Rain Rate:</b> <span style="color: #2563eb; font-weight: bold;">${cell.rain_rate_h || 0.0} mm/h</span><br>
-                                <b>💧 Accumulo Stimato:</b> <span style="color: #0284c7; font-weight: bold;">${cell.total_accumulation_mm || 0.0} mm</span><br>
-                                <hr style="margin: 4px 0; border: none; border-top: 1px solid #cbd5e1;">
-                                <b>Echo Top:</b> <span style="color: #d97706; font-weight: bold;">${cell.echo_top} km</span><br>
-                                <b>VIL:</b> ${cell.vil} kg/m²<br>
-                                <b>Attendibilità:</b> <span style="color: #16a34a; font-weight: bold;">${cell.confidence || '92.0% (Alta)'}</span><br>
-                            </div>
-                        `;
-                        marker.bindPopup(popupContent);
-                    });
-                })
-                .catch(error => {
-                    console.error("Errore di caricamento:", error);
-                    document.getElementById('counter-badge').innerHTML = `
-                        <span style="width: 10px; height: 10px; background-color: #ef4444; border-radius: 50%; display: inline-block;"></span>
-                        <b style="color: #dc2626;">Errore:</b> ${error.message}
-                    `;
-                });
-        }
-
-        // Caricamento Terremoti (M >= 3.5: lampeggiante 1 ora, rimpicciolito fino a 24 ore)
-        function loadEarthquakes() {
-            fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
-                .then(res => res.json())
-                .then(data => {
-                    const now = new Date().getTime();
-                    data.features.forEach(quake => {
-                        const mag = quake.properties.mag;
-                        const time = quake.properties.time;
-                        const place = quake.properties.place;
-                        const depth = quake.geometry.coordinates[2];
-                        const coords = [quake.geometry.coordinates[1], quake.geometry.coordinates[0]];
-                        
-                        const diffHours = (now - time) / (1000 * 60 * 60);
-
-                        if (mag >= 3.5 && diffHours <= 24) {
-                            let iconClass = 'quake-aged';
-                            let iconSize = [8, 8];
-                            let iconAnchor = [4, 4];
-
-                            if (diffHours <= 1) {
-                                iconClass = 'quake-active-flash';
-                                iconSize = [16, 16];
-                                iconAnchor = [8, 8];
-                            }
-
-                            const quakeIcon = L.divIcon({
-                                className: iconClass,
-                                iconSize: iconSize,
-                                iconAnchor: iconAnchor
-                            });
-
-                            const marker = L.marker(coords, { icon: quakeIcon }).addTo(map);
-                            const timeAgoMin = Math.round(diffHours * 60);
-
-                            marker.bindPopup(`
-                                <div style="font-family: sans-serif; font-size: 12px; line-height: 1.4; color: #1e293b; min-width: 190px;">
-                                    <b style="color: #dc2626; font-size: 13px;">⚠️ EVENTO SISMICO</b><br>
-                                    <b>Magnitudo:</b> M ${mag.toFixed(1)}<br>
-                                    <b>Località:</b> ${place}<br>
-                                    <b>Profondità:</b> ${depth} km<br>
-                                    <b>Registrato:</b> ${timeAgoMin <= 60 ? timeAgoMin + ' min fa' : Math.round(diffHours) + ' ore fa'}<br>
-                                    <span style="font-size: 10px; color: #64748b;">Soglia M ≥ 3.5 (Open Data)</span>
-                                </div>
-                            `);
-                        }
-                    });
-                })
-                .catch(err => console.log("Errore dati sismici:", err));
-        }
-
-        // Stream Fulmini in tempo reale (Blitzortung WebSocket)
-        function initLightningStream() {
-            try {
-                const ws = new WebSocket('wss://ws1.blitzortung.org:3000/');
-                ws.onopen = function() {
-                    ws.send(JSON.stringify({a: 111}));
-                };
-                ws.onmessage = function(event) {
-                    try {
-                        const pkt = JSON.parse(event.data);
-                        if (pkt && pkt.lat && pkt.lon) {
-                            const lIcon = L.divIcon({
-                                className: 'lightning-icon',
-                                html: '⚡',
-                                iconSize: [14, 14],
-                                iconAnchor: [7, 7]
-                            });
-                            const lMarker = L.marker([pkt.lat, pkt.lon], { icon: lIcon }).addTo(map);
-                            setTimeout(() => {
-                                map.removeLayer(lMarker);
-                            }, 900000); // Scompare dopo 15 minuti
-                        }
-                    } catch(e) {}
-                };
-                ws.onerror = function() {
-                    console.log("Stream fulmini in standby");
-                };
-            } catch(e) {
-                console.log("Modulo fulmini non inizializzato");
-            }
-        }
-
-        // Avvio moduli
-        loadStormCells();
-        loadEarthquakes();
-        initLightningStream();
-
-        // Polling automatico ogni 5 minuti
-        setInterval(() => {
-            loadStormCells();
-        }, 300000);
-    </script>
-</body>
-</html>
+                        // Vettore storico effettivo (bl
+                                                  
