@@ -73,7 +73,6 @@ def save_iso_profile_image(grid_data, filename):
         print(f"Errore generazione immagine profilo {filename}: {e}")
 
 def classify_storm_morphology(cnt, area, w, h):
-    """Analisi morfologica avanzata per identificazione MCS, Bow Echo e Supercelle"""
     hull = cv2.convexHull(cnt)
     hull_area = cv2.contourArea(hull)
     solidity = float(area) / hull_area if hull_area > 0 else 1.0
@@ -146,10 +145,11 @@ def analyze_radar():
         radar_info = {"host": host, "path": path}
         macro_structures = []
         
-        z = 4
+        # Passaggio a Zoom 5 per alta risoluzione e focus mirato su Spagna, Francia, Italia e Balcani
+        z = 5
         tiles_to_check = []
-        for x in range(6, 11):
-            for y in range(3, 8):
+        for x in range(14, 20):  # Longitudine da Spagna a Balcani
+            for y in range(9, 13):   # Latitudine Sud ed Europa Centrale / Mediterraneo
                 tiles_to_check.append((x, y))
 
         cell_id_counter = 1
@@ -172,7 +172,6 @@ def analyze_radar():
                     if not np.any(mask_precipitation):
                         continue
 
-                    # Chiusura morfologica per unire i nuclei vicini ed evitare la frammentazione
                     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (11, 11))
                     mask_closed = cv2.morphologyEx(mask_precipitation.astype(np.uint8) * 255, cv2.MORPH_CLOSE, kernel)
                     
@@ -180,11 +179,13 @@ def analyze_radar():
                     
                     for cnt in contours:
                         area = cv2.contourArea(cnt)
-                        if area > 45:
+                        # Soglia di area alzata per scartare i micro-frammenti e considerare solo nuclei consistenti
+                        if area > 60:
                             x_c, y_c, w, h = cv2.boundingRect(cnt)
                             lat, lon = tile_pixel_to_latlon(z, x, y, x_c + w / 2.0, y_c + h / 2.0)
                             
-                            if 35.0 <= lat <= 60.0 and -10.0 <= lon <= 30.0:
+                            # Filtro geografico rigoroso: Spagna, Francia, Italia e Balcani
+                            if 36.0 <= lat <= 48.5 and -9.5 <= lon <= 26.0:
                                 convective_type = classify_storm_morphology(cnt, area, w, h)
 
                                 x_min = max(0, int(x_c))
@@ -253,7 +254,7 @@ def analyze_radar():
                                     d_lon = dist_km * deg_per_km * np.sin(rad_dir) / np.cos(np.radians(lat))
                                     forecast_path.append([lat + d_lat, lon + d_lon])
 
-                                track_id = f"Core-{z}{x}{y}-{cell_id_counter}"
+                                track_id = f"Core-Z5-{cell_id_counter}"
                                 img_filename = f"profiles/{track_id}.png"
                                 save_iso_profile_image(grid_matrix, img_filename)
 
@@ -272,14 +273,14 @@ def analyze_radar():
                                     "forecast_path": forecast_path
                                 }
                                 
-                                if not any(abs(c["center"][0] - lat) < 0.15 and abs(c["center"][1] - lon) < 0.15 for c in macro_structures):
+                                if not any(abs(c["center"][0] - lat) < 0.12 and abs(c["center"][1] - lon) < 0.12 for c in macro_structures):
                                     macro_structures.append(data_item)
                                     cell_id_counter += 1
             except Exception as tile_err:
                 print(f"Nota tile: {tile_err}")
 
         if not macro_structures:
-            create_fallback_data("Nessun nucleo intenso")
+            create_fallback_data("Nessun nucleo intenso nell'area")
         else:
             data = {
                 "generated_at": datetime.utcnow().isoformat() + "Z",
@@ -296,4 +297,3 @@ def analyze_radar():
 if __name__ == "__main__":
     analyze_radar()
     sys.exit(0)
-                    
