@@ -73,15 +73,14 @@ def save_iso_profile_image(grid_data, filename):
         print(f"Errore generazione immagine profilo {filename}: {e}")
 
 def classify_storm_morphology(cnt, area, w, h):
-    """Analisi morfologica avanzata della forma del cluster radar"""
+    """Analisi morfologica avanzata ad alta sensibilità per sistemi meteorologici severi"""
     hull = cv2.convexHull(cnt)
     hull_area = cv2.contourArea(hull)
     solidity = float(area) / hull_area if hull_area > 0 else 1.0
     aspect_ratio = max(w, h) / (min(w, h) + 1e-5)
     
-    # Calcolo dei difetti di convessità (rientranze, tacche, uncini)
-    hull_indices = cv2.convexHull(cnt, returnPoints=False)
     max_defect_depth = 0
+    hull_indices = cv2.convexHull(cnt, returnPoints=False)
     if hull_indices is not None and len(hull_indices) > 3:
         try:
             defects = cv2.convexityDefects(cnt, hull_indices)
@@ -94,19 +93,19 @@ def classify_storm_morphology(cnt, area, w, h):
         except Exception:
             pass
 
-    # Logica di riconoscimento basata su forma e firme radar
-    if aspect_ratio > 3.2:
-        return "MCS / Linea di Groppo (Squall Line)"
-    elif max_defect_depth > 12 and solidity < 0.65:
-        if area > 250:
-            return "V-Shape / V-Notch (Temporale Severo)"
+    # Criteri affinati per evitare falsi positivi di "cellva isolata" su strutture estese
+    if aspect_ratio > 2.2 or (area > 200 and aspect_ratio > 1.7):
+        if max_defect_depth > 8 and solidity < 0.68:
+            return "Bow Echo / Eco ad Arco (Severo)"
         else:
-            return "Bow Echo (Eco ad Arco)"
-    elif max_defect_depth > 7 and solidity < 0.7:
+            return "MCS / Linea di Groppo (Squall Line)"
+    elif max_defect_depth > 10 and solidity < 0.62:
+        return "V-Shape / V-Notch (Temporale Severo)"
+    elif max_defect_depth > 6 and solidity < 0.7:
         return "Hook Echo (Eco a Uncino / Mesociclone)"
-    elif area > 350 and solidity > 0.72:
+    elif area > 280 and solidity > 0.68:
         return "MCC (Complesso Convettivo a Mesoscala)"
-    elif area > 120 and solidity > 0.6:
+    elif area > 90 and solidity > 0.55:
         return "Supercella Isolata"
     else:
         return "Cella Convettiva Isolata"
@@ -184,7 +183,6 @@ def analyze_radar():
                             lat, lon = tile_pixel_to_latlon(z, x, y, x_c + w / 2.0, y_c + h / 2.0)
                             
                             if 35.0 <= lat <= 60.0 and -10.0 <= lon <= 30.0:
-                                # Classificazione basata sulla morfologia geometrica dell'immagine
                                 convective_type = classify_storm_morphology(cnt, area, w, h)
 
                                 vil_val = round(min(70.0, 10.0 + (area * 0.18)), 1)
@@ -273,4 +271,4 @@ def analyze_radar():
 if __name__ == "__main__":
     analyze_radar()
     sys.exit(0)
-        
+    
