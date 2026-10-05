@@ -70,7 +70,7 @@
                     }).addTo(cellsLayer);
                 }
 
-                    structures.forEach(cell => {
+                structures.forEach(cell => {
                     let center = cell.center;
                     
                     // Vettore storico (Blu spesso)
@@ -92,11 +92,14 @@
                         }).addTo(cellsLayer);
                     }
 
-                    // Icona con il profilo 3D della cella direttamente sulla mappa
+                    // Dimensione dinamica dell'icona in mappa basata sulla reale estensione della cella
+                    let baseW = cell.width_px ? Math.max(45, Math.min(140, cell.width_px * 1.8)) : 60;
+                    let baseH = cell.height_px ? Math.max(30, Math.min(100, cell.height_px * 1.2)) : 40;
+
                     let cellIcon = L.icon({
-                        iconUrl: cell.profile_image + '?' + new Date().getTime(),
-                        iconSize: [53, 32],
-                        iconAnchor: [26, 16]
+                        iconUrl: (cell.profile_image || 'profiles/Core-Standby-01.png') + '?' + new Date().getTime(),
+                        iconSize: [baseW, baseH],
+                        iconAnchor: [baseW / 2, baseH / 2]
                     });
 
                     let cardinalDir = getCardinalDirection(cell.direction_deg);
