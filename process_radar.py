@@ -32,16 +32,21 @@ def get_latest_radar_tile_info():
 
 def save_iso_profile_image(grid_data, filename):
     try:
-        img = Image.new("RGBA", (160, 95), (0, 0, 0, 0))
+        rows = len(grid_data) if grid_data else 0
+        cols = len(grid_data[0]) if rows > 0 else 0
+        
+        # Dimensioni dinamiche della canvas in base alla grandezza reale della cella
+        img_w = max(180, cols * 5 + 60)
+        img_h = max(110, rows * 3 + cols * 2 + 40)
+        
+        img = Image.new("RGBA", (img_w, img_h), (0, 0, 0, 0))
         draw = ImageDraw.Draw(img)
         
-        if grid_data and len(grid_data) > 0:
-            rows = len(grid_data)
-            cols = len(grid_data[0])
-            tileW = 8
-            tileH = 4
-            startX = 80
-            startY = 10
+        if rows > 0 and cols > 0:
+            tileW = 7
+            tileH = 3.5
+            startX = img_w // 2
+            startY = 15
 
             def get_color(val):
                 if val >= 12: return (255, 0, 255, 250)      # Magenta (Picco estremo)
@@ -55,14 +60,14 @@ def save_iso_profile_image(grid_data, filename):
             for r in range(rows):
                 for c in range(cols):
                     val = grid_data[r][c]
-                    if val >= 6:
+                    if val >= 4:  # Mostra dal ciano in su per coprire tutta la struttura della cella
                         isoX = startX + (c - r) * (tileW / 2)
                         isoY = startY + (c + r) * (tileH / 2)
                         color = get_color(val)
                         if color:
                             for h in range(val):
-                                hY = isoY - (h * 2.8)
-                                draw.ellipse([isoX - 3, hY - 3, isoX + 3, hY + 3], fill=color)
+                                hY = isoY - (h * 2.5)
+                                draw.ellipse([isoX - 2.5, hY - 2.5, isoX + 2.5, hY + 2.5], fill=color)
 
         img.save(filename, format="PNG")
     except Exception as e:
@@ -88,9 +93,11 @@ def create_fallback_data(reason="Standby"):
                 "intensity": f"Sistema operativo ({reason})",
                 "vil": 0.0,
                 "echo_top": 0.0,
+                "width_px": 15,
+                "height_px": 15,
                 "profile_image": default_img,
                 "actual_path": [[44.8, 9.8], [44.9, 9.9], [45.0, 10.0]],
-                "forecast_path": [[45.2, 10.2], [45.4, 10.4], [45.6, 10.6]]
+                "forecast_path": [[45.0, 10.0], [45.3, 10.3], [45.6, 10.6]]
             }
         ]
     }
@@ -138,7 +145,6 @@ def analyze_radar():
                             x_c, y_c, w, h = cv2.boundingRect(cnt)
                             lat, lon = tile_pixel_to_latlon(z, x, y, x_c + w / 2.0, y_c + h / 2.0)
                             
-                            # Bounding box esteso a tutta Europa
                             if 35.0 <= lat <= 60.0 and -10.0 <= lon <= 30.0:
                                 aspect_ratio = max(w, h) / (min(w, h) + 1e-5)
                                 
@@ -168,22 +174,18 @@ def analyze_radar():
                                     [lat, lon]
                                 ]
 
-                                # Linee previsionali più lunghe (moltiplicatori 8, 16, 24)
                                 forecast_path = [
+                                    [lat, lon],
                                     [lat + lat_dir * step_dist * 8, lon + lon_dir * step_dist * 8],
                                     [lat + lat_dir * step_dist * 16, lon + lon_dir * step_dist * 16],
                                     [lat + lat_dir * step_dist * 24, lon + lon_dir * step_dist * 24]
                                 ]
 
-                                patch_size = 15
-                                half_p = patch_size // 2
-                                px_center = int(x_c + w / 2.0)
-                                py_center = int(y_c + h / 2.0)
-                                
-                                x_min = max(0, px_center - half_p)
-                                x_max = min(arr.shape[1], px_center + half_p + 1)
-                                y_min = max(0, py_center - half_p)
-                                y_max = min(arr.shape[0], py_center + half_p + 1)
+                                # Estrazione dell'INTERA cella basata sulla bounding box reale (w, h) anziché blocco fisso 15x15
+                                x_min = max(0, int(x_c))
+                                x_max = min(arr.shape[1], int(x_c + w))
+                                y_min = max(0, int(y_c))
+                                y_max = min(arr.shape[0], int(y_c + h))
                                 
                                 local_patch = arr[y_min:y_max, x_min:x_max]
                                 grid_matrix = []
@@ -215,6 +217,8 @@ def analyze_radar():
                                     "intensity": f">= 32 dBZ — {classification}",
                                     "vil": vil_val,
                                     "echo_top": echo_top_val,
+                                    "width_px": int(w),
+                                    "height_px": int(h),
                                     "profile_image": img_filename,
                                     "actual_path": actual_path,
                                     "forecast_path": forecast_path
@@ -244,4 +248,4 @@ def analyze_radar():
 if __name__ == "__main__":
     analyze_radar()
     sys.exit(0)
-                                
+        
