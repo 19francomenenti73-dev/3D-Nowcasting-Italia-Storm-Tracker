@@ -93,17 +93,21 @@
             maxZoom: 18
         }).addTo(map);
 
-        // Livello Satellitare in Trasparenza
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Source: Esri, Maxar, Earthstar Geographics',
-            maxZoom: 18,
-            opacity: 0.45
-        }).addTo(map);
-
-        // Caricamento tile radar di sfondo
+        // Caricamento tile radar e satellite IR in trasparenza da RainViewer
         fetch('https://api.rainviewer.com/public/weather-maps.json')
             .then(res => res.json())
             .then(data => {
+                // Livello Satellitare IR (Nuvole)
+                if (data.satellite && data.satellite.infrared && data.satellite.infrared.length > 0) {
+                    const latestSat = data.satellite.infrared[data.satellite.infrared.length - 1];
+                    L.tileLayer(`${data.host}${latestSat.path}/256/{z}/{x}/{y}/0/1_1.png`, {
+                        opacity: 0.45,
+                        zIndex: 150,
+                        attribution: '&copy; RainViewer Satellite IR'
+                    }).addTo(map);
+                }
+
+                // Livello Radar
                 if (data.radar && data.radar.past && data.radar.past.length > 0) {
                     const latestRadar = data.radar.past[data.radar.past.length - 1];
                     L.tileLayer(`${data.host}${latestRadar.path}/256/{z}/{x}/{y}/2/1_1.png`, {
@@ -113,7 +117,7 @@
                     }).addTo(map);
                 }
             })
-            .catch(err => console.log("Errore tile radar:", err));
+            .catch(err => console.log("Errore tile meteo:", err));
 
         // Caricamento celle tempestose (macro_structures con profili 3D, vettori e aree di rispetto)
         function loadStormCells() {
