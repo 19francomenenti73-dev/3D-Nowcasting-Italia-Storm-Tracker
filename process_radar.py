@@ -145,11 +145,10 @@ def analyze_radar():
         radar_info = {"host": host, "path": path}
         macro_structures = []
         
-        # Passaggio a Zoom 5 per alta risoluzione e focus mirato su Spagna, Francia, Italia e Balcani
         z = 5
         tiles_to_check = []
-        for x in range(14, 20):  # Longitudine da Spagna a Balcani
-            for y in range(9, 13):   # Latitudine Sud ed Europa Centrale / Mediterraneo
+        for x in range(14, 20):
+            for y in range(9, 13):
                 tiles_to_check.append((x, y))
 
         cell_id_counter = 1
@@ -179,43 +178,55 @@ def analyze_radar():
                     
                     for cnt in contours:
                         area = cv2.contourArea(cnt)
-                        # Soglia di area alzata per scartare i micro-frammenti e considerare solo nuclei consistenti
-                        if area > 60:
+                        if area > 50:
                             x_c, y_c, w, h = cv2.boundingRect(cnt)
-                            lat, lon = tile_pixel_to_latlon(z, x, y, x_c + w / 2.0, y_c + h / 2.0)
                             
-                            # Filtro geografico rigoroso: Spagna, Francia, Italia e Balcani
+                            x_min = max(0, int(x_c))
+                            x_max = min(arr.shape[1], int(x_c + w))
+                            y_min = max(0, int(y_c))
+                            y_max = min(arr.shape[0], int(y_c + h))
+                            
+                            local_patch = arr[y_min:y_max, x_min:x_max]
+                            grid_matrix = []
+                            max_grid_val = 2
+                            
+                            # Ricerca del pixel esatto con il picco di intensità all'interno del patch per ancoraggio millimetrico
+                            peak_local_x = w // 2
+                            peak_local_y = h // 2
+                            highest_val_found = -1
+
+                            for r_idx, row in enumerate(local_patch):
+                                row_vals = []
+                                for c_idx, pixel in enumerate(row):
+                                    pr, pg, pb, pa = pixel[0], pixel[1], pixel[2], pixel[3]
+                                    if pa < 50:
+                                        row_vals.append(0)
+                                    else:
+                                        if pr > 200 and pb > 200: val = 12
+                                        elif pr > 200 and pg < 100: val = 10
+                                        elif pr > 200 and pg > 150: val = 8
+                                        elif pg > 200: val = 6
+                                        elif pb > 200 and pg > 150: val = 4
+                                        elif pb > 150: val = 2
+                                        else: val = 1
+                                        
+                                        if val > highest_val_found:
+                                            highest_val_found = val
+                                            peak_local_x = c_idx
+                                            peak_local_y = r_idx
+
+                                        if val > max_grid_val:
+                                            max_grid_val = val
+                                        row_vals.append(val)
+                                grid_matrix.append(row_vals)
+
+                            # Ancoraggio millimetrico sul pixel di picco reale anziché sul centro geometrico impreciso
+                            exact_px = x_min + peak_local_x
+                            exact_py = y_min + peak_local_y
+                            lat, lon = tile_pixel_to_latlon(z, x, y, exact_px, exact_py)
+
                             if 36.0 <= lat <= 48.5 and -9.5 <= lon <= 26.0:
                                 convective_type = classify_storm_morphology(cnt, area, w, h)
-
-                                x_min = max(0, int(x_c))
-                                x_max = min(arr.shape[1], int(x_c + w))
-                                y_min = max(0, int(y_c))
-                                y_max = min(arr.shape[0], int(y_c + h))
-                                
-                                local_patch = arr[y_min:y_max, x_min:x_max]
-                                grid_matrix = []
-                                max_grid_val = 2
-                                
-                                for row in local_patch:
-                                    row_vals = []
-                                    for pixel in row:
-                                        pr, pg, pb, pa = pixel[0], pixel[1], pixel[2], pixel[3]
-                                        if pa < 50:
-                                            row_vals.append(0)
-                                        else:
-                                            if pr > 200 and pb > 200: val = 12
-                                            elif pr > 200 and pg < 100: val = 10
-                                            elif pr > 200 and pg > 150: val = 8
-                                            elif pg > 200: val = 6
-                                            elif pb > 200 and pg > 150: val = 4
-                                            elif pb > 150: val = 2
-                                            else: val = 1
-                                            
-                                            if val > max_grid_val:
-                                                max_grid_val = val
-                                            row_vals.append(val)
-                                    grid_matrix.append(row_vals)
 
                                 dbz_mapping = {
                                     12: "58 dBZ (Estremo / Magenta)",
@@ -273,7 +284,7 @@ def analyze_radar():
                                     "forecast_path": forecast_path
                                 }
                                 
-                                if not any(abs(c["center"][0] - lat) < 0.12 and abs(c["center"][1] - lon) < 0.12 for c in macro_structures):
+                                if not any(abs(c["center"][0] - lat) < 0.10 and abs(c["center"][1] - lon) < 0.10 for c in macro_structures):
                                     macro_structures.append(data_item)
                                     cell_id_counter += 1
             except Exception as tile_err:
@@ -297,3 +308,4 @@ def analyze_radar():
 if __name__ == "__main__":
     analyze_radar()
     sys.exit(0)
+                            
