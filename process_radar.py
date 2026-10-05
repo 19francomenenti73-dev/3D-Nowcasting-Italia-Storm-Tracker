@@ -90,10 +90,11 @@ def create_fallback_data(reason="Standby"):
                 "echo_top": 0.0,
                 "profile_image": default_img,
                 "actual_path": [[44.8, 9.8], [44.9, 9.9], [45.0, 10.0]],
-                "forecast_path": [[45.2, 10.2], [45.4, 10.4], [45.6, 10.6]]
+                "forecast_path": [[45.1, 10.1], [45.2, 10.2], [45.3, 10.3]]
             }
         ]
     }
+    # CORRETTO: salvataggio su storm_cells.json anziché centroids.json
     with open("storm_cells.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
@@ -105,6 +106,7 @@ def analyze_radar():
         
         z = 4
         tiles_to_check = []
+        # Ampliato il range delle tile per coprire tutta l'Europa occidentale e centrale
         for x in range(6, 11):
             for y in range(3, 8):
                 tiles_to_check.append((x, y))
@@ -138,7 +140,7 @@ def analyze_radar():
                             x_c, y_c, w, h = cv2.boundingRect(cnt)
                             lat, lon = tile_pixel_to_latlon(z, x, y, x_c + w / 2.0, y_c + h / 2.0)
                             
-                            # Bounding box esteso a tutta Europa
+                            # AMPLIATO IL BOUNDING BOX A TUTTA EUROPA (Lat: 35-60, Lon: -10 to 30)
                             if 35.0 <= lat <= 60.0 and -10.0 <= lon <= 30.0:
                                 aspect_ratio = max(w, h) / (min(w, h) + 1e-5)
                                 
@@ -168,11 +170,10 @@ def analyze_radar():
                                     [lat, lon]
                                 ]
 
-                                # Linee previsionali più lunghe (moltiplicatori 8, 16, 24)
                                 forecast_path = [
+                                    [lat + lat_dir * step_dist * 4, lon + lon_dir * step_dist * 4],
                                     [lat + lat_dir * step_dist * 8, lon + lon_dir * step_dist * 8],
-                                    [lat + lat_dir * step_dist * 16, lon + lon_dir * step_dist * 16],
-                                    [lat + lat_dir * step_dist * 24, lon + lon_dir * step_dist * 24]
+                                    [lat + lat_dir * step_dist * 12, lon + lon_dir * step_dist * 12]
                                 ]
 
                                 patch_size = 15
@@ -234,6 +235,7 @@ def analyze_radar():
                 "radar_tile": radar_info,
                 "macro_structures": macro_structures
             }
+            # CORRETTO: salvataggio su storm_cells.json letto dal frontend
             with open("storm_cells.json", "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=4, ensure_ascii=False)
             
@@ -244,3 +246,4 @@ def analyze_radar():
 if __name__ == "__main__":
     analyze_radar()
     sys.exit(0)
+            
