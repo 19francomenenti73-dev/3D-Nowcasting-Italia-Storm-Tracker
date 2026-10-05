@@ -72,6 +72,45 @@ def save_iso_profile_image(grid_data, filename):
     except Exception as e:
         print(f"Errore generazione immagine profilo {filename}: {e}")
 
+def classify_storm_morphology(cnt, area, w, h):
+    """Analisi morfologica avanzata della forma del cluster radar"""
+    hull = cv2.convexHull(cnt)
+    hull_area = cv2.contourArea(hull)
+    solidity = float(area) / hull_area if hull_area > 0 else 1.0
+    aspect_ratio = max(w, h) / (min(w, h) + 1e-5)
+    
+    # Calcolo dei difetti di convessità (rientranze, tacche, uncini)
+    hull_indices = cv2.convexHull(cnt, returnPoints=False)
+    max_defect_depth = 0
+    if hull_indices is not None and len(hull_indices) > 3:
+        try:
+            defects = cv2.convexityDefects(cnt, hull_indices)
+            if defects is not None:
+                for i in range(defects.shape[0]):
+                    s, e, f, d = defects[i, 0]
+                    depth = d / 256.0
+                    if depth > max_defect_depth:
+                        max_defect_depth = depth
+        except Exception:
+            pass
+
+    # Logica di riconoscimento basata su forma e firme radar
+    if aspect_ratio > 3.2:
+        return "MCS / Linea di Groppo (Squall Line)"
+    elif max_defect_depth > 12 and solidity < 0.65:
+        if area > 250:
+            return "V-Shape / V-Notch (Temporale Severo)"
+        else:
+            return "Bow Echo (Eco ad Arco)"
+    elif max_defect_depth > 7 and solidity < 0.7:
+        return "Hook Echo (Eco a Uncino / Mesociclone)"
+    elif area > 350 and solidity > 0.72:
+        return "MCC (Complesso Convettivo a Mesoscala)"
+    elif area > 120 and solidity > 0.6:
+        return "Supercella Isolata"
+    else:
+        return "Cella Convettiva Isolata"
+
 def create_fallback_data(reason="Standby"):
     default_id = "Core-Standby-01"
     default_img = f"profiles/{default_id}.png"
@@ -89,7 +128,8 @@ def create_fallback_data(reason="Standby"):
                 "center": [42.0, 12.5],
                 "speed_kmh": 40,
                 "direction_deg": 45,
-                "intensity": f"Sistema operativo ({reason})",
+                "intensity": ">= 32 dBZ",
+                "convective_type": f"Sistema Operativo ({reason})",
                 "vil": 0.0,
                 "echo_top": 0.0,
                 "profile_image": default_img,
@@ -144,16 +184,8 @@ def analyze_radar():
                             lat, lon = tile_pixel_to_latlon(z, x, y, x_c + w / 2.0, y_c + h / 2.0)
                             
                             if 35.0 <= lat <= 60.0 and -10.0 <= lon <= 30.0:
-                                aspect_ratio = max(w, h) / (min(w, h) + 1e-5)
-                                
-                                if aspect_ratio > 3.0:
-                                    classification = "MCS / Linea di Groppo"
-                                elif aspect_ratio > 1.8:
-                                    classification = "Bow Echo"
-                                elif area > 250:
-                                    classification = "MCC"
-                                else:
-                                    classification = "Supercella / Cella"
+                                # Classificazione basata sulla morfologia geometrica dell'immagine
+                                convective_type = classify_storm_morphology(cnt, area, w, h)
 
                                 vil_val = round(min(70.0, 10.0 + (area * 0.18)), 1)
                                 echo_top_val = round(min(16.0, 7.0 + (area * 0.035)), 1)
@@ -162,7 +194,6 @@ def analyze_radar():
                                 
                                 rad_dir = np.radians(direction_deg)
                                 
-                                # Storico reale (ultimi 30 minuti)
                                 actual_path = []
                                 for t_hours in [-0.5, -0.25, 0.0]:
                                     dist_km = speed_val * t_hours
@@ -170,7 +201,6 @@ def analyze_radar():
                                     d_lon = dist_km * deg_per_km * np.sin(rad_dir) / np.cos(np.radians(lat))
                                     actual_path.append([lat + d_lat, lon + d_lon])
 
-                                # Predittivo a breve termine (1 ora max, step 15 minuti)
                                 forecast_path = [[lat, lon]]
                                 for t_hours in [0.25, 0.5, 0.75, 1.0]:
                                     dist_km = speed_val * t_hours
@@ -210,7 +240,8 @@ def analyze_radar():
                                     "center": [lat, lon],
                                     "speed_kmh": speed_val,
                                     "direction_deg": direction_deg,
-                                    "intensity": f">= 32 dBZ — {classification}",
+                                    "intensity": ">= 32 dBZ",
+                                    "convective_type": convective_type,
                                     "vil": vil_val,
                                     "echo_top": echo_top_val,
                                     "profile_image": img_filename,
@@ -242,4 +273,4 @@ def analyze_radar():
 if __name__ == "__main__":
     analyze_radar()
     sys.exit(0)
-    
+        
