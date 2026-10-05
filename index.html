@@ -3,292 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nowcasting Europa 3D Storm Chaser Track</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <title>Storm Tracker Europa</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        html, body {
+        html, body, #map {
+            width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
-        }
-        #map {
-            width: 100%;
-            height: 100vh;
-        }
-        .leaflet-container svg {
-            position: absolute;
-        }
-        .map-banner {
-            position: absolute;
-            bottom: 16px;
-            left: 16px;
-            right: 16px;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(8px);
-            padding: 10px 16px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
-            border: 1px solid #cbd5e1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            color: #1e293b;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .banner-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .counter-badge {
-            font-weight: 700;
-            color: #dc2626;
-            font-size: 14px;
-            background: rgba(220, 38, 38, 0.1);
-            padding: 2px 8px;
-            border-radius: 6px;
-            border: 1px solid rgba(220, 38, 38, 0.2);
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: #475569;
-        }
-        .legend-line {
-            width: 18px;
-            height: 3px;
-            display: inline-block;
-            border-radius: 2px;
-        }
-        .cell-3d-wrapper {
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            text-align: center;
-            transition: transform 0.2s ease;
-        }
-        .cell-3d-wrapper:hover {
-            transform: scale(1.15);
-            z-index: 9999;
         }
         .centroid-ring-icon {
             background: transparent;
             border: none;
         }
         .centroid-ring {
-            width: 16px;
-            height: 16px;
-            border: 2.5px solid #16a34a;
+            width: 32px;
+            height: 32px;
+            border: 3.5px solid #16a34a;
             border-radius: 50%;
             background: rgba(22, 163, 74, 0.25);
-            animation: pulse-green-ring 1.4s infinite ease-in-out;
-            box-shadow: 0 0 8px rgba(22, 163, 74, 0.6);
+            box-shadow: 0 0 12px rgba(22, 163, 74, 0.7);
         }
-        @keyframes pulse-green-ring {
-            0% { transform: scale(0.7); opacity: 0.5; }
-            50% { transform: scale(1.4); opacity: 1; }
-            100% { transform: scale(0.7); opacity: 0.5; }
-        }
-        .history-node-dot {
-            width: 7px;
-            height: 7px;
-            background: #2563eb;
-            border: 1px solid #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 0 3px rgba(0,0,0,0.4);
-        }
-        .pulsing-arrow-icon {
-            background: transparent;
-            border: none;
-        }
-        .pulsing-arrow {
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-bottom: 12px solid #dc2626;
-            animation: pulse-arrow 1.2s infinite;
-            filter: drop-shadow(0 0 4px rgba(220, 38, 38, 0.7));
-        }
-        @keyframes pulse-arrow {
-            0% { transform: scale(0.8); opacity: 0.6; }
-            50% { transform: scale(1.4); opacity: 1; }
-            100% { transform: scale(0.8); opacity: 0.6; }
+        .info-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 10px 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-family: sans-serif;
+            font-size: 14px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
     </style>
 </head>
 <body>
-
-    <div class="map-banner">
-        <div class="banner-section">
-            <span><b>Storm Tracker Europa:</b> <span id="active-count" class="counter-badge">0</span> celle attive</span>
-            <span id="last-update" style="font-size: 11px; color: #64748b; border-left: 1px solid #cbd5e1; padding-left: 10px;">Sincronizzazione...</span>
-        </div>
-        <div class="banner-section" style="flex-wrap: wrap;">
-            <div class="legend-item"><span class="legend-line" style="background: #2563eb;"></span> Storico (15m)</div>
-            <div class="legend-item"><span style="width: 10px; height: 10px; border: 2px solid #16a34a; border-radius: 50%; display:inline-block;"></span> Centroide</div>
-            <div class="legend-item"><span style="width: 10px; height: 10px; background: #dc2626; display:inline-block; clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></span> Predittivo (3h)</div>
-        </div>
+    <div id="map"></div>
+    <div class="info-panel" id="info-panel">
+        <b>Storm Tracker Europa:</b> <span id="cell-count">0</span> celle attive
     </div>
 
-    <div id="map"></div>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Vista centrata sull'Europa (Lat: 48.0, Lng: 10.0, Zoom: 4)
-        var map = L.map('map', { zoomControl: false }).setView([48.0, 10.0], 4);
-        L.control.zoom({ position: 'topright' }).addTo(map);
+        const map = L.map('map').setView([45.0, 10.0], 5);
 
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-            maxZoom: 19,
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri'
         }).addTo(map);
 
-        var radarLayer = null;
-        var cellsLayer = L.layerGroup().addTo(map);
-        var vectorsLayer = L.layerGroup().addTo(map);
+        let cellsLayer = L.layerGroup().addTo(map);
 
-        function processAndRenderData(data) {
-            if (data.radar_tile && data.radar_tile.host && data.radar_tile.path) {
-                let radarUrl = data.radar_tile.host + data.radar_tile.path + '/256/{z}/{x}/{y}/2/1_1.png';
-                if (!radarLayer) {
-                    radarLayer = L.tileLayer(radarUrl, {
-                        tileSize: 256,
-                        opacity: 0.65,
-                        attribution: 'Radar by RainViewer',
+        function getCardinalDirection(angle) {
+            const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+            const index = Math.round((angle % 360) / 22.5);
+            return directions[index % 16];
+        }
+
+        async function loadStormCells() {
+            try {
+                let response = await fetch('storm_cells.json?' + new Date().getTime());
+                let data = await response.json();
+                
+                cellsLayer.clearLayers();
+                let structures = data.macro_structures || [];
+                document.getElementById('cell-count').innerText = structures.length;
+
+                if (data.radar_tile) {
+                    let host = data.radar_tile.host;
+                    let path = data.radar_tile.path;
+                    L.tileLayer(`${host}${path}/256/{z}/{x}/{y}/2/1_1.png`, {
+                        opacity: 0.6,
                         zIndex: 200
-                    }).addTo(map);
-                } else {
-                    radarLayer.setUrl(radarUrl);
-                }
-            }
-
-            cellsLayer.clearLayers();
-            vectorsLayer.clearLayers();
-
-            let structures = data.macro_structures || [];
-            let count = structures.length;
-
-            structures.forEach(track => {
-                let trackId = track.id || "Struttura";
-                let center = track.center; 
-                let speed = track.speed_kmh || 0;
-                let direction = track.direction_deg || 0;
-                let intensity = track.intensity || "N/D";
-                let vil = track.vil || 0.0;
-                let echoTop = track.echo_top || 0.0;
-                let profileImage = track.profile_image || "";
-
-                if (track.actual_path && track.actual_path.length > 0) {
-                    let latLngs = track.actual_path.map(p => [p[0], p[1]]);
-                    L.polyline(latLngs, {
-                        color: '#2563eb',
-                        weight: 4,
-                        opacity: 0.85
-                    }).addTo(vectorsLayer);
-
-                    track.actual_path.forEach((hPoint, index) => {
-                        let minsAgo = (track.actual_path.length - 1 - index) * 15;
-                        let nodeIcon = L.divIcon({
-                            className: 'history-node-icon',
-                            html: `<div class="history-node-dot" title="T - ${minsAgo} min"></div>`,
-                            iconSize: [8, 8],
-                            iconAnchor: [4, 4]
-                        });
-                        L.marker([hPoint[0], hPoint[1]], { icon: nodeIcon }).addTo(vectorsLayer);
-                    });
+                    }).addTo(cellsLayer);
                 }
 
-                if (center && center.length === 2) {
-                    let imageTag = '';
-                    if (profileImage) {
-                        let imageUrl = profileImage + '?' + new Date().getTime();
-                        imageTag = `<img src="${imageUrl}" width="84" height="68" style="display: block;" alt="3D Cell">`;
-                    } else {
-                        imageTag = `<div style="width: 84px; height: 50px; background: rgba(220,38,38,0.85); border-radius: 6px; color: white; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">CELL 3D</div>`;
+                structures.forEach(cell => {
+                    let center = cell.center;
+                    
+                    // Vettore storico (Blu spesso)
+                    if (cell.actual_path && cell.actual_path.length > 0) {
+                        L.polyline(cell.actual_path, {
+                            color: '#0055ff',
+                            weight: 6,
+                            opacity: 0.95
+                        }).addTo(cellsLayer);
                     }
 
-                    let customIcon = L.divIcon({
-                        className: 'custom-div-icon',
-                        html: `<div class="cell-3d-wrapper">${imageTag}</div>`,
-                        iconSize: [92, 76],
-                        iconAnchor: [46, 38]
-                    });
+                    // Vettore predittivo (Rosso tratteggiato spesso)
+                    if (cell.forecast_path && cell.forecast_path.length > 0) {
+                        L.polyline(cell.forecast_path, {
+                            color: '#ff0033',
+                            weight: 6,
+                            opacity: 0.95,
+                            dashArray: '8, 12'
+                        }).addTo(cellsLayer);
+                    }
 
-                    let marker = L.marker([center[0], center[1]], { icon: customIcon }).addTo(cellsLayer);
-
+                    // Centroide con anello largo
                     let centroidIcon = L.divIcon({
                         className: 'centroid-ring-icon',
-                        html: `<div class="centroid-ring" title="Baricentro ${trackId}"></div>`,
-                        iconSize: [16, 16],
-                        iconAnchor: [8, 8]
+                        html: `<div class="centroid-ring" title="Baricentro ${cell.id}"></div>`,
+                        iconSize: [32, 32],
+                        iconAnchor: [16, 16]
                     });
-                    L.marker([center[0], center[1]], { icon: centroidIcon }).addTo(cellsLayer);
 
+                    let cardinalDir = getCardinalDirection(cell.direction_deg);
                     let popupContent = `
-                        <div style="font-size: 12px; line-height: 1.4; min-width: 180px; color: #1e293b;">
-                            <b>ID:</b> ${trackId}<br>
-                            <b>Intensità:</b> ${intensity}<br>
-                            <b>Velocità:</b> ${speed} km/h (${direction}°)<br>
-                            <b>VIL:</b> ${vil} kg/m² | <b>Top:</b> ${echoTop} km<br>
+                        <div style="font-family: sans-serif; font-size: 13px; line-height: 1.5; min-width: 200px;">
+                            <b>ID Cellula:</b> ${cell.id}<br>
+                            <b>Intensità:</b> ${cell.intensity}<br>
+                            <b>Velocità:</b> ${cell.speed_kmh} km/h<br>
+                            <b>Direzione:</b> ${cardinalDir} (${cell.direction_deg}°)<br>
+                            <b>Echo Top:</b> <span style="color: #d97706; font-weight: bold;">${cell.echo_top} km</span><br>
+                            <b>VIL:</b> ${cell.vil} kg/m²
                         </div>
                     `;
-                    marker.bindPopup(popupContent);
-                }
 
-                if (track.forecast_path && track.forecast_path.length > 0 && center) {
-                    let linePoints = [center, ...track.forecast_path];
-                    L.polyline(linePoints, {
-                        color: '#dc2626',
-                        weight: 3.5,
-                        dashArray: '6, 8',
-                        opacity: 0.9
-                    }).addTo(vectorsLayer);
-
-                    track.forecast_path.forEach((fPoint, index) => {
-                        let forecastHour = (index + 1);
-                        let arrowIcon = L.divIcon({
-                            className: 'pulsing-arrow-icon',
-                            html: `<div class="pulsing-arrow" title="Previsione +${forecastHour}h"></div>`,
-                            iconSize: [16, 16],
-                            iconAnchor: [8, 8]
-                        });
-                        L.marker([fPoint[0], fPoint[1]], { icon: arrowIcon }).addTo(vectorsLayer);
-                    });
-                }
-            });
-
-            document.getElementById('active-count').innerText = count;
-            document.getElementById('last-update').innerText = 'Aggiornato: ' + new Date().toLocaleTimeString();
-        }
-
-        function loadTrackerData() {
-            fetch('storm_cells.json?' + new Date().getTime())
-                .then(response => {
-                    if (!response.ok) throw new Error('File dati non disponibile.');
-                    return response.json();
-                })
-                .then(data => {
-                    processAndRenderData(data);
-                })
-                .catch(error => {
-                    console.log('Errore caricamento:', error);
-                    document.getElementById('active-count').innerText = "0";
-                    document.getElementById('last-update').innerText = "Errore dati";
+                    L.marker([center[0], center[1]], { icon: centroidIcon })
+                        .bindPopup(popupContent)
+                        .addTo(cellsLayer);
                 });
+            } e {
+                console.error("Errore caricamento storm_cells.json:", e);
+            }
         }
 
-        loadTrackerData();
-        setInterval(loadTrackerData, 180000);
+        loadStormCells();
+        setInterval(loadStormCells, 300000);
     </script>
 </body>
 </html>
