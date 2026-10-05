@@ -12,18 +12,6 @@
             margin: 0;
             padding: 0;
         }
-        .centroid-ring-icon {
-            background: transparent;
-            border: none;
-        }
-        .centroid-ring {
-            width: 32px;
-            height: 32px;
-            border: 3.5px solid #16a34a;
-            border-radius: 50%;
-            background: rgba(22, 163, 74, 0.25);
-            box-shadow: 0 0 12px rgba(22, 163, 74, 0.7);
-        }
         .info-panel {
             position: absolute;
             bottom: 20px;
@@ -82,7 +70,7 @@
                     }).addTo(cellsLayer);
                 }
 
-                structures.forEach(cell => {
+                    structures.forEach(cell => {
                     let center = cell.center;
                     
                     // Vettore storico (Blu spesso)
@@ -104,12 +92,11 @@
                         }).addTo(cellsLayer);
                     }
 
-                    // Centroide con anello largo
-                    let centroidIcon = L.divIcon({
-                        className: 'centroid-ring-icon',
-                        html: `<div class="centroid-ring" title="Baricentro ${cell.id}"></div>`,
-                        iconSize: [32, 32],
-                        iconAnchor: [16, 16]
+                    // Icona con il profilo 3D della cella direttamente sulla mappa
+                    let cellIcon = L.icon({
+                        iconUrl: cell.profile_image + '?' + new Date().getTime(),
+                        iconSize: [53, 32],
+                        iconAnchor: [26, 16]
                     });
 
                     let cardinalDir = getCardinalDirection(cell.direction_deg);
@@ -124,7 +111,7 @@
                         </div>
                     `;
 
-                    L.marker([center[0], center[1]], { icon: centroidIcon })
+                    L.marker([center[0], center[1]], { icon: cellIcon })
                         .bindPopup(popupContent)
                         .addTo(cellsLayer);
                 });
