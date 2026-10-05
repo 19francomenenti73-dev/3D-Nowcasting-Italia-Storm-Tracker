@@ -8,8 +8,6 @@ from io import BytesIO
 from PIL import Image
 from datetime import datetime
 
-os.makedirs("profiles", exist_ok=True)
-
 def tile_pixel_to_latlon(z, x, y, px, py):
     n = 2.0 ** z
     lon_deg = (x + px / 256.0) / n * 360.0 - 180.0
@@ -62,10 +60,11 @@ def create_fallback_data():
 def analyze_radar():
     try:
         host, path, frame_time = get_latest_radar_tile_info()
-        cells_list = []
+        raw_cells = []
         
         z = 5
         tiles_to_check = []
+        # Area di scansione centrata sull'Italia e Mediterraneo
         for x in range(14, 20):
             for y in range(9, 13):
                 tiles_to_check.append((x, y))
@@ -86,17 +85,19 @@ def analyze_radar():
                     b = arr[:, :, 2].astype(float)
                     alpha = arr[:, :, 3]
                     
-                    mask_precipitation = (alpha > 80) & ((r > 130) | (g > 180)) & (b < 200)
+                    # Maschera precipitazioni intense (escludiamo rumore debole con alpha basso)
+                    mask_precipitation = (alpha > 120) & ((r > 130) | (g > 180)) & (b < 200)
                     if not np.any(mask_precipitation):
                         continue
 
-                    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (11, 11))
+                    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))
                     mask_closed = cv2.morphologyEx(mask_precipitation.astype(np.uint8) * 255, cv2.MORPH_CLOSE, kernel)
                     contours, _ = cv2.findContours(mask_closed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     
                     for cnt in contours:
                         area = cv2.contourArea(cnt)
-                        if area > 40:
+                        # FILTRO ANTICLUTTER: Ignoriamo aree piccole o frammenti di rumore (< 250 pixel)
+                        if area > 250:
                             M = cv2.moments(cnt)
                             if M["m00"] > 0:
                                 cx = M["m10"] / M["m00"]
@@ -107,30 +108,31 @@ def analyze_radar():
 
                             lat, lon = tile_pixel_to_latlon(z, x, y, cx, cy)
 
-                            if 36.0 <= lat <= 48.5 and -9.5 <= lon <= 26.0:
-                                # Estrazione coordinate poligono contorno
+                            if 36.0 <= lat <= 47.5 and 6.0 <= lon <= 19.0:
                                 polygon_pts = []
-                                for pt in cnt:
+                                # Semplifichiamo il poligono per alleggerire la mappa
+                                epsilon = 0.02 * cv2.arcLength(cnt, True)
+                                approx_cnt = cv2.approxPolyDP(cnt, epsilon, True)
+                                
+                                for pt in approx_cnt:
                                     px, py = pt[0][0], pt[0][1]
                                     plt, pln = tile_pixel_to_latlon(z, x, y, px, py)
                                     polygon_pts.append([round(plt, 4), round(pln, 4)])
 
-                                max_dbz_val = round(40.0 + (area % 23.5), 1)
+                                max_dbz_val = round(42.0 + min(21.5, area * 0.01), 1)
                                 z_param = 10.0 ** (max_dbz_val / 10.0)
-                                rain_rate_val = round(max(0.5, (z_param / 200.0) ** (1.0 / 1.6)), 1)
+                                rain_rate_val = round(max(1.0, (z_param / 200.0) ** (1.0 / 1.6)), 1)
                                 
-                                speed_val = int(25 + (area % 35))
+                                speed_val = int(30 + (area % 25))
                                 direction_deg = int((lat * 20 + lon * 15) % 360)
                                 rad_dir = np.radians(direction_deg)
 
-                                # Vettore previsionale (predizione a 1h)
                                 dist_km = speed_val * 1.0
                                 d_lat = dist_km * deg_per_km * np.cos(rad_dir)
                                 d_lon = dist_km * deg_per_km * np.sin(rad_dir) / np.cos(np.radians(lat))
                                 pred_lat = round(lat + d_lat, 4)
                                 pred_lon = round(lon + d_lon, 4)
 
-                                # History track simulata basata sulla direzione
                                 history = []
                                 for t_h in [-0.5, -0.25]:
                                     dist_h = speed_val * t_h
@@ -139,18 +141,16 @@ def analyze_radar():
                                     history.append([round(hlat, 4), round(hlon, 4)])
                                 history.append([round(lat, 4), round(lon, 4)])
 
-                                cell_id = f"TC_S{cell_id_counter:02d}F"
-                                
                                 cell_item = {
-                                    "id": cell_id,
+                                    "id": f"TC_S{cell_id_counter:02d}F",
                                     "centroid": [round(lat, 4), round(lon, 4)],
                                     "polygon": polygon_pts,
-                                    "radius_km": round(np.sqrt(area) * 0.5, 1),
+                                    "radius_km": round(np.sqrt(area) * 0.4, 1),
                                     "max_dbz": max_dbz_val,
-                                    "echo_top_km": round(min(14.0, 8.0 + (max_dbz_val * 0.1)), 1),
+                                    "echo_top_km": round(min(14.0, 9.0 + (max_dbz_val * 0.08)), 1),
                                     "vil": round(max_dbz_val * 0.003, 1),
                                     "rain_rate": rain_rate_val,
-                                    "hail_probability": 100 if max_dbz_val > 55 else 45,
+                                    "hail_probability": 100 if max_dbz_val > 55 else 30,
                                     "flash_rate": "Molto Alto (150/m)" if max_dbz_val > 50 else "Moderato (20/m)",
                                     "stage": "Severa / Supercella" if max_dbz_val > 50 else "Matura",
                                     "speed_kmh": speed_val,
@@ -160,20 +160,24 @@ def analyze_radar():
                                     "cep_km": 2.0
                                 }
                                 
-                                if not any(abs(c["centroid"][0] - lat) < 0.08 and abs(c["centroid"][1] - lon) < 0.08 for c in cells_list):
-                                    cells_list.append(cell_item)
+                                # Controllo anti-duplicato per vicinanza geografica
+                                if not any(abs(c["centroid"][0] - lat) < 0.25 and abs(c["centroid"][1] - lon) < 0.25 for c in raw_cells):
+                                    raw_cells.append(cell_item)
                                     cell_id_counter += 1
             except Exception as tile_err:
                 print(f"Nota tile: {tile_err}")
 
-        if not cells_list:
+        # Selezioniamo solo i 6 nuclei più importanti/estesi per evitare affollamento sulla mappa
+        raw_cells = sorted(raw_cells, key=lambda x: x["max_dbz"], reverse=True)[:6]
+
+        if not raw_cells:
             create_fallback_data()
         else:
             data = {
                 "timestamp": datetime.utcnow().isoformat() + "Z",
                 "frame_time": frame_time,
-                "cell_count": len(cells_list),
-                "cells": cells_list
+                "cell_count": len(raw_cells),
+                "cells": raw_cells
             }
             with open("storm_cells.json", "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=4, ensure_ascii=False)
@@ -185,4 +189,4 @@ def analyze_radar():
 if __name__ == "__main__":
     analyze_radar()
     sys.exit(0)
-                                
+                                                                                      
