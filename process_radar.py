@@ -73,7 +73,7 @@ def save_iso_profile_image(grid_data, filename):
         print(f"Errore generazione immagine profilo {filename}: {e}")
 
 def classify_storm_morphology(cnt, area, w, h):
-    """Analisi morfologica avanzata ad alta sensibilità per sistemi meteorologici severi"""
+    """Analisi morfologica avanzata per prevenire la frammentazione e identificare MCS/Bow Echo"""
     hull = cv2.convexHull(cnt)
     hull_area = cv2.contourArea(hull)
     solidity = float(area) / hull_area if hull_area > 0 else 1.0
@@ -93,19 +93,18 @@ def classify_storm_morphology(cnt, area, w, h):
         except Exception:
             pass
 
-    # Criteri affinati per evitare falsi positivi di "cellva isolata" su strutture estese
-    if aspect_ratio > 2.2 or (area > 200 and aspect_ratio > 1.7):
-        if max_defect_depth > 8 and solidity < 0.68:
+    if aspect_ratio > 2.2 or (area > 180 and aspect_ratio > 1.6):
+        if max_defect_depth > 7 and solidity < 0.70:
             return "Bow Echo / Eco ad Arco (Severo)"
         else:
             return "MCS / Linea di Groppo (Squall Line)"
-    elif max_defect_depth > 10 and solidity < 0.62:
+    elif max_defect_depth > 9 and solidity < 0.62:
         return "V-Shape / V-Notch (Temporale Severo)"
-    elif max_defect_depth > 6 and solidity < 0.7:
+    elif max_defect_depth > 5 and solidity < 0.72:
         return "Hook Echo (Eco a Uncino / Mesociclone)"
-    elif area > 280 and solidity > 0.68:
+    elif area > 250 and solidity > 0.65:
         return "MCC (Complesso Convettivo a Mesoscala)"
-    elif area > 90 and solidity > 0.55:
+    elif area > 80 and solidity > 0.52:
         return "Supercella Isolata"
     else:
         return "Cella Convettiva Isolata"
@@ -172,22 +171,25 @@ def analyze_radar():
                     if not np.any(mask_precipitation):
                         continue
 
-                    kernel = np.ones((2,2), np.uint8)
-                    mask_clean = cv2.morphologyEx(mask_precipitation.astype(np.uint8) * 255, cv2.MORPH_OPEN, kernel)
-                    contours, _ = cv2.findContours(mask_clean, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                    # Chiusura morfologica pesante per unire i nuclei vicini ed evitare la frammentazione
+                    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (11, 11))
+                    mask_closed = cv2.morphologyEx(mask_precipitation.astype(np.uint8) * 255, cv2.MORPH_CLOSE, kernel)
+                    
+                    contours, _ = cv2.findContours(mask_closed, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     
                     for cnt in contours:
                         area = cv2.contourArea(cnt)
-                        if area > 15:
+                        # Soglia minima di area alzata per scartare il rumore e i micro-frammenti spuri
+                        if area > 45:
                             x_c, y_c, w, h = cv2.boundingRect(cnt)
                             lat, lon = tile_pixel_to_latlon(z, x, y, x_c + w / 2.0, y_c + h / 2.0)
                             
                             if 35.0 <= lat <= 60.0 and -10.0 <= lon <= 30.0:
                                 convective_type = classify_storm_morphology(cnt, area, w, h)
 
-                                vil_val = round(min(70.0, 10.0 + (area * 0.18)), 1)
-                                echo_top_val = round(min(16.0, 7.0 + (area * 0.035)), 1)
-                                speed_val = int(35 + (area % 30))
+                                vil_val = round(min(70.0, 10.0 + (area * 0.15)), 1)
+                                echo_top_val = round(min(16.0, 7.0 + (area * 0.03)), 1)
+                                speed_val = int(35 + (area % 25))
                                 direction_deg = int((lat * 22 + lon * 18) % 360)
                                 
                                 rad_dir = np.radians(direction_deg)
@@ -247,7 +249,7 @@ def analyze_radar():
                                     "forecast_path": forecast_path
                                 }
                                 
-                                if not any(abs(c["center"][0] - lat) < 0.12 and abs(c["center"][1] - lon) < 0.12 for c in macro_structures):
+                                if not any(abs(c["center"][0] - lat) < 0.15 and abs(c["center"][1] - lon) < 0.15 for c in macro_structures):
                                     macro_structures.append(data_item)
                                     cell_id_counter += 1
             except Exception as tile_err:
