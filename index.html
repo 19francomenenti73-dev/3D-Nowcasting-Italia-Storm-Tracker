@@ -94,7 +94,7 @@
             maxZoom: 18
         }).addTo(map);
 
-        // Livello Satellitare in Trasparenza (Fuso perfettamente sotto il radar)
+        // Livello Satellitare in Trasparenza
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Source: Esri, Maxar, Earthstar Geographics',
             maxZoom: 18,
@@ -144,5 +144,33 @@
                             html: `
                                 <div style="text-align: center; pointer-events: auto; cursor: pointer;">
                                     <img src="${cell.profile_image}" style="width: 80px; height: 48px; display: block; margin: 0 auto; filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.6));" alt="${cell.id}">
-                                    <span style="background: rgba(15, 23, 42, 0.9); color: #38bdf8; padding: 2px 7px; font-
+                                    <span style="background: rgba(15, 23, 42, 0.9); color: #38bdf8; padding: 2px 7px; font-size: 10px; font-weight: bold; border-radius: 4px; border: 1px solid rgba(56, 189, 248, 0.4); white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                                        ${cell.id}
+                                    </span>
+                                </div>
+                            `,
+                            iconSize: [90, 70],
+                            iconAnchor: [45, 70]
+                        });
+
+                        const marker = L.marker(cell.center, { icon: profileIcon }).addTo(map);
+
+                        // Vettore storico effettivo (blu tratteggiato)
+                        if (cell.actual_path && cell.actual_path.length > 0) {
+                            L.polyline(cell.actual_path, { color: '#38bdf8', weight: 3, dashArray: '4, 4', opacity: 0.8 }).addTo(map);
+                        }
+                        // Vettore previsionale (verde continuo)
+                        if (cell.forecast_path && cell.forecast_path.length > 0) {
+                            L.polyline(cell.forecast_path, { color: '#22c55e', weight: 4, opacity: 0.9 }).addTo(map);
+                        }
+
+                        // Cerchio perimetrale di attenzione attorno al centroide di picco
+                        L.circle(cell.center, {
+                            radius: 20000,
+                            color: '#22c55e',
+                            fillColor: '#22c55e',
+                            fillOpacity: 0.08,
+                            weight: 1,
+                            dashArray: '5, 5'
+                        }).addTo(
         
