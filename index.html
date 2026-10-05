@@ -83,14 +83,17 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         const map = L.map('map', {
-            zoomControl: false
+            zoomControl: false,
+            maxZoom: 19
         }).setView([42.5, 12.5], 6);
 
         L.control.zoom({ position: 'topright' }).addTo(map);
 
+        // Risolto il problema dello zoom con maxNativeZoom (evita l'errore tile non supportate)
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
-            maxZoom: 18
+            maxZoom: 19,
+            maxNativeZoom: 16
         }).addTo(map);
 
         // Caricamento tile radar di sfondo
@@ -108,7 +111,7 @@
             })
             .catch(err => console.log("Errore tile radar:", err));
 
-        // Caricamento celle tempestose (macro_structures con profili 3D, vettori e aree di rispetto)
+        // Caricamento celle tempestose con etichetta tecnica professionale
         function loadStormCells() {
             const jsonUrl = 'storm_cells.json?t=' + new Date().getTime();
             
@@ -131,18 +134,21 @@
                     `;
 
                     data.macro_structures.forEach(cell => {
+                        // Estrae il valore numerico dei dBZ dalla stringa di intensità per renderlo pulito nel badge
+                        const dbzShort = cell.intensity ? cell.intensity.split(' ')[0] + ' dBZ' : '';
+
                         const profileIcon = L.divIcon({
                             className: 'custom-storm-marker',
                             html: `
                                 <div style="text-align: center; pointer-events: auto; cursor: pointer;">
                                     <img src="${cell.profile_image}" style="width: 80px; height: 48px; display: block; margin: 0 auto; filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.6));" alt="${cell.id}">
-                                    <span style="background: rgba(15, 23, 42, 0.9); color: #38bdf8; padding: 2px 7px; font-size: 10px; font-weight: bold; border-radius: 4px; border: 1px solid rgba(56, 189, 248, 0.4); white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                                        ${cell.id}
-                                    </span>
+                                    <div style="background: rgba(15, 23, 42, 0.95); color: #38bdf8; padding: 2px 6px; font-size: 10px; font-family: monospace; font-weight: bold; border-radius: 4px; border: 1px solid rgba(56, 189, 248, 0.5); white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.4);">
+                                        <span>${cell.id}</span> • <span style="color: #facc15;">${dbzShort}</span>
+                                    </div>
                                 </div>
                             `,
-                            iconSize: [90, 70],
-                            iconAnchor: [45, 70]
+                            iconSize: [90, 75],
+                            iconAnchor: [45, 75]
                         });
 
                         const marker = L.marker(cell.center, { icon: profileIcon }).addTo(map);
@@ -175,7 +181,7 @@
                                 <b>Velocità:</b> ${cell.speed_kmh} km/h<br>
                                 <b>Direzione:</b> ${cell.direction_deg}°<br>
                                 <hr style="margin: 4px 0; border: none; border-top: 1px solid #cbd5e1;">
-                                <b>🌧️ Rain Rate:</b> <span style="color: #2563eb; font-weight: bold;">${cell.rain_rate_h || 0.0} mm/h</span><br>
+                                <b>🌧️️ Rain Rate:</b> <span style="color: #2563eb; font-weight: bold;">${cell.rain_rate_h || 0.0} mm/h</span><br>
                                 <b>💧 Accumulo Stimato:</b> <span style="color: #0284c7; font-weight: bold;">${cell.total_accumulation_mm || 0.0} mm</span><br>
                                 <hr style="margin: 4px 0; border: none; border-top: 1px solid #cbd5e1;">
                                 <b>Echo Top:</b> <span style="color: #d97706; font-weight: bold;">${cell.echo_top} km</span><br>
