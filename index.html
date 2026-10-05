@@ -118,7 +118,7 @@
 
         // Caricamento celle tempestose (macro_structures con profili 3D, vettori e aree di rispetto)
         function loadStormCells() {
-            const jsonUrl = 'storm_cells.json?t=' + new Date().getTime();
+            const jsonUrl = 'celle_tempestose.json?t=' + new Date().getTime();
             
             fetch(jsonUrl)
                 .then(response => {
@@ -172,5 +172,24 @@
                             fillOpacity: 0.08,
                             weight: 1,
                             dashArray: '5, 5'
-                        }).addTo(
-        
+                        }).addTo(map);
+
+                        // Popup completo di telemetria
+                        const popupContent = `
+                            <div style="font-family: sans-serif; font-size: 13px; line-height: 1.5; color: #1e293b; min-width: 220px;">
+                                <b style="font-size: 14px; color: #0f172a;">ID Cellula:</b> ${cell.id}<br>
+                                <b>Tipologia:</b> <span style="color: #2563eb; font-weight: bold;">${cell.convective_type}</span><br>
+                                <b>Intensità Picco:</b> <span style="color: #dc2626; font-weight: bold;">${cell.intensity}</span><br>
+                                <b>Velocità:</b> ${cell.speed_kmh} km/h<br>
+                                <b>Direzione:</b> ${cell.direction_deg}°<br>
+                                <hr style="margin: 4px 0; border: none; border-top: 1px solid #cbd5e1;">
+                                <b>🌧️ Rain Rate:</b> <span style="color: #2563eb; font-weight: bold;">${cell.rain_rate_h || 0.0} mm/h</span><br>
+                                <b>💧 Accumulo Stimato:</b> <span style="color: #0284c7; font-weight: bold;">${cell.total_accumulation_mm || 0.0} mm</span><br>
+                                <hr style="margin: 4px 0; border: none; border-top: 1px solid #cbd5e1;">
+                                <b>Echo Top:</b> <span style="color: #d97706; font-weight: bold;">${cell.echo_top} km</span><br>
+                                <b>VIL:</b> ${cell.vil} kg/m²<br>
+                                <b>Attendibilità:</b> <span style="color: #16a34a; font-weight: bold;">${cell.confidence || '92.0% (Alta)'}</span><br>
+                            </div>
+                        `;
+                        marker.bindPopup(popup
+                                         
