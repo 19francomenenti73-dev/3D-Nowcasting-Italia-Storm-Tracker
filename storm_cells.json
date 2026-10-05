@@ -1,283 +1,274 @@
 {
-    "timestamp": "2026-10-05T10:48:16.481965Z",
-    "frame_time": 1791196800,
-    "cell_count": 4,
-    "cells": [
+    "generated_at": "2026-10-05T10:54:56.899645Z",
+    "radar_tile": {
+        "host": "https://tilecache.rainviewer.com",
+        "path": "/v2/radar/399e9b60fcbc"
+    },
+    "macro_structures": [
         {
-            "id": "TC_S01F",
-            "centroid": [
-                42.4928,
-                8.8089
+            "id": "Core-Z5-2",
+            "center": [
+                36.66841891894785,
+                -8.7451171875
             ],
-            "polygon": [
+            "speed_kmh": 54,
+            "direction_deg": 289,
+            "intensity": "58 dBZ (Estremo / Magenta)",
+            "convective_type": "MCS / Linea di Groppo (Squall Line)",
+            "vil": 70.0,
+            "echo_top": 16.0,
+            "rain_rate_h": 137.0,
+            "total_accumulation_mm": 364.8,
+            "confidence": "98.5% (Alta Affidabilità)",
+            "profile_image": "profiles/Core-Z5-2.png",
+            "actual_path": [
                 [
-                    43.2932,
-                    10.1074
+                    36.58922666516097,
+                    -8.458382875878666
                 ],
                 [
-                    43.1972,
-                    8.1299
+                    36.628822792054414,
+                    -8.601750031689333
                 ],
                 [
-                    42.876,
-                    7.5146
-                ],
-                [
-                    41.8041,
-                    7.9102
-                ],
-                [
-                    41.8041,
-                    10.0195
-                ],
-                [
-                    42.5531,
-                    10.1514
-                ],
-                [
-                    42.4883,
-                    9.4482
-                ],
-                [
-                    42.7793,
-                    9.2725
-                ],
-                [
-                    42.9082,
-                    9.8877
+                    36.66841891894785,
+                    -8.7451171875
                 ]
             ],
-            "radius_km": 18.4,
-            "max_dbz": 63.2,
-            "echo_top_km": 14.0,
-            "vil": 0.2,
-            "rain_rate": 325.0,
-            "hail_probability": 100,
-            "flash_rate": "Molto Alto (150/m)",
-            "stage": "Severa / Supercella",
-            "speed_kmh": 30,
-            "history_track": [
+            "forecast_path": [
                 [
-                    42.514,
-                    8.9899
+                    36.66841891894785,
+                    -8.7451171875
                 ],
                 [
-                    42.5034,
-                    8.8994
+                    36.708015045841286,
+                    -8.888484343310667
                 ],
                 [
-                    42.4928,
-                    8.8089
+                    36.74761117273473,
+                    -9.031851499121334
+                ],
+                [
+                    36.787207299628164,
+                    -9.175218654932003
+                ],
+                [
+                    36.8268034265216,
+                    -9.31858581074267
                 ]
-            ],
-            "predictive_vector": [
-                42.4505,
-                8.4469
-            ],
-            "eta_rome_min": 48,
-            "cep_km": 2.0
+            ]
         },
         {
-            "id": "TC_S03F",
-            "centroid": [
-                46.0081,
-                10.3596
+            "id": "Core-Z5-3",
+            "center": [
+                40.84706035607122,
+                -8.2177734375
             ],
-            "polygon": [
+            "speed_kmh": 57,
+            "direction_deg": 30,
+            "intensity": "58 dBZ (Estremo / Magenta)",
+            "convective_type": "Supercella Isolata",
+            "vil": 70.0,
+            "echo_top": 16.0,
+            "rain_rate_h": 137.0,
+            "total_accumulation_mm": 173.0,
+            "confidence": "98.5% (Alta Affidabilità)",
+            "profile_image": "profiles/Core-Z5-3.png",
+            "actual_path": [
                 [
-                    46.5286,
-                    8.7891
+                    40.624702482126565,
+                    -8.387483269435302
                 ],
                 [
-                    46.2255,
-                    9.9316
+                    40.73588141909889,
+                    -8.30262835346765
                 ],
                 [
-                    45.4293,
-                    10.1514
-                ],
-                [
-                    45.1201,
-                    11.2061
-                ],
-                [
-                    45.9817,
-                    11.2061
-                ],
-                [
-                    46.1342,
-                    10.2832
-                ],
-                [
-                    46.8001,
-                    10.7227
+                    40.84706035607122,
+                    -8.2177734375
                 ]
             ],
-            "radius_km": 13.3,
-            "max_dbz": 53.0,
-            "echo_top_km": 13.2,
-            "vil": 0.2,
-            "rain_rate": 74.9,
-            "hail_probability": 30,
-            "flash_rate": "Molto Alto (150/m)",
-            "stage": "Severa / Supercella",
-            "speed_kmh": 30,
-            "history_track": [
+            "forecast_path": [
                 [
-                    45.8735,
-                    10.3765
+                    40.84706035607122,
+                    -8.2177734375
                 ],
                 [
-                    45.9408,
-                    10.3681
+                    40.95823929304355,
+                    -8.13291852153235
                 ],
                 [
-                    46.0081,
-                    10.3596
+                    41.06941823001587,
+                    -8.048063605564698
+                ],
+                [
+                    41.1805971669882,
+                    -7.963208689597048
+                ],
+                [
+                    41.29177610396052,
+                    -7.878353773629398
                 ]
-            ],
-            "predictive_vector": [
-                46.2774,
-                10.3257
-            ],
-            "eta_rome_min": 48,
-            "cep_km": 2.0
+            ]
         },
         {
-            "id": "TC_S04F",
-            "centroid": [
-                45.7524,
-                11.7062
+            "id": "Core-Z5-4",
+            "center": [
+                42.35854391749706,
+                3.779296875
             ],
-            "polygon": [
+            "speed_kmh": 63,
+            "direction_deg": 279,
+            "intensity": "58 dBZ (Estremo / Magenta)",
+            "convective_type": "MCC (Complesso Convettivo a Mesoscala)",
+            "vil": 70.0,
+            "echo_top": 16.0,
+            "rain_rate_h": 137.0,
+            "total_accumulation_mm": 224.3,
+            "confidence": "98.5% (Alta Affidabilità)",
+            "profile_image": "profiles/Core-Z5-4.png",
+            "actual_path": [
                 [
-                    46.4379,
-                    11.8652
+                    42.31415035309375,
+                    4.158608839560742
                 ],
                 [
-                    46.1646,
-                    11.8213
+                    42.336347135295405,
+                    3.968952857280371
                 ],
                 [
-                    45.8594,
-                    11.25
-                ],
-                [
-                    45.1511,
-                    11.2939
-                ],
-                [
-                    45.3676,
-                    11.8652
-                ],
-                [
-                    45.7369,
-                    11.9531
-                ],
-                [
-                    46.0122,
-                    12.3486
-                ],
-                [
-                    46.3166,
-                    12.1729
+                    42.35854391749706,
+                    3.779296875
                 ]
             ],
-            "radius_km": 9.0,
-            "max_dbz": 47.0,
-            "echo_top_km": 12.8,
-            "vil": 0.1,
-            "rain_rate": 31.6,
-            "hail_probability": 30,
-            "flash_rate": "Moderato (20/m)",
-            "stage": "Matura",
-            "speed_kmh": 34,
-            "history_track": [
+            "forecast_path": [
                 [
-                    45.6015,
-                    11.6681
+                    42.35854391749706,
+                    3.779296875
                 ],
                 [
-                    45.677,
-                    11.6872
+                    42.38074069969871,
+                    3.589640892719629
                 ],
                 [
-                    45.7524,
-                    11.7062
+                    42.402937481900366,
+                    3.3999849104392585
+                ],
+                [
+                    42.42513426410202,
+                    3.2103289281588876
+                ],
+                [
+                    42.447331046303674,
+                    3.0206729458785166
                 ]
-            ],
-            "predictive_vector": [
-                46.054,
-                11.7824
-            ],
-            "eta_rome_min": 42,
-            "cep_km": 2.0
+            ]
         },
         {
-            "id": "TC_S02F",
-            "centroid": [
-                43.887,
-                8.65
+            "id": "Core-Z5-5",
+            "center": [
+                43.133061162406136,
+                9.84375
             ],
-            "polygon": [
+            "speed_kmh": 68,
+            "direction_deg": 46,
+            "intensity": "52 dBZ (Molto Elevato / Rosso)",
+            "convective_type": "MCC (Complesso Convettivo a Mesoscala)",
+            "vil": 70.0,
+            "echo_top": 16.0,
+            "rain_rate_h": 56.2,
+            "total_accumulation_mm": 130.4,
+            "confidence": "98.5% (Alta Affidabilità)",
+            "profile_image": "profiles/Core-Z5-5.png",
+            "actual_path": [
                 [
-                    43.7711,
-                    7.6465
+                    42.92028292280608,
+                    9.541820686904702
                 ],
                 [
-                    43.7394,
-                    9.1406
+                    43.02667204260611,
+                    9.69278534345235
                 ],
                 [
-                    43.6122,
-                    9.4922
-                ],
-                [
-                    43.7394,
-                    9.624
-                ],
-                [
-                    44.1822,
-                    8.3057
-                ],
-                [
-                    44.1507,
-                    7.998
-                ],
-                [
-                    43.8979,
-                    7.998
+                    43.133061162406136,
+                    9.84375
                 ]
             ],
-            "radius_km": 7.4,
-            "max_dbz": 45.4,
-            "echo_top_km": 12.6,
-            "vil": 0.1,
-            "rain_rate": 25.1,
-            "hail_probability": 30,
-            "flash_rate": "Moderato (20/m)",
-            "stage": "Matura",
-            "speed_kmh": 49,
-            "history_track": [
+            "forecast_path": [
                 [
-                    43.8224,
-                    8.9428
+                    43.133061162406136,
+                    9.84375
                 ],
                 [
-                    43.8547,
-                    8.7964
+                    43.239450282206164,
+                    9.99471465654765
                 ],
                 [
-                    43.887,
-                    8.65
+                    43.34583940200619,
+                    10.145679313095298
+                ],
+                [
+                    43.45222852180622,
+                    10.296643969642949
+                ],
+                [
+                    43.55861764160624,
+                    10.447608626190597
+                ]
+            ]
+        },
+        {
+            "id": "Core-Z5-7",
+            "center": [
+                43.771093817756494,
+                9.31640625
+            ],
+            "speed_kmh": 72,
+            "direction_deg": 50,
+            "intensity": "58 dBZ (Estremo / Magenta)",
+            "convective_type": "MCS / Linea di Groppo (Squall Line)",
+            "vil": 70.0,
+            "echo_top": 16.0,
+            "rain_rate_h": 137.0,
+            "total_accumulation_mm": 80.7,
+            "confidence": "98.5% (Alta Affidabilità)",
+            "profile_image": "profiles/Core-Z5-7.png",
+            "actual_path": [
+                [
+                    43.562622160560856,
+                    8.972349142895542
+                ],
+                [
+                    43.66685798915868,
+                    9.144377696447771
+                ],
+                [
+                    43.771093817756494,
+                    9.31640625
                 ]
             ],
-            "predictive_vector": [
-                44.016,
-                8.0642
-            ],
-            "eta_rome_min": 30,
-            "cep_km": 2.0
+            "forecast_path": [
+                [
+                    43.771093817756494,
+                    9.31640625
+                ],
+                [
+                    43.87532964635431,
+                    9.488434803552229
+                ],
+                [
+                    43.97956547495213,
+                    9.660463357104458
+                ],
+                [
+                    44.08380130354995,
+                    9.832491910656687
+                ],
+                [
+                    44.18803713214776,
+                    10.004520464208916
+                ]
+            ]
         }
     ]
 }
