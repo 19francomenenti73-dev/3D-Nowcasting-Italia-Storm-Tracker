@@ -88,20 +88,20 @@
 
         L.control.zoom({ position: 'topright' }).addTo(map);
 
-        // 1. Mappa di base Esri
+        // Mappa di base stradale/orografica
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
             maxZoom: 18
         }).addTo(map);
 
-        // 2. Livello Satellitare in Trasparenza (nuvole e dettaglio geografico reale)
+        // UNICA AGGIUNTA: Livello Satellitare in Trasparenza
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Source: Esri, Maxar, Earthstar Geographics',
             maxZoom: 18,
             opacity: 0.45
         }).addTo(map);
 
-        // 3. Caricamento tile radar di sfondo
+        // Caricamento tile radar di sfondo
         fetch('https://api.rainviewer.com/public/weather-maps.json')
             .then(res => res.json())
             .then(data => {
@@ -118,7 +118,7 @@
 
         // Caricamento celle tempestose (macro_structures con profili 3D, vettori e aree di rispetto)
         function loadStormCells() {
-            const jsonUrl = 'cele_tempestose.json?t=' + new Date().getTime();
+            const jsonUrl = 'storm_cells.json?t=' + new Date().getTime();
             
             fetch(jsonUrl)
                 .then(response => {
@@ -284,4 +284,17 @@
             } catch(e) {
                 console.log("Modulo fulmini non inizializzato");
             }
-            
+        }
+
+        // Avvio moduli
+        loadStormCells();
+        loadEarthquakes();
+        initLightningStream();
+
+        // Polling automatico ogni 5 minuti
+        setInterval(() => {
+            loadStormCells();
+        }, 300000);
+    </script>
+</body>
+</html>
