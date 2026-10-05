@@ -93,21 +93,21 @@
             maxZoom: 18
         }).addTo(map);
 
-        // Caricamento tile radar e satellite IR in trasparenza da RainViewer
+        // Caricamento tile radar e satellite IR di sfondo
         fetch('https://api.rainviewer.com/public/weather-maps.json')
             .then(res => res.json())
             .then(data => {
-                // Livello Satellitare IR (Nuvole)
+                // Livello Satellitare IR in trasparenza (Integrazione Nuvole)
                 if (data.satellite && data.satellite.infrared && data.satellite.infrared.length > 0) {
                     const latestSat = data.satellite.infrared[data.satellite.infrared.length - 1];
                     L.tileLayer(`${data.host}${latestSat.path}/256/{z}/{x}/{y}/0/1_1.png`, {
                         opacity: 0.45,
                         zIndex: 150,
-                        attribution: '&copy; RainViewer Satellite IR'
+                        attribution: '&copy; RainViewer IR'
                     }).addTo(map);
                 }
 
-                // Livello Radar
+                // Livello Radar esistente
                 if (data.radar && data.radar.past && data.radar.past.length > 0) {
                     const latestRadar = data.radar.past[data.radar.past.length - 1];
                     L.tileLayer(`${data.host}${latestRadar.path}/256/{z}/{x}/{y}/2/1_1.png`, {
@@ -117,7 +117,7 @@
                     }).addTo(map);
                 }
             })
-            .catch(err => console.log("Errore tile meteo:", err));
+            .catch(err => console.log("Errore tile radar:", err));
 
         // Caricamento celle tempestose (macro_structures con profili 3D, vettori e aree di rispetto)
         function loadStormCells() {
@@ -171,133 +171,4 @@
                         L.circle(cell.center, {
                             radius: 20000,
                             color: '#22c55e',
-                            fillColor: '#22c55e',
-                            fillOpacity: 0.08,
-                            weight: 1,
-                            dashArray: '5, 5'
-                        }).addTo(map);
-
-                        // Popup completo di telemetria
-                        const popupContent = `
-                            <div style="font-family: sans-serif; font-size: 13px; line-height: 1.5; color: #1e293b; min-width: 220px;">
-                                <b style="font-size: 14px; color: #0f172a;">ID Cellula:</b> ${cell.id}<br>
-                                <b>Tipologia:</b> <span style="color: #2563eb; font-weight: bold;">${cell.convective_type}</span><br>
-                                <b>Intensità Picco:</b> <span style="color: #dc2626; font-weight: bold;">${cell.intensity}</span><br>
-                                <b>Velocità:</b> ${cell.speed_kmh} km/h<br>
-                                <b>Direzione:</b> ${cell.direction_deg}°<br>
-                                <hr style="margin: 4px 0; border: none; border-top: 1px solid #cbd5e1;">
-                                <b>🌧️ Rain Rate:</b> <span style="color: #2563eb; font-weight: bold;">${cell.rain_rate_h || 0.0} mm/h</span><br>
-                                <b>💧 Accumulo Stimato:</b> <span style="color: #0284c7; font-weight: bold;">${cell.total_accumulation_mm || 0.0} mm</span><br>
-                                <hr style="margin: 4px 0; border: none; border-top: 1px solid #cbd5e1;">
-                                <b>Echo Top:</b> <span style="color: #d97706; font-weight: bold;">${cell.echo_top} km</span><br>
-                                <b>VIL:</b> ${cell.vil} kg/m²<br>
-                                <b>Attendibilità:</b> <span style="color: #16a34a; font-weight: bold;">${cell.confidence || '92.0% (Alta)'}</span><br>
-                            </div>
-                        `;
-                        marker.bindPopup(popupContent);
-                    });
-                })
-                .catch(error => {
-                    console.error("Errore di caricamento:", error);
-                    document.getElementById('counter-badge').innerHTML = `
-                        <span style="width: 10px; height: 10px; background-color: #ef4444; border-radius: 50%; display: inline-block;"></span>
-                        <b style="color: #dc2626;">Errore:</b> ${error.message}
-                    `;
-                });
-        }
-
-        // Caricamento Terremoti (M >= 3.5: lampeggiante 1 ora, rimpicciolito fino a 24 ore)
-        function loadEarthquakes() {
-            fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
-                .then(res => res.json())
-                .then(data => {
-                    const now = new Date().getTime();
-                    data.features.forEach(quake => {
-                        const mag = quake.properties.mag;
-                        const time = quake.properties.time;
-                        const place = quake.properties.place;
-                        const depth = quake.geometry.coordinates[2];
-                        const coords = [quake.geometry.coordinates[1], quake.geometry.coordinates[0]];
-                        
-                        const diffHours = (now - time) / (1000 * 60 * 60);
-
-                        if (mag >= 3.5 && diffHours <= 24) {
-                            let iconClass = 'quake-aged';
-                            let iconSize = [8, 8];
-                            let iconAnchor = [4, 4];
-
-                            if (diffHours <= 1) {
-                                iconClass = 'quake-active-flash';
-                                iconSize = [16, 16];
-                                iconAnchor = [8, 8];
-                            }
-
-                            const quakeIcon = L.divIcon({
-                                className: iconClass,
-                                iconSize: iconSize,
-                                iconAnchor: iconAnchor
-                            });
-
-                            const marker = L.marker(coords, { icon: quakeIcon }).addTo(map);
-                            const timeAgoMin = Math.round(diffHours * 60);
-
-                            marker.bindPopup(`
-                                <div style="font-family: sans-serif; font-size: 12px; line-height: 1.4; color: #1e293b; min-width: 190px;">
-                                    <b style="color: #dc2626; font-size: 13px;">⚠️ EVENTO SISMICO</b><br>
-                                    <b>Magnitudo:</b> M ${mag.toFixed(1)}<br>
-                                    <b>Località:</b> ${place}<br>
-                                    <b>Profondità:</b> ${depth} km<br>
-                                    <b>Registrato:</b> ${timeAgoMin <= 60 ? timeAgoMin + ' min fa' : Math.round(diffHours) + ' ore fa'}<br>
-                                    <span style="font-size: 10px; color: #64748b;">Soglia M ≥ 3.5 (Open Data)</span>
-                                </div>
-                            `);
-                        }
-                    });
-                })
-                .catch(err => console.log("Errore dati sismici:", err));
-        }
-
-        // Stream Fulmini in tempo reale (Blitzortung WebSocket)
-        function initLightningStream() {
-            try {
-                const ws = new WebSocket('wss://ws1.blitzortung.org:3000/');
-                ws.onopen = function() {
-                    ws.send(JSON.stringify({a: 111}));
-                };
-                ws.onmessage = function(event) {
-                    try {
-                        const pkt = JSON.parse(event.data);
-                        if (pkt && pkt.lat && pkt.lon) {
-                            const lIcon = L.divIcon({
-                                className: 'lightning-icon',
-                                html: '⚡',
-                                iconSize: [14, 14],
-                                iconAnchor: [7, 7]
-                            });
-                            const lMarker = L.marker([pkt.lat, pkt.lon], { icon: lIcon }).addTo(map);
-                            setTimeout(() => {
-                                map.removeLayer(lMarker);
-                            }, 900000); // Scompare dopo 15 minuti
-                        }
-                    } catch(e) {}
-                };
-                ws.onerror = function() {
-                    console.log("Stream fulmini in standby");
-                };
-            } catch(e) {
-                console.log("Modulo fulmini non inizializzato");
-            }
-        }
-
-        // Avvio moduli
-        loadStormCells();
-        loadEarthquakes();
-        initLightningStream();
-
-        // Polling automatico ogni 5 minuti
-        setInterval(() => {
-            loadStormCells();
-        }, 300000);
-    </script>
-</body>
-</html>
+                            
