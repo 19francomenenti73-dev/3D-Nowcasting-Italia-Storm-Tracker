@@ -32,37 +32,41 @@ def get_latest_radar_tile_info():
 
 def save_iso_profile_image(grid_data, filename):
     try:
-        img = Image.new("RGBA", (160, 95), (0, 0, 0, 0))
+        rows = len(grid_data) if grid_data else 0
+        cols = len(grid_data[0]) if rows > 0 else 0
+        
+        img_w = max(160, cols * 6 + 50)
+        img_h = max(100, rows * 3 + cols * 3 + 30)
+        
+        img = Image.new("RGBA", (img_w, img_h), (0, 0, 0, 0))
         draw = ImageDraw.Draw(img)
         
-        if grid_data and len(grid_data) > 0:
-            rows = len(grid_data)
-            cols = len(grid_data[0])
+        if rows > 0 and cols > 0:
             tileW = 8
             tileH = 4
-            startX = 80
-            startY = 10
+            startX = img_w // 2
+            startY = 15
 
             def get_color(val):
-                if val >= 12: return (255, 0, 255, 250)      # Magenta (Picco estremo)
-                elif val >= 10: return (255, 26, 26, 250)   # Rosso (Forte)
-                elif val >= 8: return (255, 204, 0, 250)    # Giallo (Moderato-Alto)
-                elif val >= 6: return (0, 230, 0, 250)      # Verde (Base moderata)
-                elif val >= 4: return (0, 191, 255, 250)    # Ciano (Debole)
-                elif val > 0: return (0, 128, 255, 250)     # Blu (Leggero)
+                if val >= 12: return (255, 0, 255, 250)      # Magenta
+                elif val >= 10: return (255, 26, 26, 250)   # Rosso
+                elif val >= 8: return (255, 204, 0, 250)    # Giallo
+                elif val >= 6: return (0, 230, 0, 250)      # Verde
+                elif val >= 4: return (0, 191, 255, 250)    # Ciano
+                elif val > 0: return (0, 128, 255, 250)     # Blu
                 return None
 
             for r in range(rows):
                 for c in range(cols):
                     val = grid_data[r][c]
-                    if val >= 6:
+                    if val > 0:
                         isoX = startX + (c - r) * (tileW / 2)
                         isoY = startY + (c + r) * (tileH / 2)
                         color = get_color(val)
                         if color:
                             for h in range(val):
-                                hY = isoY - (h * 2.8)
-                                draw.ellipse([isoX - 3, hY - 3, isoX + 3, hY + 3], fill=color)
+                                hY = isoY - (h * 3.2)
+                                draw.ellipse([isoX - 2.5, hY - 2.5, isoX + 2.5, hY + 2.5], fill=color)
 
         img.save(filename, format="PNG")
     except Exception as e:
@@ -88,13 +92,14 @@ def create_fallback_data(reason="Standby"):
                 "intensity": f"Sistema operativo ({reason})",
                 "vil": 0.0,
                 "echo_top": 0.0,
+                "width_px": 15,
+                "height_px": 15,
                 "profile_image": default_img,
-                "actual_path": [[44.8, 9.8], [44.9, 9.9], [45.0, 10.0]],
-                "forecast_path": [[45.1, 10.1], [45.2, 10.2], [45.3, 10.3]]
+                "actual_path": [[44.9, 9.9], [44.95, 9.95], [45.0, 10.0]],
+                "forecast_path": [[45.0, 10.0], [45.3, 10.3], [45.6, 10.6]]
             }
         ]
     }
-    # CORRETTO: salvataggio su storm_cells.json anziché centroids.json
     with open("storm_cells.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
@@ -106,12 +111,12 @@ def analyze_radar():
         
         z = 4
         tiles_to_check = []
-        # Ampliato il range delle tile per coprire tutta l'Europa occidentale e centrale
         for x in range(6, 11):
             for y in range(3, 8):
                 tiles_to_check.append((x, y))
 
         cell_id_counter = 1
+        deg_per_km = 1.0 / 111.0
 
         for x, y in tiles_to_check:
             tile_url = f"{host}{path}/256/{z}/{x}/{y}/2/1_1.png"
@@ -140,7 +145,6 @@ def analyze_radar():
                             x_c, y_c, w, h = cv2.boundingRect(cnt)
                             lat, lon = tile_pixel_to_latlon(z, x, y, x_c + w / 2.0, y_c + h / 2.0)
                             
-                            # AMPLIATO IL BOUNDING BOX A TUTTA EUROPA (Lat: 35-60, Lon: -10 to 30)
                             if 35.0 <= lat <= 60.0 and -10.0 <= lon <= 30.0:
                                 aspect_ratio = max(w, h) / (min(w, h) + 1e-5)
                                 
@@ -159,32 +163,27 @@ def analyze_radar():
                                 direction_deg = int((lat * 22 + lon * 18) % 360)
                                 
                                 rad_dir = np.radians(direction_deg)
-                                step_dist = speed_val * 0.00035
-                                lat_dir = np.cos(rad_dir)
-                                lon_dir = np.sin(rad_dir)
-
-                                actual_path = [
-                                    [lat - lat_dir * step_dist * 3, lon - lon_dir * step_dist * 3],
-                                    [lat - lat_dir * step_dist * 2, lon - lon_dir * step_dist * 2],
-                                    [lat - lat_dir * step_dist * 1, lon - lon_dir * step_dist * 1],
-                                    [lat, lon]
-                                ]
-
-                                forecast_path = [
-                                    [lat + lat_dir * step_dist * 4, lon + lon_dir * step_dist * 4],
-                                    [lat + lat_dir * step_dist * 8, lon + lon_dir * step_dist * 8],
-                                    [lat + lat_dir * step_dist * 12, lon + lon_dir * step_dist * 12]
-                                ]
-
-                                patch_size = 15
-                                half_p = patch_size // 2
-                                px_center = int(x_c + w / 2.0)
-                                py_center = int(y_c + h / 2.0)
                                 
-                                x_min = max(0, px_center - half_p)
-                                x_max = min(arr.shape[1], px_center + half_p + 1)
-                                y_min = max(0, py_center - half_p)
-                                y_max = min(arr.shape[0], py_center + half_p + 1)
+                                # Reale (Storico cumulativo a intervalli di 15 min: -45m, -30m, -15m, 0)
+                                actual_path = []
+                                for t_hours in [-0.75, -0.5, -0.25, 0.0]:
+                                    dist_km = speed_val * t_hours
+                                    d_lat = dist_km * deg_per_km * np.cos(rad_dir)
+                                    d_lon = dist_km * deg_per_km * np.sin(rad_dir) / np.cos(np.radians(lat))
+                                    actual_path.append([lat + d_lat, lon + d_lon])
+
+                                # Predittivo (Fino a 6 ore: +1.5h, +3h, +4.5h, +6h)
+                                forecast_path = [[lat, lon]]
+                                for t_hours in [1.5, 3.0, 4.5, 6.0]:
+                                    dist_km = speed_val * t_hours
+                                    d_lat = dist_km * deg_per_km * np.cos(rad_dir)
+                                    d_lon = dist_km * deg_per_km * np.sin(rad_dir) / np.cos(np.radians(lat))
+                                    forecast_path.append([lat + d_lat, lon + d_lon])
+
+                                x_min = max(0, int(x_c))
+                                x_max = min(arr.shape[1], int(x_c + w))
+                                y_min = max(0, int(y_c))
+                                y_max = min(arr.shape[0], int(y_c + h))
                                 
                                 local_patch = arr[y_min:y_max, x_min:x_max]
                                 grid_matrix = []
@@ -216,6 +215,8 @@ def analyze_radar():
                                     "intensity": f">= 32 dBZ — {classification}",
                                     "vil": vil_val,
                                     "echo_top": echo_top_val,
+                                    "width_px": int(w),
+                                    "height_px": int(h),
                                     "profile_image": img_filename,
                                     "actual_path": actual_path,
                                     "forecast_path": forecast_path
@@ -235,7 +236,6 @@ def analyze_radar():
                 "radar_tile": radar_info,
                 "macro_structures": macro_structures
             }
-            # CORRETTO: salvataggio su storm_cells.json letto dal frontend
             with open("storm_cells.json", "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=4, ensure_ascii=False)
             
@@ -246,4 +246,4 @@ def analyze_radar():
 if __name__ == "__main__":
     analyze_radar()
     sys.exit(0)
-            
+    
